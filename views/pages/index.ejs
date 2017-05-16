@@ -7,7 +7,7 @@
     		<meta name="Author" content="Fabien TURGUT">
     		<title>Accueil</title>
     		<link rel="stylesheet" href="..\..\public\stylesheets\style.css" />
-    		<link rel="shortcut icon" type="image/x-icon" href="views/img/TeteCerf.png" />
+    		<link rel="shortcut icon" type="image/x-icon" href="../img/TeteCerf.png" />
     </head>
 
 	<body>
@@ -26,7 +26,7 @@
 				<form class="forMedia Connexion" method="post" action="compte-cible.php">
 					<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail" size="20"/>
 					<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe" size="20"/>
-					<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" <?php if(isset($_COOKIE['ResterConnecte']) || $_COOKIE['ResterConnecte'] == 1){echo "checked";}?>/><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
+					<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" /><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
 					<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
 					<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
 				</form>
