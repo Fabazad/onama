@@ -1,66 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <% include ../partials/header.ejs %>
-</head>
+    <head>
+        <meta charset="UTF-8" />
+		<meta name="description" content="Page d'accueil du site Onama"/>
+		<meta name="Content-Language" content="fr">
+		<meta name="Author" content="Fabien TURGUT">
+		<title>Accueil</title>
+		<link rel="stylesheet" href="../../public/stylesheets/style.css" />
+		<link rel="shortcut icon" type="image/x-icon" href="../img/TeteCerf.png" />
+    </head>
 
-<body>
-
-  <% include ../partials/nav.ejs %>
-
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Getting Started with Node on Heroku</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/master/package.json">package.json</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/node-js-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd node-js-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started with Node on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
-</div>
-
-
-</body>
+	<body>
+		<div class="overlay" onclick="closeOverlay()">
+			<p style="color: white; text-align: left; padding-left: 33%">Cliquer pour quitter</p>
+			<img class="ImageOverlay" src="" alt="Photo de diapo"/>
+		</div>
+    <% include ../partials/header.ejs %>
+    <% include ../partials/nav.ejs %>
+		<script>
+			document.getElementById('Accueil').id = 'Selected';
+		</script>
+		<div class="page">
+			<h2>Bienvenue sur Onama.fr !</h2>
+				<a href='Inscription.php' class='Bouton' id='Sinscrire'>S'inscrire</a>
+				<form class="forMedia Connexion" method="post" action="compte-cible.php">
+					<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail" size="20"/>
+					<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe" size="20"/>
+					<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" <?php if(isset($_COOKIE['ResterConnecte']) || $_COOKIE['ResterConnecte'] == 1){echo "checked";}?>/><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
+					<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
+					<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
+				</form>
+			<article>
+				<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
+				Grâce à une interface simple est rapide vous pouvez modifier ou vous rendre compte des aliments présents dans votre frigot, vos placards, votre réfrigérateur,...</p>
+				<p>Mais Onama va encore plus loin en proposant des <strong>recettes adaptées</strong> à ce que vous possédez mais vous permet aussi de choisir en fonction de la popularité, l'origine, le temps, la difficulté, le prix et de différentes valeurs nutritives telle que les calories ou la vitamine D.</p>
+				<p>Tout cela étant programmé dans l'objectif d'être le plus simple et rapide possible à utiliser !</p>
+			</article>
+			<br>
+			<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </body>
 </html>

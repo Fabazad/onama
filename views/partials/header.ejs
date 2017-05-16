@@ -1,5 +1,32 @@
-<title>Node.js Getting Started on Heroku</title>
-<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<header id="header">
+	<a href="/Accueil.php" id="Titre-Onama" class="InHeader"><h1>Onama.fr</h1></a>
+	<a href="/Accueil.php" class="InHeader" style="height:50px"><img id="LogoOnama" src="img/TeteCerf.png" alt="Logo Onama" /></a>
+
+		<form class="InHeader" id="Connexion" method="post" action="/compte-cible.php">
+			<section>
+				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail" size="26"/>
+				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe" size="26"/>
+			</section>
+			<section id="ResterOublie" >
+				<div id="resterConnecteDiv"><input id="ResterConnecte" type="checkbox" name="ResterConnecte" style="width: 12px;display: inline;" <?php if(isset($_COOKIE['ResterConnecte']) || $_COOKIE['ResterConnecte'] == 1){echo "checked";}?>/><label for="ResterConnecte">Rester connecté </label></div>
+				<a href="/MotDePasseOublie.php">Mot de pass oublié ?</a>
+			</section>
+			<input type="submit" name="NomForm" value="Connexion" class="Bouton" onclick="return testConnexion()" />
+		</form>
+</header>
+<script>
+var inputAdresseMailC = document.getElementById('AdresseMailC');
+var inputMotDePasseC = document.getElementById('MotDePasseC');
+function testConnexion()
+{
+	if(inputAdresseMailC.value && inputMotDePasseC.value)
+	{
+		return true;
+	}
+	else
+	{
+		alert('Veuillez remplir le formulaire de connexion.');
+		return false;
+	}
+}
+</script>
