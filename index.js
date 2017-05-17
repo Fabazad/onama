@@ -18,5 +18,6 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/user', function (req, res) {
+  res.writeHead(200);
   res.render('<p>test reussi</p>');
 });
