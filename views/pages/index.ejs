@@ -15,14 +15,16 @@
 	<body>
     <% include ../partials/nav.ejs %>
     <% include ../partials/accueil.ejs %>
-    <div id="connection" class="container uk-background-contain uk-background-muted uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle" style="background-image: url(img/Fondecran.jpg);">
-			<form method="post" action="compte-cible.php">
-				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail"/>
-				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe"/>
-				<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" /><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
-				<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
-				<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
-			</form>
+    <divv id="connection" class="uk-background-contain uk-background-muted uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle" style="background-image: url(img/Fondecran.jpg);">
+      <div class="container">
+  			<form method="post" action="compte-cible.php">
+  				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail"/>
+  				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe"/>
+  				<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" /><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
+  				<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
+  				<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
+  			</form>
+      </div>
     </div>
 		<article>
 			<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
