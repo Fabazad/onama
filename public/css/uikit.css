@@ -54,11 +54,6 @@ a,
   text-decoration: none;
   cursor: pointer;
 }
-a:hover,
-.uk-link:hover {
-  color: #0f6ecd;
-  text-decoration: underline;
-}
 /* Text-level semantics
  ========================================================================== */
 /*
