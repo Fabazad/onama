@@ -18,5 +18,5 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/user', function (req, res) {
-  console.log('Got a PUT request at /user');
+  response.render('<p>test reussi</p>');
 });
