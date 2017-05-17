@@ -3,14 +3,11 @@
     <h1>Inscription</h1>
     <form method="post" action="compte-cible.php">
       <label class="form_col" for="homme" >Sexe :</label>
-					<label><input name="Sexe" type="radio" value="Homme" id="homme" />Homme</label>
-					<label><input name="Sexe" type="radio" value="Femme" />Femme</label>
-					<span class="tooltip">Vous devez sélectionnez votre Sexe.</span>
+					<input name="Sexe" type="radio" value="Homme" id="homme" /><label>Homme</label>
+					<input name="Sexe" type="radio" value="Femme" /><label>Femme</label>
 					<input name="firstname" type="text" placeholder="Nom"/>
-					<span class="tooltip">Un nom ne peut pas faire moins de 2 caractères.</span>
 					<input name="name" type="text" placeholder="Prenom"/>
-					<span class="tooltip">Un prénom ne peut pas faire moins de 2 caractères.</span>
-					<input name="mailadress" type="email" placeholder="Adresse mail"/>
+					<input name="mailadress" type="mail" placeholder="Adresse mail"/>
       <input class="waves-effect waves-light btn" type="submit" name="form" value="Inscription"/>
     </form>
   </div>
