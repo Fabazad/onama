@@ -11,18 +11,18 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index');
+})
+.get('/user', function (req, res) {
+  res.writeHead(200, {"Content-Type": "text/html"});
+  res.end('<p>test reussi</p>');
 });
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-app.get('/user', function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/html"});
-  res.end('<p>test reussi</p>');
-});
 
 app.use(function(req, res, next){
     res.setHeader('Content-Type', 'text/plain');
-    res.send(404, 'Page introuvable !');
+    res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
