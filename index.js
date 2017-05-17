@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var favicon = require('serve-favicon');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -27,4 +28,4 @@ app.use(function(req, res, next){
     res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
 
-app.use(express.favicon("public/img/TeteCerf.png"));
+app.use(favicon(path.join(__dirname, 'public', 'img/TeteCerf.png')));
