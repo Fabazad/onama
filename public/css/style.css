@@ -46,3 +46,6 @@ html{
   margin-bottom: 25px;
   margin-top: 25px;
 }
+.btn, .btn-large{
+  background-color: rgb(144,119,78);
+}
