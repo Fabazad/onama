@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
 })
 .get('/user', function (req, res) {
   res.writeHead(200, {"Content-Type": "text/html"});
-  res.end('<p>test reussi ' + 'id' in req.params + '</p>');
+  res.end('<p>test reussi ' + req.params + '</p>');
 });
 
 app.listen(app.get('port'), function() {
