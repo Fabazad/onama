@@ -29,9 +29,6 @@ a{
 }
 html{
   background-image: url("../img/Fondecran.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
 }
 #home, #article{
   background-color: white;
