@@ -18,5 +18,5 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/user', function (req, res) {
-  response.render('<p>test reussi</p>');
+  res.render('<p>test reussi</p>');
 });
