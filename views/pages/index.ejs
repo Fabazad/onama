@@ -15,18 +15,7 @@
 	<body class="uk-background-fixed uk-background-cover">
     <% include ../partials/nav.ejs %>
     <% include ../partials/accueil.ejs %>
-    <div id="connection">
-      <div class="container onBackground">
-        <h3>Connexion</h3>
-  			<form method="post" action="compte-cible.php">
-  				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail"/>
-  				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe"/>
-          <input id="ResterConnecte" type="checkbox" name="ResterConnecte" /><label style="float:left" for="ResterConnecte">Rester connecté </label>
-  				<a style="float:right" href="MotDePasseOublie.php">Mot de pass oublié ?</a><br>
-  				<input class="waves-effect waves-light btn" type="submit" name="NomForm" value="Connexion" class="Bouton" />
-  			</form>
-      </div>
-    </div>
+    <% include ../partials/connexion.ejs %>
     <div id="article">
       <div class="container">
     		<article>

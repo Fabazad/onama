@@ -30,7 +30,7 @@ a{
 body{
   background-image: url("../img/Fondecran.jpg");
 }
-#home, #article{
+#home, #article, #inscription{
   background-color: white;
   padding-top: 20px;
   padding-bottom: 20px;
