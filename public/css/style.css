@@ -1,3 +1,8 @@
 nav{
   background: rgba(0,143,69,0.9);
 }
+h1{
+  text-align: center;
+  text-shadow: 1px 1px 4px;
+  color: rgb(144,119,78);
+}
