@@ -28,4 +28,4 @@ app.use(function(req, res, next){
     res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
 
-app.use(favicon(path.join(__dirname, 'public', 'img/TeteCerf.png')));
+//app.use(favicon(path.join(__dirname, 'public', 'img/TeteCerf.png')));
