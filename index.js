@@ -26,3 +26,5 @@ app.use(function(req, res, next){
     res.setHeader('Content-Type', 'text/plain');
     res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
+
+app.use(express.favicon("public/img/TeteCerf.png"));
