@@ -1,7 +1,7 @@
-uk-navbar-container{
+.uk-navbar-container{
   background: rgba(0,143,69,0.9);
 
 }
-uk-navbar-container li{
+.uk-navbar-container li{
   color: white;
 }
