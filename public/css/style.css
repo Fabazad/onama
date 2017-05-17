@@ -49,7 +49,7 @@ html{
 .btn, .btn-large{
   background-color: rgb(144,119,78);
 }
-.btn, .btn-large :hover{
+.btn:hover, .btn-large:hover{
   background-color: rgb(124,99,58);
 }
 .container{
