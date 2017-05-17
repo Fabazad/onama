@@ -21,3 +21,8 @@ app.get('/user', function (req, res) {
   res.writeHead(200, {"Content-Type": "text/html"});
   res.end('<p>test reussi</p>');
 });
+
+app.use(function(req, res, next){
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(404, 'Page introuvable !');
+});
