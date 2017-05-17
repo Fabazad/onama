@@ -14,51 +14,21 @@
     </head>
 	<body>
     <% include ../partials/nav.ejs %>
-    <div class="container" id="home">
-			<h1>Bienvenue sur Onama</h1>
-      <h3>Ornanisez avec efficacité et facilité votre alimentation !</h3>
+    <% include ../partials/accueil.ejs %>
+    <div id="connection" class="container uk-background-contain uk-background-muted uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle" style="background-image: url(img/Fondecran.jpg);">
+			<form method="post" action="compte-cible.php">
+				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail"/>
+				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe"/>
+				<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" /><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
+				<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
+				<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
+			</form>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col s6" ><a href="#recipes">
-          <div class="uk-inline-clip uk-transition-toggle imgHome">
-              <img src="img/recipes.jpeg" alt="">
-              <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default">
-                  <p class="uk-h4 uk-margin-remove">Recettes</p>
-              </div>
-          </div>
-        </a></div>
-        <div class="col s6"><a href="#recipes"><div class="uk-inline-clip uk-transition-toggle imgHome">
-            <img src="img/food.jpeg" alt="">
-            <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default">
-                <p class="uk-h4 uk-margin-remove">Aliments</p>
-            </div>
-        </div></a></div>
-      </div>
-    </div>
-
-
-
-
-
-
-    </div>
-      <div class="container">
-  			<form method="post" action="compte-cible.php">
-  				<input type="text" name="AdresseMailC" id="AdresseMailC" placeholder=" Adresse Mail" size="20"/>
-  				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe" size="20"/>
-  				<section id="resterConnecteDiv"><input id="ResterConnecteMedia" type="checkbox" name="ResterConnecte" /><label for="ResterConnecteMedia"style="font-size: 1em;">Rester connecté </label></section>
-  				<a href="MotDePasseOublie.php">Mot de pass oublié ?</a>
-  				<input type="submit" name="NomForm" value="Connexion" class="Bouton" />
-  			</form>
-
-      </div>
-			<article>
-				<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
-				Grâce à une interface simple est rapide vous pouvez modifier ou vous rendre compte des aliments présents dans votre frigot, vos placards, votre réfrigérateur,...</p>
-				<p>Mais Onama va encore plus loin en proposant des <strong>recettes adaptées</strong> à ce que vous possédez mais vous permet aussi de choisir en fonction de la popularité, l'origine, le temps, la difficulté, le prix et de différentes valeurs nutritives telle que les calories ou la vitamine D.</p>
-
-			</article>
+		<article>
+			<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
+			Grâce à une interface simple est rapide vous pouvez modifier ou vous rendre compte des aliments présents dans votre frigot, vos placards, votre réfrigérateur,...</p>
+			<p>Mais Onama va encore plus loin en proposant des <strong>recettes adaptées</strong> à ce que vous possédez mais vous permet aussi de choisir en fonction de la popularité, l'origine, le temps, la difficulté, le prix et de différentes valeurs nutritives telle que les calories ou la vitamine D.</p>
+		</article>
       <div id="connection" class="page">
         <form>
     			<input type="mail" name="mailC" placeholder="Adresse Mail"/>
