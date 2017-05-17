@@ -17,4 +17,6 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-
+app.put('/user', function (req, res) {
+  res.send('Got a PUT request at /user');
+});

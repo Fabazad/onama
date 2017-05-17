@@ -8,7 +8,7 @@
 				<input type="password" name="MotDePasseC" id="MotDePasseC" placeholder=" Mot de Passe" size="26"/>
 			</section>
 			<section id="ResterOublie" >
-				<div id="resterConnecteDiv"><input id="ResterConnecte" type="checkbox" name="ResterConnecte" style="width: 12px;display: inline;" <?php if(isset($_COOKIE['ResterConnecte']) || $_COOKIE['ResterConnecte'] == 1){echo "checked";}?>/><label for="ResterConnecte">Rester connecté </label></div>
+				<div id="resterConnecteDiv"><input id="ResterConnecte" type="checkbox" name="ResterConnecte" style="width: 12px;display: inline;"/><label for="ResterConnecte">Rester connecté </label></div>
 				<a href="/MotDePasseOublie.php">Mot de pass oublié ?</a>
 			</section>
 			<input type="submit" name="NomForm" value="Connexion" class="Bouton" onclick="return testConnexion()" />
