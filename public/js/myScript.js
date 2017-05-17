@@ -1,1 +1,1 @@
-<script>$(".button-collapse").sideNav();</script>
+$(".button-collapse").sideNav();
