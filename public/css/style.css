@@ -1,6 +1,6 @@
 .nav{
   background: rgba(0,143,69,0.9)!important;
 }
-.nav a{
+.nav>li>a{
   color: white!important!;
 }
