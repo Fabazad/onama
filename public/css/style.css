@@ -6,3 +6,8 @@ h1{
   text-shadow: 1px 1px 4px;
   color: rgb(144,119,78);
 }
+h3{
+  text-align: center;
+  color: #008F45;
+  text-shadow: 1px 1px 3px;
+}
