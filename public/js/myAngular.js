@@ -5,7 +5,7 @@
     this.review = {
       firstname: "fabien",
       lastname: "turgut"
-    }
+    };
   });
 
 });
