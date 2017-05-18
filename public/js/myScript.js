@@ -5,5 +5,4 @@ $('.datepicker').pickadate({
   });
 $('#nav-mobile').click(function(){
   $('.button-collapse').sideNav('hide');
-  alert("test");
 });
