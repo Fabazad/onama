@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var user = require("user");
-var favicon = require('serve-favicon');
+var favicon = require('express-favicon');
 
 app.set('port', (process.env.PORT || 5000));
 
