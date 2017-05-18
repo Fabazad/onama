@@ -18,7 +18,7 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
 .get('/connection', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'text/html');
   res.send("hey");
 });
 
