@@ -19,8 +19,8 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
 .get('/connection', function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/html"});
-  res.end("hey");
+  res.setHeader('Content-Type', 'text/plain');
+  res.send(200, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
 
 app.listen(app.get('port'), function() {
