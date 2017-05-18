@@ -5,7 +5,7 @@
       this.connection = {};
       this.getConnection = function(){
         $http.get('/').then(function(data){
-          alert(data);
+          alert(data.toString());
         });
         this.connection = {};
       };
