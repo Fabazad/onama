@@ -19,7 +19,8 @@ app.get('/', function(request, response) {
 })
 .get('/connection', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ name: "hey" }));
+  var objet = {name : "hey"};
+  res.send(JSON.stringify(objet));
 });
 
 app.listen(app.get('port'), function() {

@@ -4,12 +4,9 @@
     app.controller("ConnectionCtrl", ["$http", function($http){
       this.connection = {};
       this.getConnection = function(){
-        alert(this.connection.password);
-
-        $http.get('/connection').then(function(data){
-          alert(JSON.parse(data).name);
+        $http.get('/').then(function(data){
+          alert(data);
         });
-
         this.connection = {};
       };
     }]);
