@@ -30,9 +30,11 @@ a{
 body{
   background-image: url("../img/Fondecran.jpg");
 }
+#home{
+  padding-top: 1px;
+}
 #home, #article, #inscription{
   background-color: white;
-  padding-bottom: 20px;
 }
 .row{
   margin-bottom: 25px;
@@ -49,4 +51,5 @@ body{
 }
 .page{
   padding-top:80px;
+  padding-bottom:80px;
 }
