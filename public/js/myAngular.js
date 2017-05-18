@@ -11,8 +11,8 @@
 
     app.controller("ConnectionCtrl", function(){
       this.connection = {};
-      this.getConnection = function(connexion){
-        alert(connexion.password);
+      this.getConnection = function(connection){
+        alert(connection.password);
         this.connection = {};
       };
     });
