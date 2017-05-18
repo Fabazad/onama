@@ -9,15 +9,15 @@
       lastname: "turgut",
     }
 
-    app.controller("ConnectionCtrl", function(){
-      /*this.connection = {
+    /*app.controller("ConnectionCtrl", function(){
+      this.connection = {
         mailadress: "fabazad@live.fr",
         password: "K2vm@0r67",
       };
       this.getConnection = function(connection){
         this.connection = {};
-      };*/
+      };
 
-    });
+    });*/
 
 })();
