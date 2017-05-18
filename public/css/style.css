@@ -53,3 +53,6 @@ body{
   padding-top:80px;
   padding-bottom:80px;
 }
+.ng-invalid.ng-dirty{
+  background-color: red;
+}
