@@ -19,7 +19,7 @@ app.get('/', function(request, response) {
 })
 .get('/connection', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ name: "hey" }));
+  res.send({ name: "hey" });
 });
 
 app.listen(app.get('port'), function() {
