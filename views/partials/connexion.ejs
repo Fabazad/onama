@@ -2,8 +2,8 @@
   <div class="container onBackground">
     <h3>Connexion</h3>
     <form method="post" ng-submit="ConnectionCtrl.getConnection(connection)" name="Connection" novalidate>
-      <input type="email" name="AdresseMailC" value="{{connecction.mailadress}}" placeholder=" Adresse Mail" ng-model="connection.mailadress" required />
-      <input type="password" name="MotDePasseC" value="{{connecction.password}}" placeholder=" Mot de Passe" ng-model="connection.password" required/>
+      <input type="email" name="AdresseMailC" value="{{connection.mailadress}}" placeholder=" Adresse Mail" ng-model="connection.mailadress" required />
+      <input type="password" name="MotDePasseC" value="{{connection.password}}" placeholder=" Mot de Passe" ng-model="connection.password" required/>
       <input id="ResterConnecte" type="checkbox" name="ResterConnecte" /><label style="float:left" for="ResterConnecte">Rester connecté </label>
       <a style="float:right" href="MotDePasseOublie.php">Mot de pass oublié ?</a><br>
       <input class="waves-effect waves-light btn" type="submit" name="NomForm" value="Connexion" class="Bouton" />
