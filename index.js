@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var user = require("modules/user.js");
+//var user = require("modules/user.js");
 //var favicon = require('serve-favicon');
 
 app.set('port', (process.env.PORT || 5000));
@@ -19,8 +19,8 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
 .get('/connection', function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/html"});
-  res.end(user.lire());
+  /*res.writeHead(200, {"Content-Type": "text/html"});
+  res.end(user.lire());*/
 });
 
 app.listen(app.get('port'), function() {
