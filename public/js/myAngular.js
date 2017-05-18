@@ -6,7 +6,7 @@
       this.getConnection = function(){
         alert(this.connection.password);
 
-        $http.put('/connection', { param: this.connection }).success(function(data){
+        $http.get('/connection').success(function(data){
           alert(data);
         });
 
