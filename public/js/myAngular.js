@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('app', []);
 
-    app.controller("ConnectionCtrl", function(){
+    app.controller("ConnectionCtrl", ["$http", function($http){
       this.connection = {};
       this.getConnection = function(){
         alert(this.connection.password);
@@ -12,7 +12,7 @@
 
         this.connection = {};
       };
-    });
+    }]);
 
     app.controller("InscriptionCtrl", function(){
       this.inscription = {};
