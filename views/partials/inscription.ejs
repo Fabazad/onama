@@ -3,10 +3,10 @@
     <h1>Inscription</h1>
     <form method="post" name="inscription" action="compte-cible.php" novalidate>
       <label class="form_col" for="homme" style="float:left">Sexe :</label><br>
-			<p><input name="sexe" type="radio" value="Homme" id="homme" ng-model="inscription.sexe" required/><label for="homme">Homme</label></p>
-			<p><input name="sexe" type="radio" value="femme" id="femme" ng-model="inscription.sexe" required/><label for="femme">Femme</label></p>
+			<p><input name="sexe" type="radio" value="Homme" id="homme"/><label for="homme">Homme</label></p>
+			<p><input name="sexe" type="radio" value="femme" id="femme"/><label for="femme">Femme</label></p>
       <div class="input-field">
-        <input id="lastname" name="lastname" type="text" ng-model="inscription.lastname" required/>
+        <input id="lastname" name="lastname" type="text" required/>
         <label for="lastname">Nom</label>
       </div>
       <div class="input-field">
