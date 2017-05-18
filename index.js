@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var user = require("modules/user.js");
+var user = require("modules/user");
 //var favicon = require('serve-favicon');
 
 app.set('port', (process.env.PORT || 5000));
