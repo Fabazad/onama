@@ -6,7 +6,9 @@
       <input type="password" name="MotDePasseC" placeholder=" Mot de Passe" ng-model="connectionCtrl.connection.password" required/>
       <input id="ResterConnecte" type="checkbox" name="ResterConnecte" /><label style="float:left" for="ResterConnecte">Rester connecté </label>
       <a style="float:right" href="MotDePasseOublie.php">Mot de pass oublié ?</a><br>
-      <input class="waves-effect waves-light btn" type="submit" name="NomForm" value="Connexion" class="Bouton"/>
+      <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
+        <i class="material-icons right">send</i>
+      </button>
     </form>
     <p>{{Connection.$valid}} and {{connectionCtrl.connection.mailadress}} and {{connectionCtrl.connection.password}}<p>
   </div>
