@@ -1,7 +1,7 @@
 <div class="page" id="inscription">
   <div class="container">
     <h1>Inscription</h1>
-    <form method="post" name="inscription" action="compte-cible.php" novalidate>
+    <form method="post" name="Inscription" action="compte-cible.php" novalidate>
       <label class="form_col" for="homme" style="float:left">Sexe :</label><br>
 			<p><input name="sexe" type="radio" value="Homme" id="homme"/><label for="homme">Homme</label></p>
 			<p><input name="sexe" type="radio" value="femme" id="femme"/><label for="femme">Femme</label></p>
@@ -10,7 +10,7 @@
         <label for="lastname">Nom</label>
       </div>
       <div class="input-field">
-        <input id="firstname" name="firstname" type="text" ng-model="firstname" required/>
+        <input id="firstname" name="firstname" type="text" ng-model="inscription.firstname" required/>
         <label for="firstname">Prénom</label>
       </div>
       <div class="input-field">
@@ -31,6 +31,6 @@
       </div>
       <input class="waves-effect waves-light btn" type="submit" name="form" value="Inscription"/>
     </form>
-    <p></p>
+    <p>{{Inscription.$valid}} and {{inscription.password == inscription.passwordbis}}</p>
   </div>
 </div>
