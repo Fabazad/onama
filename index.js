@@ -18,8 +18,8 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
 .get('/connection', function (req, res) {
-  var objet = {name: "hello"};
-  res.send(objet);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ name: "hey" }));
 });
 
 app.listen(app.get('port'), function() {
