@@ -12,7 +12,7 @@
     app.controller("ConnectionCtrl", function(){
       this.connection = {};
       this.getConnection = function(){
-        alert(connection.password);
+        alert(this.connection.password);
         this.connection = {};
       };
     });
