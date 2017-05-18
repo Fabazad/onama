@@ -20,7 +20,7 @@
     app.controller("InscriptionCtrl", function(){
       this.inscription = {};
       this.getInscription = function(inscription){
-        alert(inscription.password);
+        alert(this.inscription.password);
         this.inscription = {};
       };
     });
