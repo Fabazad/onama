@@ -10,14 +10,14 @@
     }
 
     app.controller("ConnectionCtrl", function(){
-      this.connection = {
+      /*this.connection = {
         mailadress: "fabazad@live.fr",
         password: "K2vm@0r67",
       };
       this.getConnection = function(connection){
         this.connection = {};
         alert("test");
-      };
+      };*/
     });
 
     app.controller("InscriptionCtrl", function(){
