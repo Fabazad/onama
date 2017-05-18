@@ -14,7 +14,7 @@
         mailadress: "fabazad@live.fr",
         password: "K2vm@0r67",
       };
-      this.connection(connection){
+      this.getConnection = function(connection){
         this.connection = {};
       };
 
