@@ -16,6 +16,7 @@
       };
       this.getConnection = function(connection){
         this.connection = {};
+        alert("test");
       };
     });
 
