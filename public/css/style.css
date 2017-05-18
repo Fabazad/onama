@@ -54,5 +54,6 @@ body{
   padding-bottom:80px;
 }
 .ng-invalid.ng-dirty{
-  background-color: red;
+  border-bottom: red;
+  box-shadow: red; 
 }
