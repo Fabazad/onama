@@ -7,7 +7,7 @@
         alert(this.connection.password);
 
         $http.get('/connection').then(function(data){
-          alert(data);
+          alert(data +" hey");
         });
 
         this.connection = {};
