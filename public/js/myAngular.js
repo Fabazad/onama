@@ -1,5 +1,5 @@
 (function() {
-  var app = angular.module('users', []);
+  var app = angular.module('app', []);
 
   app.controller('ReviewController', function(){
     this.review = {
