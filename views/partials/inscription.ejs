@@ -14,7 +14,7 @@
         <label for="firstname">Prénom</label>
       </div>
       <div class="input-field">
-        <input id="mailadress" name="mailadress" type="email" ng-model="inscription.mailadress" required/>
+        <input  name="mailadress" type="email" ng-model="inscription.mailadress" required/>
         <label for="mailadress">Adresse mail</label>
       </div>
       <div class="input-field">
@@ -31,6 +31,6 @@
       </div>
       <input class="waves-effect waves-light btn" type="submit" name="form" value="Inscription"/>
     </form>
-    <p>{{Inscription.$valid}} and {{inscription.password == inscription.passwordbis}}</p>
+    <p>{{Inscription.$valid}} and {{inscription.password == inscription.passwordbis}} and {{inscription.mailadress}}</p>
   </div>
 </div>
