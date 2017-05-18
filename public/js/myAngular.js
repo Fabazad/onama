@@ -1,11 +1,11 @@
 (function() {
   var app = angular.module('app', []);
 
-  app.controller('UserCtrl', function(){
-    this.user = user;
+  app.controller('UserController', function(){
+    this.user = user1;
   });
-    var user = {
+    var user1 = {
       firstname: "fabien",
-      lastname: "turgut"
-    };
+      lastname: "turgut",
+    }
 })();
