@@ -46,6 +46,9 @@ body{
 .btn:hover, .btn-large:hover{
   background-color: rgb(124,99,58);
 }
+.btn:focus, .btn-large:focus{
+  background-color: rgb(124,99,58);
+}
 .container{
   text-align: center;
 }
