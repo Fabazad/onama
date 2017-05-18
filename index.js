@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var user = require("user");
-var favicon = require('express-favicon');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -19,8 +18,8 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
 .get('/connection', function (req, res) {
-  res.setHeader('Content-Type', 'text/plain');
-  res.send(200, 'Page introuvable ! Sûrement une mauvaise Url ;)');
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ name: "hey" }));
 });
 
 app.listen(app.get('port'), function() {
@@ -32,5 +31,3 @@ app.use(function(req, res, next){
     res.setHeader('Content-Type', 'text/plain');
     res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
 });
-
-app.use(favicon(__dirname + '/public/img/TeteCerf.png'));
