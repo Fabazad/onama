@@ -17,10 +17,10 @@ app.get('/', function(request, response) {
   res.writeHead(200, {"Content-Type": "text/html"});
   res.end('<p>test reussi ' + req.param('id') + '</p>');
 })
-.get('/connection', function (req, res) {
+.get('/connection/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   var objet = {name : "hey"};
-  res.send(JSON.stringify(objet));
+  res.send({name : "hey"});
 });
 
 app.listen(app.get('port'), function() {
