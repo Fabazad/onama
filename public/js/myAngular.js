@@ -12,13 +12,17 @@
     app.controller("ConnectionCtrl", function(){
       this.connection = {};
       this.getConnection = function(connexion){
-        this.connection = {};
         alert(connexion.password);
+        this.connection = {};
       };
     });
 
     app.controller("InscriptionCtrl", function(){
-
+      this.inscription = {};
+      this.getInscription = function(inscription){
+        alert(inscription.password);
+        this.inscription = {};
+      };
     });
 
     app.controller("HomeCtrl", function(){
