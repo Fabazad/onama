@@ -2,7 +2,7 @@
   <div class="container onBackground">
     <h3>Connexion</h3>
     <form ng-submit="Connection.$valid && connectionCtrl.getConnection()" name="Connection" novalidate>
-      <input type="text" name="mailadress" placeholder="Adresse Mail" ng-model="connectionCtrl.connection.mailadress" required/>
+      <input type="email" name="mailadress" placeholder="Adresse Mail" ng-model="connectionCtrl.connection.mailadress" required/>
       <input type="password" name="MotDePasseC" placeholder=" Mot de Passe" ng-model="connectionCtrl.connection.password" required/>
       <input id="ResterConnecte" type="checkbox" name="ResterConnecte" ng-model="connectionCtrl.connection.stayconnected"/><label style="float:left" for="ResterConnecte">Rester connecté </label>
       <a style="float:right" href="MotDePasseOublie.php">Mot de pass oublié ?</a><br>
