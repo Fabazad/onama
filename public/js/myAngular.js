@@ -3,7 +3,8 @@
 
     app.controller("ConnectionCtrl", ["$http", function($http){
       this.connection = {};
-      this.connection.mailadresss = "Mon email";
+      this.connection.mailadresss = "Mon email"
+      this.connection.password = "Mon MotDePasse";
       this.getConnection = function(){
         $http.get('/connection/').then(function(data){
           alert(data.data);
