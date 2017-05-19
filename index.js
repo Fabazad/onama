@@ -1,11 +1,13 @@
 var express = require('express');
 var app = express();
 var user = require("user");
+var bodyParser = require("body-parser");
 
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(bodyParser.urlencoded({ extended: true }));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -15,11 +17,12 @@ app.get('/', function(request, response) {
 })
 .get('/user', function (req, res) {
   res.writeHead(200, {"Content-Type": "text/html"});
-  res.end('<p>test reussi ' + req.param('id') + '</p>');
+  console.log(req);
+  res.end('<p>test reussi ' + req.query.id + '</p>');
 })
-.get('/connection/', function (req, res) {
-  var objet = {name : "hey"};
-  res.send('hey' + user.lire());
+.post('/connection', function (req, res) {
+  console.log(req.body);
+  user.connection(req,res);
 });
 
 app.listen(app.get('port'), function() {
