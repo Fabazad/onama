@@ -19,7 +19,7 @@ app.get('/', function(request, response) {
 })
 .get('/connection/', function (req, res) {
   var objet = {name : "hey"};
-  res.send(user.lire());
+  res.send('hey' + user.lire());
 });
 
 app.listen(app.get('port'), function() {
