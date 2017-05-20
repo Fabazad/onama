@@ -35,7 +35,6 @@ app.get('/', function(request, response) {
 })
 
 .post('/connectionCookie', function (req, res, next) {
-  console.log(req.body.codecookie);
   user.connectionCookie(req, res, next);
 })
 .post('/inscription', function (req, res, next) {

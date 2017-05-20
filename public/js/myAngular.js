@@ -42,11 +42,9 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
   this.inscription = {};
   var userCtrl = this;
 
-  var codecookie = {codecookie : $cookies.get('codecookie')};
-  alert(codecookie.codecookie)
-  if($cookies.get('codecookie')){
-    //var codecookie = {codecookie : "t7n17g20f"} ;
-    $http.post('/connectionCookie', codecookie)
+  var cookie = {cookiecode : $cookies.get('cookiecode')};
+  if(cookie.cookiecode){
+    $http.post('/connectionCookie', cookie)
     .then(function(response){
       if("error" in response.data){
         alert(response.data.error);
@@ -67,7 +65,7 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
     delete this.user;
     this.connection = {};
     this.inscription = {};
-    $cookies.remove("codecookie");
+    $cookies.remove("cookiecode");
   }
 
   this.getConnection = function(){
@@ -80,12 +78,12 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
         if(response.data.stayconnected){
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDay() - 7);
-          $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate} );
+          $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
         }
         else {
           var expireDate = new Date();
           expireDate.setMinutes(expireDate.getMinutes() + 20);
-          $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate} );
+          $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
         }
       }
       this.connection = {};
@@ -102,7 +100,7 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
         userCtrl.user = response.data;
         var expireDate = new Date();
         expireDate.setMinutes(expireDate.getMinutes() + 20);
-        $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate });
+        $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate });
       }
       this.inscription = {};
     });
