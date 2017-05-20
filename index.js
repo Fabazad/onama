@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express();
-var user = require("user");
 var bodyParser = require("body-parser");
+var user = require("user");
+
+
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -21,8 +23,13 @@ app.get('/', function(request, response) {
   res.end('<p>test reussi ' + req.query.id + '</p>');
 })
 .post('/connection', function (req, res) {
-  console.log(req.body);
   user.connection(req,res);
+})
+.post('/inscription', function (req, res, next) {
+  user.verifInscription(req,res,next);
+}
+,function(req,res,next){
+  user.inscription(req,res);
 });
 
 app.listen(app.get('port'), function() {

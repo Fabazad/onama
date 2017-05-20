@@ -1,6 +1,5 @@
 (function() {
   //var app = angular.module('app', []);
-  var httpfunction =
   var app = angular.module('app', [], function($httpProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     var param = function(obj) {
@@ -35,32 +34,38 @@
     }];
   });
 
-
-
-
-    app.controller("ConnectionCtrl", ["$http", function($http){
+  app.controller("ConnectionCtrl", ["$http", function($http){
+    this.connection = {};
+    this.getConnection = function(){
+      $http.post('/connection', this.connection).then(function(response){
+        if("error" in response.data){
+          alert(response.data.error);
+        }
+        else {
+          alert("Connecté !");
+        }
+      });
       this.connection = {};
-      this.connection.mailadress = "Mon email"
-      this.connection.password = "Mon MotDePasse";
-      this.getConnection = function(){
-        alert(this.connection.password);
-        $http.post('/connection', this.connection).then(function(response){
-          alert(response.data.name);
-        });
-        this.connection = {};
-      };
-    }]);
+    };
+  }]);
 
-    app.controller("InscriptionCtrl", function(){
+  app.controller("InscriptionCtrl", ["$http", function($http){
+    this.inscription = {};
+    this.getInscription = function(inscription){
+      $http.post('/inscription', this.inscription).then(function(response){
+        if("error" in response.data){
+          alert(response.data.error);
+        }
+        else {
+          alert("Inscris !");
+        }
+      });
       this.inscription = {};
-      this.getInscription = function(inscription){
-        alert(this.inscription.password);
-        this.inscription = {};
-      };
-    });
+    };
+  }]);
 
-    app.controller("HomeCtrl", function(){
+  app.controller("HomeCtrl", function(){
 
-    });
+  });
 
 })();
