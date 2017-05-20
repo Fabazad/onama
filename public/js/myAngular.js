@@ -41,8 +41,8 @@
     this.connection = {};
     this.inscription = {};
     var userCtrl = this;
-
     var cookie = {cookiecode : $cookies.get('cookiecode')};
+
     if(cookie.cookiecode){
       this.chargement = true;
       $http.post('/connectionCookie', cookie)
@@ -53,7 +53,7 @@
         else {
           userCtrl.user = response.data;
         }
-        this.chargement = false;
+        userCtrl.chargement = false;
       });
     }
 
@@ -87,8 +87,8 @@
             $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
           }
         }
-        this.chargement = false;
-        this.connection = {};
+        userCtrl.chargement = false;
+        userCtrl.connection = {};
       });
     };
 
@@ -105,10 +105,12 @@
           expireDate.setMinutes(expireDate.getMinutes() + 20);
           $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate });
         }
-        this.chargement = false;
-        this.inscription = {};
+        userCtrl.chargement = false;
+        userCtrl.inscription = {};
       });
     };
+
   }]);
+
 
 })();
