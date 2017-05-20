@@ -38,14 +38,17 @@
 /*Controllers*/
 
 app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
-  if($cookies.get('codecookie')){
-    alert("true")
-  }
-  else {
-    alert("false");
-  }
   this.connection = {};
   this.inscription = {};
+  if($cookies.get('codecookie')){
+    $http.post('/connectionCookie', {codecookie : $cookies.get('codecookie')})
+    .then(function(response){
+      /*if("error" in response.data){
+        alert(response.data.error);
+      }*/
+    });
+  }
+
   var userCtrl = this;
 
   this.connected = function(){
@@ -60,7 +63,7 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
   }
 
   this.getConnection = function(){
-      $http.post('/connection', this.connection).then(function(response){
+    $http.post('/connection', this.connection).then(function(response){
       if("error" in response.data){
         alert(response.data.error);
       }

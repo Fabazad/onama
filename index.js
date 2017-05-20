@@ -34,17 +34,16 @@ app.get('/', function(request, response) {
   user.connection(req, res, next);
 })
 
+.post('/connectionCookie', function (req, res, next) {
+  console.log(req.body);
+  //user.verifConnection(req, res, next);
+})
 .post('/inscription', function (req, res, next) {
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
   user.inscription(req,res);
 })
-
-.get("/partials", function(req, res) {
-  console.log("test");
-    //response.render('partials/' + req.params.pageName);
-});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
