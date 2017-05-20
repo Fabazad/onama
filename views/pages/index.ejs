@@ -14,28 +14,34 @@
   </head>
 
 	<body class="uk-background-fixed uk-background-cover" ng-controller="UserCtrl as userCtrl">
-    <% include ../partials/nav.ejs %>
-    <% include ../partials/accueil.ejs %>
-    <% include ../partials/connexion.ejs %>
-    <% include ../partials/inscription.ejs %>
-    <div class="page">
-      <div class="container onBackground">
-    		<article >
-          <a class="waves-effect waves-light btn" ng-click="userCtrl.test()">button</a>
-    			<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
-    			Grâce à une interface simple est rapide vous pouvez modifier ou vous rendre compte des aliments présents dans votre frigot, vos placards, votre réfrigérateur,...</p>
-    			<p>Mais Onama va encore plus loin en proposant des <strong>recettes adaptées</strong> à ce que vous possédez mais vous permet aussi de choisir en fonction de la popularité, l'origine, le temps, la difficulté, le prix et de différentes valeurs nutritives telle que les calories ou la vitamine D.</p>
-    		</article>
-        <p>test : {{userCtrl.user.lastname}}</p>
-      </div>
+    <div id="chargement" ng-show="chargement">
+      <img src="img/loader.gif"/>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.22/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.22/js/uikit-icons.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
-    <script src="js/myAngular.js"></script>
-    <script src="js/myScript.js"></script>
+      <% include ../partials/nav.ejs %>
+      <% include ../partials/accueil.ejs %>
+      <% include ../partials/connexion.ejs %>
+      <% include ../partials/inscription.ejs %>
+      <div class="page">
+        <div class="container onBackground">
+      		<article >
+            <a class="waves-effect waves-light btn" ng-click="userCtrl.test()">button</a>
+      			<p>Onama est un site web qui propose une <strong>gestion facilitée des aliments</strong> que vous possédez dans votre cuisine.</br>
+      			Grâce à une interface simple est rapide vous pouvez modifier ou vous rendre compte des aliments présents dans votre frigot, vos placards, votre réfrigérateur,...</p>
+      			<p>Mais Onama va encore plus loin en proposant des <strong>recettes adaptées</strong> à ce que vous possédez mais vous permet aussi de choisir en fonction de la popularité, l'origine, le temps, la difficulté, le prix et de différentes valeurs nutritives telle que les calories ou la vitamine D.</p>
+      		</article>
+          <p>test : {{userCtrl.user.lastname}}</p>
+        </div>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.22/js/uikit.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.22/js/uikit-icons.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
+      <script src="js/myAngular.js"></script>
+      <script src="js/myScript.js"></script>
+      <script>
+
+      </script>
     </body>
 </html>

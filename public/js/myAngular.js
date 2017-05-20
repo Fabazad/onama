@@ -44,6 +44,7 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
 
   var cookie = {cookiecode : $cookies.get('cookiecode')};
   if(cookie.cookiecode){
+    this.chargement = true;
     $http.post('/connectionCookie', cookie)
     .then(function(response){
       if("error" in response.data){
@@ -52,10 +53,9 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
       else {
         userCtrl.user = response.data;
       }
+      this.chargement = false;
     });
   }
-
-
 
   this.connected = function(){
     return("user" in this);
