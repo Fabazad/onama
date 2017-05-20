@@ -1,32 +1,32 @@
 <div class="page" id="inscription" ng-hide="userCtrl.connected()">
   <div class="container">
     <h1>Inscription</h1>
-    <form name="Inscription" ng-submit="Inscription.$valid && UserCtrl.inscription.password == inscriptionCtrl.inscription.passwordbis && inscriptionCtrl.getInscription(inscription)" novalidate>
+    <form name="Inscription" ng-submit="Inscription.$valid && userCtrl.inscription.password == userCtrl.inscription.passwordbis && userCtrl.getInscription(inscription)" novalidate>
       <label class="form_col" for="homme" style="float:left">Sexe :</label><br>
-			<p><input name="sexe" type="radio" value="homme" id="homme" ng-model="UserCtrl.inscription.sexe"/><label for="homme">Homme</label></p>
-			<p><input name="sexe" type="radio" value="femme" id="femme" ng-model="UserCtrl.inscription.sexe"/><label for="femme">Femme</label></p>
+			<p><input name="sexe" type="radio" value="homme" id="homme" ng-model="userCtrl.inscription.sexe"/><label for="homme">Homme</label></p>
+			<p><input name="sexe" type="radio" value="femme" id="femme" ng-model="userCtrl.inscription.sexe"/><label for="femme">Femme</label></p>
       <div class="input-field">
-        <input id="lastname" name="lastname" type="text" ng-model="UserCtrl.inscription.lastname" required/>
+        <input id="lastname" name="lastname" type="text" ng-model="userCtrl.inscription.lastname" required/>
         <label for="lastname">Nom</label>
       </div>
       <div class="input-field">
-        <input id="firstname" name="firstname" type="text" ng-model="UserCtrl.inscription.firstname" required/>
+        <input id="firstname" name="firstname" type="text" ng-model="userCtrl.inscription.firstname" required/>
         <label for="firstname">Prénom</label>
       </div>
       <div class="input-field">
-        <input  name="mailadress" type="text" ng-model="UserCtrl.inscription.mailadress" required/>
+        <input  name="mailadress" type="text" ng-model="userCtrl.inscription.mailadress" required/>
         <label for="mailadress">Adresse mail</label>
       </div>
       <div class="input-field">
         <label for="birthdate">Date de naissance</label>
-        <input type="date" id="birthdate" name="birthdate" class="datepicker" ng-model="UserCtrl.inscription.birthdate" required/>
+        <input type="date" id="birthdate" name="birthdate" class="datepicker" ng-model="userCtrl.inscription.birthdate" required/>
       </div>
       <div class="input-field">
-        <input id="password" name="password" type="password" ng-model="UserCtrl.inscription.password" required/>
+        <input id="password" name="password" type="password" ng-model="userCtrl.inscription.password" required/>
         <label for="password">Mot de passe</label>
       </div>
       <div class="input-field">
-        <input id="passwordbis" name="passwordbis" type="password" ng-model="UserCtrl.inscription.passwordbis" required/>
+        <input id="passwordbis" name="passwordbis" type="password" ng-model="userCtrl.inscription.passwordbis" required/>
         <label for="passwordbis">Mot de passe</label>
       </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Inscription

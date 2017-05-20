@@ -17,19 +17,33 @@ app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
   response.render('pages/index');
 })
+
 .get('/user', function (req, res) {
   res.writeHead(200, {"Content-Type": "text/html"});
   console.log(req);
   res.end('<p>test reussi ' + req.query.id + '</p>');
 })
-.post('/connection', function (req, res) {
-  user.connection(req,res);
+
+.post('/connection', function (req, res, next) {
+  user.verifConnection(req, res, next);
+}
+,function(req, res, next){
+  user.addStayConnected(req,res,next);
+}
+, function(req, res, next){
+  user.connection(req, res, next);
 })
+
 .post('/inscription', function (req, res, next) {
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
   user.inscription(req,res);
+})
+
+.get("/partials", function(req, res) {
+  console.log("test");
+    //response.render('partials/' + req.params.pageName);
 });
 
 app.listen(app.get('port'), function() {

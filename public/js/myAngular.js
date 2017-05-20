@@ -1,6 +1,6 @@
 (function() {
   //var app = angular.module('app', []);
-  var app = angular.module('app', [], function($httpProvider) {
+  var app = angular.module('app', ['ngCookies'], function($httpProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     var param = function(obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
@@ -37,7 +37,13 @@
 
 /*Controllers*/
 
-app.controller("UserCtrl", ["$http", function($http){
+app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
+  if($cookies.get('codecookie')){
+    alert("true")
+  }
+  else {
+    alert("false");
+  }
   this.connection = {};
   this.inscription = {};
   var userCtrl = this;
@@ -50,6 +56,7 @@ app.controller("UserCtrl", ["$http", function($http){
     delete this.user;
     this.connection = {};
     this.inscription = {};
+    $cookies.remove("codecookie");
   }
 
   this.getConnection = function(){
@@ -59,6 +66,17 @@ app.controller("UserCtrl", ["$http", function($http){
       }
       else {
         userCtrl.user = response.data;
+        if(response.data.stayconnected){
+          var expireDate = new Date();
+          expireDate.setDate(expireDate.getDay() - 7);
+          alert(expireDate);
+          $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate} );
+        }
+        else {
+          var expireDate = new Date();
+          expireDate.setMinutes(expireDate.getMinutes() + 20);
+          $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate} );
+        }
       }
       this.connection = {};
     });
@@ -72,6 +90,9 @@ app.controller("UserCtrl", ["$http", function($http){
       }
       else {
         userCtrl.user = response.data;
+        var expireDate = new Date();
+        expireDate.setMinutes(expireDate.getMinutes() + 20);
+        $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate });
       }
       this.inscription = {};
     });
@@ -79,11 +100,11 @@ app.controller("UserCtrl", ["$http", function($http){
 }]);
 
 
-/*app.directive('nav-onama', function(){
+app.directive('nav-onama', function(){
   return {
     restrict: 'E',
-    templateUrl: 'partials/nav-onama.html'
-  };*/
+    templateUrl: 'http://localhost:5000/partials'
+  };
 });
 
 })();
