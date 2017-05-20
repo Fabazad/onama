@@ -34,38 +34,56 @@
     }];
   });
 
-  app.controller("ConnectionCtrl", ["$http", function($http){
+
+/*Controllers*/
+
+app.controller("UserCtrl", ["$http", function($http){
+  this.connection = {};
+  this.inscription = {};
+  var userCtrl = this;
+
+  this.connected = function(){
+    return("user" in this);
+  }
+
+  this.deconnection = function(){
+    delete this.user;
     this.connection = {};
-    this.getConnection = function(){
-      $http.post('/connection', this.connection).then(function(response){
-        if("error" in response.data){
-          alert(response.data.error);
-        }
-        else {
-          alert("Connecté !");
-        }
-      });
-      this.connection = {};
-    };
-  }]);
-
-  app.controller("InscriptionCtrl", ["$http", function($http){
     this.inscription = {};
-    this.getInscription = function(inscription){
-      $http.post('/inscription', this.inscription).then(function(response){
-        if("error" in response.data){
-          alert(response.data.error);
-        }
-        else {
-          alert("Inscris !");
-        }
-      });
+  }
+
+  this.getConnection = function(){
+      $http.post('/connection', this.connection).then(function(response){
+      if("error" in response.data){
+        alert(response.data.error);
+      }
+      else {
+        userCtrl.user = response.data;
+      }
+      this.connection = {};
+    });
+  };
+
+
+  this.getInscription = function(inscription){
+    $http.post('/inscription', this.inscription).then(function(response){
+      if("error" in response.data){
+        alert(response.data.error);
+      }
+      else {
+        userCtrl.user = response.data;
+      }
       this.inscription = {};
-    };
-  }]);
+    });
+  };
+}]);
 
-  app.controller("HomeCtrl", function(){
 
-  });
+/*app.directive('nav-onama', function(){
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/nav-onama.html'
+  };*/
+});
 
 })();
