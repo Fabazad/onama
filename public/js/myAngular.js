@@ -40,16 +40,22 @@
 app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
   this.connection = {};
   this.inscription = {};
+  var userCtrl = this;
+
   if($cookies.get('codecookie')){
-    $http.post('/connectionCookie', {codecookie : $cookies.get('codecookie')})
+    var codecookie = {codecookie : "t7n17g20f"} ;
+    $http.post('/connectionCookie', codecookie)
     .then(function(response){
-      /*if("error" in response.data){
+      if("error" in response.data){
         alert(response.data.error);
-      }*/
+      }
+      else {
+        userCtrl.user = response.data;
+      }
     });
   }
 
-  var userCtrl = this;
+
 
   this.connected = function(){
     return("user" in this);
@@ -72,7 +78,6 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
         if(response.data.stayconnected){
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDay() - 7);
-          alert(expireDate);
           $cookies.put('codecookie', response.data.cookiecode, {"expires" : expireDate} );
         }
         else {
