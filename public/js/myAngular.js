@@ -42,8 +42,10 @@ app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
   this.inscription = {};
   var userCtrl = this;
 
+  var codecookie = {codecookie : $cookies.get('codecookie')};
+  alert(codecookie.codecookie)
   if($cookies.get('codecookie')){
-    var codecookie = {codecookie : "t7n17g20f"} ;
+    //var codecookie = {codecookie : "t7n17g20f"} ;
     $http.post('/connectionCookie', codecookie)
     .then(function(response){
       if("error" in response.data){
