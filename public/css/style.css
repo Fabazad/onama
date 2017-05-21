@@ -28,7 +28,7 @@ a{
   padding: 50px;
 }
 body{
-  background-image: url("../img/Fondecran.jpg");
+  /*background-image: url("../img/Fondecran.jpg");*/
 }
 #home{
   padding-top: 1px;
@@ -69,11 +69,38 @@ body{
   background-color: rgba(255,255,255,0.8);
   z-index: 998;
 }
-#chargement>img{
-  top: 40%;
-  left: 40%;
+#chargement>div{
+  top: 45%;
+  left: 45%;
   position: fixed;
   margin: auto;
   z-index: 999;
-  height: 20%;
+}
+.page-footer{
+  background: rgb(0,143,69);
+}
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid rgb(0,143,69);
+    box-shadow: 0 1px 0 0 rgb(0,143,69);
+}
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: rgb(0,143,69);
+}
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+    border: 2px solid rgb(0,143,69);
+}
+.picker__date-display {
+    background-color: rgb(0,143,69);
+  }
+  .picker__weekday-display {
+    background-color: rgb(144,119,78);
+  }
+  .picker__close, .picker__today {
+      color: rgb(144,119,78);
+  }
+  .picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+    background-color: rgb(0,143,69);
+}
+.toast{
+  background-color: rgba(144,119,78,1);
 }

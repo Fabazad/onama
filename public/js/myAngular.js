@@ -40,6 +40,7 @@
   app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
     this.connection = {};
     this.inscription = {};
+    this.editPassword = {};
     var userCtrl = this;
     var cookie = {cookiecode : $cookies.get('cookiecode')};
 
@@ -47,13 +48,14 @@
       this.chargement = true;
       $http.post('/connectionCookie', cookie)
       .then(function(response){
+        userCtrl.chargement = false;
         if("error" in response.data){
           alert(response.data.error);
         }
         else {
           userCtrl.user = response.data;
+          Materialize.toast("Connecté.", 10000);
         }
-        userCtrl.chargement = false;
       });
     }
 
@@ -66,13 +68,16 @@
       this.connection = {};
       this.inscription = {};
       $cookies.remove("cookiecode");
+      Materialize.toast("Déconnecté.", 3000);
     }
 
     this.getConnection = function(){
       this.chargement = true;
       $http.post('/connection', this.connection).then(function(response){
+        userCtrl.chargement = false;
+        userCtrl.connection = {};
         if("error" in response.data){
-          alert(response.data.error);
+          Materialize.toast(response.data.error, 3000);
         }
         else {
           userCtrl.user = response.data;
@@ -80,36 +85,51 @@
             var expireDate = new Date();
             expireDate.setDate(expireDate.getDay() - 7);
             $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
+            Materialize.toast("Connecté.", 3000);
           }
           else {
             var expireDate = new Date();
             expireDate.setMinutes(expireDate.getMinutes() + 20);
             $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
+            Materialize.toast("Connecté.", 3000);
           }
         }
-        userCtrl.chargement = false;
-        userCtrl.connection = {};
       });
     };
-
 
     this.getInscription = function(inscription){
       this.chargement = true;
       $http.post('/inscription', this.inscription).then(function(response){
+        userCtrl.chargement = false;
+        userCtrl.inscription = {};
         if("error" in response.data){
-          alert(response.data.error);
+          Materialize.toast(response.data.error, 3000);
         }
         else {
           userCtrl.user = response.data;
           var expireDate = new Date();
           expireDate.setMinutes(expireDate.getMinutes() + 20);
           $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate });
+          Materialize.toast("Inscrit.", 3000);
         }
-        userCtrl.chargement = false;
-        userCtrl.inscription = {};
       });
     };
 
+    this.editPassword = function(){
+      this.chargement = true;
+      var params = this.editpassword;
+      params.id_user = this.user.id_user;
+      $http.post('/editPassword', params).then(function(response){
+        userCtrl.chargement = false;
+        userCtrl.editpassword = {};
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else {
+          Materialize.toast("Mot de passe modifié.", 3000);
+        }
+      });
+    };
   }]);
 
 

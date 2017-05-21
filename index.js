@@ -20,7 +20,6 @@ app.get('/', function(request, response) {
 
 .get('/user', function (req, res) {
   res.writeHead(200, {"Content-Type": "text/html"});
-  console.log(req);
   res.end('<p>test reussi ' + req.query.id + '</p>');
 })
 
@@ -37,12 +36,21 @@ app.get('/', function(request, response) {
 .post('/connectionCookie', function (req, res, next) {
   user.connectionCookie(req, res, next);
 })
+
 .post('/inscription', function (req, res, next) {
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
   user.inscription(req,res);
 })
+
+.post("/editPassword", function (req, res, next){
+  console.log(req.body);
+  user.verifPassword(req, res, next);
+}
+, function(req, res, next){
+  user.editPassword(req, res);
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

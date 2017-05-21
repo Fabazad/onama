@@ -13,15 +13,27 @@
     <link rel="icon" type="image/png" href="img/TeteCerf.png" />
   </head>
 
-	<body class="uk-background-fixed uk-background-cover" ng-controller="UserCtrl as userCtrl">
+	<body  ng-controller="UserCtrl as userCtrl">
     <div id="chargement" ng-show="userCtrl.chargement">
-      <img src="img/loader.gif"/>
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
     </div>
       <% include ../partials/nav.ejs %>
       <% include ../partials/accueil.ejs %>
       <% include ../partials/connexion.ejs %>
       <% include ../partials/inscription.ejs %>
-      <div class="page">
+      <% include ../partials/myProfile.ejs %>
+      <div class="page parallax-container">
+        <div class="parallax"><img src="img/Fondecran2.jpg"></div>
         <div class="container onBackground">
       		<article >
             <a class="waves-effect waves-light btn" ng-click="userCtrl.test()">button</a>
@@ -32,6 +44,7 @@
           <p>test : {{userCtrl.user.lastname}}</p>
         </div>
       </div>
+      <% include ../partials/footer.ejs %>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.22/js/uikit.min.js"></script>
