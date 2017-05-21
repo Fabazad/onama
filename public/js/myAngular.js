@@ -54,7 +54,7 @@
         }
         else {
           userCtrl.user = response.data;
-          Materialize.toast("Connecté.", 10000);
+          Materialize.toast("Connecté.", 3000);
         }
       });
     }
