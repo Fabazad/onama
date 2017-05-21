@@ -1,0 +1,130 @@
+<div class="page " id="food" ng-controller="FoodCtrl as foodCtrl">
+  <div class="container onBackground">
+    <div id="chargement" ng-show="foodCtrl.chargement">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Aliments</h3>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">search</i>
+              <input type="text" id="autocomplete-input" class="autocomplete">
+              <label for="autocomplete-input">Chercher aliment</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12">
+        <ul class="pagination">
+           <li class="waves-effect" ng-class="foodCtrl.disableLeft()" ng-click="foodCtrl.previousPage()"><a href=""><i class="material-icons">chevron_left</i></a></li>
+           <li ng-repeat="i in foodCtrl.totalPage" ng-class="foodCtrl.activePage(i)" ng-click="foodCtrl.changePage(i)"><a href="">{{i}}</a></li>
+           <li class="waves-effect" ng-class="foodCtrl.disableRight()" ng-click="foodCtrl.nextPage()"><a href=""><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+      </div>
+
+      <div class="col s6">
+        <ul class="collapsible" data-collapsible="accordion">
+          <li ng-repeat="foodrow in foodCtrl.foodrow1">
+            <div class="collapsible-header">{{foodrow.title_food}}</div>
+              <div class="collapsible-body"><span>
+                <table>
+                  <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Valeur(pour 100g)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Prix</td>
+                      <td>{{foodrow.price}}€/kg</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                      <td>Calories</td>
+                      <td>{{foodrow.calorie}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Lipides</td>
+                      <td>{{foodrow.calorie}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Glucides</td>
+                      <td>{{foodrow.carbohydrates}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Protéines</td>
+                      <td>{{foodrow.proteins}}g</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </span></div>
+            </li>
+        </ul>
+      </div>
+      <div class="col s6">
+        <ul class="collapsible" data-collapsible="accordion">
+          <li ng-repeat="foodrow in foodCtrl.foodrow2">
+            <div class="collapsible-header">{{foodrow.title_food}}</div>
+              <div class="collapsible-body"><span>
+                <table>
+                  <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Valeur(pour 100g)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Prix</td>
+                      <td>{{foodrow.price}}€/kg</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                      <td>Calories</td>
+                      <td>{{foodrow.calorie}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Lipides</td>
+                      <td>{{foodrow.calorie}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Glucides</td>
+                      <td>{{foodrow.carbohydrates}}g</td>
+                    </tr>
+                    <tr>
+                      <td>Protéines</td>
+                      <td>{{foodrow.proteins}}g</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </span></div>
+            </li>
+        </ul>
+      </div>
+
+      <div class="col s12">
+        <ul class="pagination">
+           <li class="waves-effect" ng-class="foodCtrl.disableLeft()" ng-click="foodCtrl.previousPage()"><a href=""><i class="material-icons">chevron_left</i></a></li>
+           <li ng-repeat="i in foodCtrl.totalPage" ng-class="foodCtrl.activePage(i)" ng-click="foodCtrl.changePage(i)"><a href="">{{i}}</a></li>
+           <li class="waves-effect" ng-class="foodCtrl.disableRight()" ng-click="foodCtrl.nextPage()"><a href=""><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

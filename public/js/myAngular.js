@@ -34,7 +34,6 @@
     }];
   });
 
-
 /*Controllers*/
 
   app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
@@ -50,7 +49,7 @@
       .then(function(response){
         userCtrl.chargement = false;
         if("error" in response.data){
-          alert(response.data.error);
+          Materialize.toast(response.data.error, 3000);
         }
         else {
           userCtrl.user = response.data;
@@ -132,5 +131,85 @@
     };
   }]);
 
+
+  app.controller("FoodCtrl",["$http", function($http, $cookies){
+    this.food = {};
+    this.foodrow1 = {};
+    this.foodrow2 = {};
+    this.page = 0;
+    this.totalPage = [];
+    var foodCtrl = this;
+    foodCtrl.chargement = true;
+    $http.get('/getFood')
+    .then(function(response){
+      if("error" in response.data){
+        alert(response.data.error);
+      }
+      else {
+        foodCtrl.food = response.data;
+        for(var i = 0 ; i <= Math.trunc(response.data.length/50); i++){
+          foodCtrl.totalPage.push(i + 1);
+        }
+        foodCtrl.changePage(1);
+        var data = {};
+        foodCtrl.chargement = false;
+
+        var setField = function(element){
+          data[element.title_food] = null;
+        }
+        response.data.forEach(setField);
+
+        $('input.autocomplete').autocomplete({
+          data: data,
+          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+            var index = -1;
+
+            for(var i = 0; i < foodCtrl.food.length; i++){
+              if(foodCtrl.food[i].title_food.replace(/ /g, "").toLowerCase() == val.replace(/ /g, "").toLowerCase()){
+                index = i;
+              }
+            }
+            if(index == -1){
+              Materialize.toast("Erreur.", 3000);
+            }
+            else {
+              //foodCtrl.changePage(Math.trunc(index/50) + 1);
+              Materialize.toast("Page : " + (Math.trunc(index/50) + 1) + " aliment : " + (index%50 + 1), 3000);
+            }
+          },
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+        });
+      }
+    });
+
+    this.changePage = function(numpage){
+      if(numpage > 0 && numpage <= this.totalPage.length){
+        this.page = numpage;
+        this.foodrow1 = this.food.slice((this.page-1)*50, (this.page-1)*50 + 25);
+        this.foodrow2 = this.food.slice((this.page-1)*50+25, (this.page-1)*50 + 50);
+      }
+    }
+
+    this.activePage = function(i){
+      return (i == this.page ? "active" : "");
+    }
+
+    this.previousPage = function(){
+      this.changePage(this.page - 1);
+    }
+    this.nextPage = function(){
+        this.changePage(this.page + 1);
+    }
+
+    this.disableLeft = function(){
+      return(this.page == 1 ? "disabled" :"");
+      alert("test");
+    }
+    this.disableRight = function(){
+      return(this.page == this.totalPage.length ? "disabled" : "");
+    }
+
+  }]);
 
 })();

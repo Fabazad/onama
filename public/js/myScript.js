@@ -11,4 +11,6 @@ $('#nav-mobile').click(function(){
 
 $(document).ready(function(){
   $('.parallax').parallax();
+
+
 });

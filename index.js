@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require("body-parser");
 var user = require("user");
-
+var food = require("food");
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -50,6 +50,11 @@ app.get('/', function(request, response) {
 }
 , function(req, res, next){
   user.editPassword(req, res);
+})
+
+.get("/getFood", function (req, res) {
+  console.log(req.query);
+  food.getFood(req,res);
 });
 
 app.listen(app.get('port'), function() {
