@@ -28,7 +28,7 @@ a{
   padding: 50px;
 }
 body{
-  /*background-image: url("../img/Fondecran.jpg");*/
+  background-image: url("../img/Fondecran.jpg");
 }
 #home{
   padding-top: 1px;
@@ -103,4 +103,8 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 }
 .toast{
   background-color: rgba(144,119,78,1);
+}
+.parallax-container {
+    z-index: 1;
+    height: initial;
 }

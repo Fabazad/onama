@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="img/TeteCerf.png" />
   </head>
 
-	<body  ng-controller="UserCtrl as userCtrl">
+	<body class="uk-background-fixed uk-background-cover" ng-controller="UserCtrl as userCtrl">
     <div id="chargement" ng-show="userCtrl.chargement">
       <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-green-only">
@@ -33,7 +33,7 @@
       <% include ../partials/inscription.ejs %>
       <% include ../partials/myProfile.ejs %>
       <div class="page parallax-container">
-        <div class="parallax"><img src="img/Fondecran2.jpg"></div>
+        <div class="parallax parallax-container"><img src="img/Fondecran2.jpg"></div>
         <div class="container onBackground">
       		<article >
             <a class="waves-effect waves-light btn" ng-click="userCtrl.test()">button</a>
