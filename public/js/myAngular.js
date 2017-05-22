@@ -40,7 +40,6 @@
     this.connection = {};
     this.inscription = {};
     this.editPassword = {};
-    this.user = {};
     this.food = {};
     var userCtrl = this;
 
