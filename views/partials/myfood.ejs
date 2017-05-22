@@ -1,0 +1,44 @@
+<div class="page" id="myfood" ng-controller="FoodCtrl as foodCtrl" ng-show="userCtrl.connected()">
+  <div class="container">
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>{{foodCtrl.modal.title_food}} </h4>
+        <input type="number" min=0 value=0 step=1 max={{foodCtrl.modal.max}}/><span>g</span>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">{{foodCtrl.modal.action}}</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+      </div>
+    </div>
+    <h3>Mes aliments</h3>
+    <table class="bordered">
+        <thead>
+          <tr>
+              <th>Aliment</th>
+              <th>Quantite</th>
+              <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="food in userCtrl.food">
+            <td>{{food.title_food}}</td>
+            <td>{{food.quantity_getfood}}</td>
+            <td>
+              <div class="fixed-action-btn horizontal">
+                <a class="btn-floating btn-large">
+                  <i class="large material-icons">mode_edit</i>
+                </a>
+                <ul>
+                  <li><a ng-click="foodCtrl.setModalAdd(food.id_food)" href="#modal1" class="btn-floating green btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a></li>
+                  <li><a ng-click="foodCtrl.setModalSub(food.id_food, food.quantity_getfood)" href="#modal1" class="btn-floating orange btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a></li>
+                  <li><a ng-click="foodCtrl.setModalNew(food.id_food)" href="#modal1" class="btn-floating yellow btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a></li>
+                  <li><a ng-click="foodCtrl.setModalDel(food.id_food)" class="btn-floating red btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Supprimer"><i class="material-icons">delete</i></a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>

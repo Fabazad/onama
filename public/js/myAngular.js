@@ -40,9 +40,36 @@
     this.connection = {};
     this.inscription = {};
     this.editPassword = {};
+    this.user = {};
+    this.food = {};
     var userCtrl = this;
-    var cookie = {cookiecode : $cookies.get('cookiecode')};
 
+
+    //recuperation des aliments de l'user
+    this.getFood = function(id_user){
+      $http.get('/getMyFood',{params: {id_user: id_user}})
+      .then(function(response){
+        userCtrl.food = response.data;
+        Materialize.toast("Connecté.", 3000);
+      });
+    }
+
+    //Initialiser le cookie stayconnected
+    this.initStayConnected = function(data){
+      if(data.stayconnected){ //Cookie 7 jours
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 7);
+        $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+      }
+      else { //Cookie 20min
+        var expireDate = new Date();
+        expireDate.setMinutes(expireDate.getMinutes() + 20);
+        $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+      }
+    }
+
+    //Connection si cookie stayconnected
+    var cookie = {cookiecode : $cookies.get('cookiecode')};
     if(cookie.cookiecode){
       this.chargement = true;
       $http.post('/connectionCookie', cookie)
@@ -53,15 +80,18 @@
         }
         else {
           userCtrl.user = response.data;
-          Materialize.toast("Connecté.", 3000);
+          userCtrl.initStayConnected(response.data);
+          userCtrl.getFood(userCtrl.user.id_user);
         }
       });
     }
 
+    //Indique si un utilisateur est connecté
     this.connected = function(){
       return("user" in this);
     }
 
+    //deconnection de l'utilisateur
     this.deconnection = function(){
       delete this.user;
       this.connection = {};
@@ -70,6 +100,8 @@
       Materialize.toast("Déconnecté.", 3000);
     }
 
+
+    // Connection
     this.getConnection = function(){
       this.chargement = true;
       $http.post('/connection', this.connection).then(function(response){
@@ -80,22 +112,13 @@
         }
         else {
           userCtrl.user = response.data;
-          if(response.data.stayconnected){
-            var expireDate = new Date();
-            expireDate.setDate(expireDate.getDay() - 7);
-            $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
-            Materialize.toast("Connecté.", 3000);
-          }
-          else {
-            var expireDate = new Date();
-            expireDate.setMinutes(expireDate.getMinutes() + 20);
-            $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate} );
-            Materialize.toast("Connecté.", 3000);
-          }
+          userCtrl.initStayConnected(response.data);
+          userCtrl.getFood(userCtrl.user.id_user);
         }
       });
     };
 
+    //Inscription
     this.getInscription = function(inscription){
       this.chargement = true;
       $http.post('/inscription', this.inscription).then(function(response){
@@ -106,14 +129,13 @@
         }
         else {
           userCtrl.user = response.data;
-          var expireDate = new Date();
-          expireDate.setMinutes(expireDate.getMinutes() + 20);
-          $cookies.put('cookiecode', response.data.cookiecode, {"expires" : expireDate });
+          userCtrl.initStayConnected(response.data);
           Materialize.toast("Inscrit.", 3000);
         }
       });
     };
 
+    //Changer le mot de passe
     this.editPassword = function(){
       this.chargement = true;
       var params = this.editpassword;
@@ -129,6 +151,8 @@
         }
       });
     };
+
+
   }]);
 
 
@@ -138,8 +162,12 @@
     this.foodrow2 = {};
     this.page = 0;
     this.totalPage = [];
+    this.modal = {};
+
     var foodCtrl = this;
     foodCtrl.chargement = true;
+
+
     $http.get('/getFood')
     .then(function(response){
       if("error" in response.data){
@@ -208,6 +236,32 @@
     }
     this.disableRight = function(){
       return(this.page == this.totalPage.length ? "disabled" : "");
+    }
+
+    //Initialiser la fenetre modal
+    this.findTitle_food = function(id_food){
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          return this.food[i].title_food;
+        }
+      }
+      return "";
+    }
+    this.setModalAdd = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Ajouter";
+      this.modal.title_food = this.findTitle_food(id);
+    }
+    this.setModalSub = function(id, q){
+      this.modal.id_food = id;
+      this.modal.action = "Enlever";
+      this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = q;
+    }
+    this.setModalNew = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Initialiser";
+      this.modal.title_food = this.findTitle_food(id);
     }
 
   }]);

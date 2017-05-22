@@ -53,8 +53,11 @@ app.get('/', function(request, response) {
 })
 
 .get("/getFood", function (req, res) {
-  console.log(req.query);
   food.getFood(req,res);
+})
+
+.get("/getMyFood", function(req, res){
+  food.getMyFood(req, res);
 });
 
 app.listen(app.get('port'), function() {
