@@ -3,35 +3,27 @@
     <h3>Recettes</h3>
     <div class="row">
 
-      <ul class="collapsible" data-collapsible="accordion">
+      <ul class="collapsible popout" data-collapsible="accordion">
        <li ng-repeat="recipe in recipesCtrl.recipes">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" /><h4>{{recipe.title_recipe}}</h4></div>
          <div class="collapsible-body container">
            <div class="row"/>
-             <div class="col s12">
+             <div class="col s12" style="margin-bottom:10px">
                <span>{{recipe.description}}</span>
              </div>
              <div class="col s6">
+               <p>Type : {{recipe.title_type}}</p>
                <p>Difficulté : {{recipe.title_difficulty}}</p>
+               <p>Pour {{recipe.peopleamount}} personnes</p>
              </div>
              <div class="col s6">
-               <p>Temps : {{recipe.time_recipe}}</p>
+               <p>Temps : {{recipe.time_recipe}} min</p>
+               <p>Origine : {{recipe.title_origin}}</p>
+               <p>Popularité : {{recipe.popularity}} vues</p>
              </div>
            </div>
          </div>
        </li>
-       <li>
-        <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-      </li>
-      <li>
-        <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-      </li>
-      <li>
-        <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-      </li>
      </ul>
 
     </div>
