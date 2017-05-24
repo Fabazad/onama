@@ -9,8 +9,8 @@
       <ul class="right hide-on-med-and-down">
         <li ng-hide="userCtrl.connected()"><a href="#connection" uk-scroll>Connexion</a></li>
         <li ng-hide="userCtrl.connected()"><a href="#inscription" uk-scroll ng-hide="userCtrl.connected()">Inscription</a></li>
-        <li ng-show="userCtrl.connected()"><a href="#myProfile" title="Mon compte" uk-scroll><i class="large material-icons">perm_identity</i></a></li>
-        <li ng-show="userCtrl.connected()" ng-click="userCtrl.deconnection()"><a href="#top" title="Deconnexion" uk-scroll><i class="large material-icons">power_settings_new</i></a></li>
+        <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Mon compte" ng-show="userCtrl.connected()"><a href="#myProfile" uk-scroll><i class="large material-icons">perm_identity</i></a></li>
+        <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Dconnexion" ng-show="userCtrl.connected()" ng-click="userCtrl.deconnection()"><a href="#top" uk-scroll><i class="large material-icons">power_settings_new</i></a></li>
       </ul>
 
       <a href="#" data-activates="nav-mobile" class="button-collapse" ><i class="material-icons">menu</i></a>

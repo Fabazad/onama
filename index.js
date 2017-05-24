@@ -5,6 +5,7 @@ var user = require("user");
 var food = require("food");
 
 
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -41,6 +42,7 @@ app.get('/', function(request, response) {
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
+
   user.inscription(req,res);
 })
 
@@ -61,17 +63,22 @@ app.get('/', function(request, response) {
 })
 
 .post("/user/addFood", function(req, res){
-  console.log("set" + req.body);
   user.insertFood(req, res);
 })
 
 .put("/user/setFood", function(req, res){
-  console.log("set" + req.body);
   user.updateFood(req, res);
 })
 
 .delete("/user/delFood", function(req, res){
   user.deleteFood(req, res);
+})
+
+.put("/user/newPassword", function(req, res, next){
+  user.verifMail(req, res, next);
+}
+,function(req, res){
+  user.newPassword(req, res);
 });
 
 app.listen(app.get('port'), function() {

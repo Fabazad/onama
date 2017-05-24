@@ -242,6 +242,19 @@
       }
     }
 
+    this.newPassword = function(mailAdress){
+      Materialize.toast(mailAdress,3000);
+      $http.put("user/newPassword", {}, {params:{mailadress: mailAdress}})
+      .then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else{
+          Materialize.toast("Un mail a été envoyé à " + response.data.mailadress + ".", 2000);
+        }
+      });
+    }
+
   }]);
 
 
