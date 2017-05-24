@@ -92,9 +92,11 @@
 
     //deconnection de l'utilisateur
     this.deconnection = function(){
-      delete this.user;
       this.connection = {};
       this.inscription = {};
+      this.editPassword = {};
+      this.user = {};
+      this.food = {};
       $cookies.remove("cookiecode");
       Materialize.toast("Déconnecté.", 3000);
     }
@@ -186,7 +188,7 @@
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, modalValue, title_food){
-      
+
       var actualQuantity = this.getQuantity(id_food);
       var id_user = userCtrl.user.id_user;
 
