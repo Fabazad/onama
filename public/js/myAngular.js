@@ -42,6 +42,7 @@
     this.editPassword = {};
     this.user = {};
     this.food = {};
+    this.recipes = {};
     var userCtrl = this;
 
     //recuperation des aliments de l'user
@@ -49,7 +50,15 @@
       $http.get('/user/myfood',{params: {id_user: id_user}})
       .then(function(response){
         userCtrl.food = response.data;
-        Materialize.toast("Connecté.", 3000);
+
+      });
+    }
+
+    //Recuperation des recettes de l'utilisateur
+    this.getRecipes = function(id_user){
+      $http.get('/user/myRecipes',{params: {id_user: id_user}})
+      .then(function(response){
+        userCtrl.recipes = response.data;
       });
     }
 
@@ -74,6 +83,7 @@
       $http.post('/connectionCookie', cookie)
       .then(function(response){
         userCtrl.chargement = false;
+        Materialize.toast("Connecté.", 3000);
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
         }
@@ -81,6 +91,7 @@
           userCtrl.user = response.data;
           userCtrl.initStayConnected(response.data);
           userCtrl.getFood(userCtrl.user.id_user);
+          userCtrl.getRecipes(userCtrl.user.id_user);
         }
       });
     }
@@ -114,6 +125,7 @@
           userCtrl.user = response.data;
           userCtrl.initStayConnected(response.data);
           userCtrl.getFood(userCtrl.user.id_user);
+          userCtrl.getRecipes(userCtrl.user.id_user);
         }
       });
     };
@@ -415,4 +427,39 @@
       recipesCtrl.recipes = response.data;
     })
   }]);
+
+  app.controller("MyRecipesCtrl",["$http", function($http){
+    this.buttonType = 'add';
+    this.showForm = false;
+    this.types = {};
+    this.difficulties = {};
+    this.origins = {};
+
+    var myRecipesCtrl = this;
+
+    this.setForm = function(){
+      if(this.showForm){
+        this.showForm = false;
+        this.buttonType = 'add';
+      }else {
+        this.showForm = true;
+        this.buttonType = 'stop';
+      }
+    }
+
+    $http.get("/recipes/types").then(function(response){
+      myRecipesCtrl.types = response.data;
+    });
+    $http.get("/recipes/difficulties").then(function(response){
+      myRecipesCtrl.difficulties = response.data;
+    });
+    $http.get("/recipes/origins").then(function(response){
+      myRecipesCtrl.origins = response.data;
+    });
+
+
+
+  }]);
+
+
 })();

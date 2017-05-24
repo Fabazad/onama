@@ -79,8 +79,31 @@ app.get('/', function(request, response) {
 
 //Recettes
 
-.get("/recipes/getAll", function(req, res){
-  recipes.getAll(req, res);
+.get("/recipes/:action", function(req, res){
+  switch (req.params.action) {
+    case 'getAll':
+      recipes.getAll(req, res);
+      break;
+
+    case 'types':
+      recipes.getTypes(req, res);
+      break;
+
+    case 'difficulties':
+      recipes.getDifficulties(req, res);
+      break;
+
+    case 'origins':
+      recipes.getOrigins(req, res);
+      break;
+
+    default:
+      res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
+  }
+})
+
+.get("/user/myRecipes", function(req, res){
+  user.getRecipes(req, res);
 });
 
 

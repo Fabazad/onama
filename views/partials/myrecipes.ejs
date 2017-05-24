@@ -1,0 +1,52 @@
+<div class="page" id="myrecipes" ng-controller="MyRecipesCtrl as myRecipesCtrl" ng-show="userCtrl.connected()">
+  <div class="container onBackground">
+    <h3>Mes recettes</h3>
+    <div class="row">
+
+      <ul class="collapsible popout" data-collapsible="accordion">
+       <li ng-repeat="recipe in userCtrl.recipes">
+         <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" /><h4>{{recipe.title_recipe}}</h4></div>
+         <div class="collapsible-body container">
+           <div class="row"/>
+             <div class="col s12" style="margin-bottom:10px">
+               <span>{{recipe.description}}</span>
+             </div>
+             <div class="col s6">
+               <p>Type : {{recipe.title_type}}</p>
+               <p>Difficulté : {{recipe.title_difficulty}}</p>
+               <p>Pour {{recipe.peopleamount}} personnes</p>
+             </div>
+             <div class="col s6">
+               <p>Temps : {{recipe.time_recipe}} min</p>
+               <p>Origine : {{recipe.title_origin}}</p>
+               <p>Popularité : {{recipe.popularity}} vues</p>
+             </div>
+           </div>
+         </div>
+       </li>
+     </ul>
+
+      <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Créer Recette">
+        <i ng-click="myRecipesCtrl.setForm()" class="material-icons">{{myRecipesCtrl.buttonType}}</i>
+      </a>
+      <form ng-show="myRecipesCtrl.showForm" name="AddRecipe" ng-submit="AddRecipe.$valid" novalidate>
+        <h3>Créer une recette</h3>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="title_recipe" type="text" ng-model='myRecipesCtrl.addRecipe.title_food' required>
+            <label class="active" for="title_recipe">Nom de la recette</label>
+          </div>
+          <div class="input-field col s12">
+            <select  ng-model='myRecipesCtrl.addRecipe.type' required>
+              <option value="" disabled ng-model='myRecipesCtrl.addRecipe.type' selected>Choose your option</option>
+              <option ng-repeat="type in myRecipesCtrl.types" ng-value='{{type.id_type}}'>{{type.title_type}}</option>
+            </select>
+            <label>Type de plat</label>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

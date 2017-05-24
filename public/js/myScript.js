@@ -50,4 +50,8 @@ $("#myfood").hover(function(){
 
 $(document).hover(function(){
   $('.collapsible').collapsible();
+  $(document).ready(function() {
+   $('select').material_select();
+  });
+
 });
