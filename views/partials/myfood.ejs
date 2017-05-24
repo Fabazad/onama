@@ -1,4 +1,4 @@
-<div class="page" id="myfood" ng-controller="MyFoodCtrl as myFoodCtrl" ng-show="userCtrl.connected()">
+<div class="page noBackground" id="myfood" ng-controller="MyFoodCtrl as myFoodCtrl" ng-show="userCtrl.connected()">
   <div class="container">
 
     <div id="modal1" class="modal">
@@ -23,13 +23,13 @@
           <label for="autocompleteMyFood">Aliment</label>
         </div>
       </div>
-      <div class="row" ng-show="myFoodCtrl.existingFood()">
+      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood()">
         <div class="input-field col s6">
           <input type="number" min=0 step="1" ng-model="myFoodCtrl.quantity" required/>
           <label for="input_text">Quantité (g)</label>
         </div>
       </div>
-      <div class="row" ng-show="myFoodCtrl.existingFood()">
+      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood()">
         <div class="input-field col s3">
           <a class="green btn tooltipped" ng-click="myFoodAction.$valid && userCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Ajouter',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a>
         </div>

@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var user = require("user");
 var food = require("food");
-
+var recipes = require("recipes");
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -19,11 +19,7 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 })
 
-.get('/user', function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/html"});
-  res.end('<p>test reussi ' + req.query.id + '</p>');
-})
-
+//User Connection/Inscription
 .post('/connection', function (req, res, next) {
   user.verifConnection(req, res, next);
 }
@@ -49,11 +45,18 @@ app.get('/', function(request, response) {
 .post("/editPassword", function (req, res, next){
   user.verifPassword(req, res, next);
 }
-
-, function(req, res, next){
+,function(req, res, next){
   user.editPassword(req, res);
 })
 
+.put("/user/newPassword", function(req, res, next){
+  user.verifMail(req, res, next);
+}
+,function(req, res){
+  user.newPassword(req, res);
+})
+
+//Food
 .get("/food/all", function (req, res) {
   food.getFood(req,res);
 })
@@ -74,12 +77,12 @@ app.get('/', function(request, response) {
   user.deleteFood(req, res);
 })
 
-.put("/user/newPassword", function(req, res, next){
-  user.verifMail(req, res, next);
-}
-,function(req, res){
-  user.newPassword(req, res);
+//Recettes
+
+.get("/recipes/getAll", function(req, res){
+  recipes.getAll(req, res);
 });
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

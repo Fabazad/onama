@@ -1,4 +1,4 @@
-<div class="page" id="inscription" ng-hide="userCtrl.connected()">
+<div class="page noBackground" id="inscription" ng-hide="userCtrl.connected()">
   <div class="container">
     <h1>Inscription</h1>
     <form name="Inscription" ng-submit="Inscription.$valid && userCtrl.inscription.password == userCtrl.inscription.passwordbis && userCtrl.getInscription(inscription)" novalidate>
@@ -19,14 +19,14 @@
       </div>
       <div class="input-field">
         <label for="birthdate">Date de naissance</label>
-        <input type="date" id="birthdate" name="birthdate" class="datepicker" ng-model="userCtrl.inscription.birthdate" required/>
+        <input type="text" id="birthdate" class="datepicker" ng-model="userCtrl.inscription.birthdate" required/>
       </div>
       <div class="input-field">
-        <input id="password" name="password" type="password" ng-model="userCtrl.inscription.password" required/>
+        <input id="password" type="password" ng-minlength="6" ng-model="userCtrl.inscription.password" required/>
         <label for="password">Mot de passe</label>
       </div>
       <div class="input-field">
-        <input id="passwordbis" name="passwordbis" type="password" ng-model="userCtrl.inscription.passwordbis" required/>
+        <input id="passwordbis" name="passwordbis" type="password" ng-minlength="6" ng-model="userCtrl.inscription.passwordbis" required/>
         <label for="passwordbis">Mot de passe</label>
       </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Inscription

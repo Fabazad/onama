@@ -46,3 +46,8 @@ $("#myfood").hover(function(){
     }
   );
 });
+
+
+$(document).hover(function(){
+  $('.collapsible').collapsible();
+});

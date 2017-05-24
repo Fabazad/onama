@@ -33,7 +33,7 @@ body{
 #home{
   padding-top: 1px;
 }
-#home, #article, #inscription, #myfood{
+.noBackground{
   background-color: white;
 }
 .row{
@@ -142,4 +142,19 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 }
 #mailLostPassword{
   width:80%;
+}
+.collapsible-header>img{
+  height: 120px;
+  margin: 10px;
+  box-shadow: 0 0 5px grey;
+}
+.collapsible-header {
+  text-align: left;
+}
+.collapsible-header>h4 {
+  display: inline-block;
+  margin-left: 15%;
+}
+.collapsible-body{
+  padding: 0px;
 }

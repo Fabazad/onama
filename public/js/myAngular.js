@@ -128,8 +128,6 @@
           Materialize.toast(response.data.error, 3000);
         }
         else {
-          userCtrl.user = response.data;
-          userCtrl.initStayConnected(response.data);
           Materialize.toast("Inscrit.", 3000);
         }
       });
@@ -407,4 +405,14 @@
 
   }]);
 
+
+  app.controller("RecipesCtrl",["$http", function($http){
+    this.recipes = {};
+    var recipesCtrl = this;
+
+    $http.get("/recipes/getAll")
+    .then(function(response){
+      recipesCtrl.recipes = response.data;
+    })
+  }]);
 })();
