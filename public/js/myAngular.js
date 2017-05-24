@@ -186,8 +186,7 @@
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, modalValue, title_food){
-
-      Materialize.toast(modalValue,3000);
+      
       var actualQuantity = this.getQuantity(id_food);
       var id_user = userCtrl.user.id_user;
 
@@ -199,7 +198,6 @@
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
           }
           else{
-            Materialize.toast(newValue);
             var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
             $http.put("user/setFood", {}, {params: data}).then(function(response){
             });
