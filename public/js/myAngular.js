@@ -162,11 +162,16 @@
     }
 
     //Obtenir la quantite en fonction de l'id
-    this.setQuantity = function(id_food, quantity){
+    this.setQuantity = function(id_food, quantity, title_food){
+      var find = false;
       for(var i =0; i < this.food.length; i++){
         if(this.food[i].id_food == id_food){
           this.food[i].quantity_getfood = quantity;
+          find = true;
         }
+      }
+      if(!find){
+        this.food.push({id_food: id_food, quantity_getfood: quantity, title_food: title_food});
       }
     }
 
@@ -180,26 +185,23 @@
     }
 
     //Modifier quantite d'aliment
-    this.updateQuantityFood = function(id_food, action){
-      userCtrl.chargement = true;
+    this.updateQuantityFood = function(id_food, action, modalValue, title_food){
+
+      Materialize.toast(modalValue,3000);
       var actualQuantity = this.getQuantity(id_food);
-      var modalValue = this.modal ? this.modal.inputValue : 0;
       var id_user = userCtrl.user.id_user;
 
       switch (action){
         case "Ajouter":
           var newValue = parseInt(actualQuantity) + parseInt(modalValue);
+          this.setQuantity(id_food, newValue, title_food);
           if(actualQuantity == 0){
-            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue}).then(function(response){
-              userCtrl.chargement = false;
-              userCtrl.setQuantity(response.data.id_food, response.data.quantity);
-            });
+            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
           }
           else{
+            Materialize.toast(newValue);
             var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
             $http.put("user/setFood", {}, {params: data}).then(function(response){
-              userCtrl.chargement = false;
-              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
             });
           }
           break;
@@ -207,47 +209,35 @@
         case "Enlever":
           var newValue = actualQuantity - modalValue;
           if(newValue == 0){
-            $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}}).then(function(response){
-              userCtrl.chargement = false;
-              userCtrl.deleteFood(response.data.id_food);
-            });
+            this.deleteFood(id_food);
+            $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           }
           else if(newValue > 0){
+            this.setQuantity(id_food, newValue);
             var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
-            $http.put("user/setFood", {}, {params: data}).then(function(response){
-              userCtrl.chargement = false;
-              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
-            });
+            $http.put("user/setFood", {}, {params: data});
           }
           else{
-            userCtrl.chargement = false;
             Materialize.toast("Erreur : valeur finale négative.");
           }
           break;
 
         case "Initialiser":
           var newValue = modalValue;
+          this.setQuantity(id_food, newValue, title_food);
           if(actualQuantity == 0)
           {
-            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue}).then(function(response){
-              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
-              userCtrl.chargement = false;
-            });
+            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
           }
           else{
-            $http.put("user/setFood",{}, {params:{id_user: id_user, id_food: id_food, quantity_getfood: newValue}}).then(function(response){
-              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
-              userCtrl.chargement = false;
-            });
+            $http.put("user/setFood",{}, {params:{id_user: id_user, id_food: id_food, quantity_getfood: newValue}});
           }
           break;
 
         case "Delete":
           var newValue = actualQuantity - modalValue;
-          $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}}).then(function(response){
-            userCtrl.deleteFood(response.data.id_food);
-            userCtrl.chargement = false;
-          });
+          this.deleteFood(id_food);
+          $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           break;
       }
     }
@@ -255,16 +245,83 @@
   }]);
 
 
-  app.controller("FoodCtrl",["$http", function($http, $cookies){
+  app.controller("MyFoodCtrl",["$http", function($http){
+    this.food = {};
+    this.modal = {};
+    var myFoodCtrl = this;
+
+    $http.get('/food/all')
+    .then(function(response){
+      if("error" in response.data){
+        alert(response.data.error);
+      }
+      else {
+        myFoodCtrl.food = response.data;
+        var data = {};
+        var setField = function(element){
+          data[element.title_food] = null;
+        }
+        response.data.forEach(setField);
+        $('#autocompleteMyFood').autocomplete({
+          data: data,
+          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+            //
+          },
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+        });
+      }
+    });
+
+    //Initialiser la fenetre modal
+    this.findTitle_food = function(id_food){
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          return this.food[i].title_food;
+        }
+      }
+      return "";
+    }
+    this.setModalAdd = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Ajouter";
+      this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = "";
+    }
+    this.setModalSub = function(id, q){
+      this.modal.id_food = id;
+      this.modal.action = "Enlever";
+      this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = q;
+    }
+    this.setModalNew = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Initialiser";
+      this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = "";
+    }
+
+    this.existingFood = function(){
+      var existing = 0;
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].title_food == this.myFoodAutocomplete){
+          existing = this.food[i].id_food;
+        }
+      }
+      return existing;
+    }
+
+  }]);
+
+
+  app.controller("FoodCtrl",["$http", function($http){
     this.food = {};
     this.foodrow1 = {};
     this.foodrow2 = {};
     this.page = 0;
     this.totalPage = [];
-    this.modal = {};
 
     var foodCtrl = this;
-    foodCtrl.chargement = true;
 
 
     $http.get('/food/all')
@@ -279,36 +336,34 @@
         }
         foodCtrl.changePage(1);
         var data = {};
-        foodCtrl.chargement = false;
 
         var setField = function(element){
           data[element.title_food] = null;
         }
         response.data.forEach(setField);
-
-        $('input.autocomplete').autocomplete({
+        $('#autocompleteFood').autocomplete({
           data: data,
           limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
           onAutocomplete: function(val) {
-            var index = -1;
-
-            for(var i = 0; i < foodCtrl.food.length; i++){
-              if(foodCtrl.food[i].title_food.replace(/ /g, "").toLowerCase() == val.replace(/ /g, "").toLowerCase()){
-                index = i;
+              var index = -1;
+              for(var i = 0; i < foodCtrl.food.length; i++){
+                if(foodCtrl.food[i].title_food.replace(/ /g, "").toLowerCase() == val.replace(/ /g, "").toLowerCase()){
+                  index = i;
+                }
               }
-            }
-            if(index == -1){
-              Materialize.toast("Erreur.", 3000);
-            }
-            else {
-              //foodCtrl.changePage(Math.trunc(index/50) + 1);
-              Materialize.toast("Page : " + (Math.trunc(index/50) + 1) + " aliment : " + (index%50 + 1), 3000);
-            }
+              if(index == -1){
+                Materialize.toast("Erreur.", 3000);
+              }
+              else {
+                //foodCtrl.changePage(Math.trunc(index/50) + 1);
+                Materialize.toast("Page : " + (Math.trunc(index/50) + 1) + " aliment : " + (index%50 + 1), 3000);
+              }
           },
           minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
         });
       }
     });
+
 
     this.changePage = function(numpage){
       if(numpage > 0 && numpage <= this.totalPage.length){
@@ -335,37 +390,6 @@
     }
     this.disableRight = function(){
       return(this.page == this.totalPage.length ? "disabled" : "");
-    }
-
-    //Initialiser la fenetre modal
-    this.findTitle_food = function(id_food){
-      for(var i = 0; i < this.food.length; i++){
-        if(this.food[i].id_food == id_food){
-          return this.food[i].title_food;
-        }
-      }
-      return "";
-    }
-    this.setModalAdd = function(id){
-      this.modal.id_food = id;
-      this.modal.action = "Ajouter";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = "";
-      document.getElementById("inputModal").focus();
-    }
-    this.setModalSub = function(id, q){
-      this.modal.id_food = id;
-      this.modal.action = "Enlever";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = q;
-      document.getElementById("inputModal").focus();
-    }
-    this.setModalNew = function(id){
-      this.modal.id_food = id;
-      this.modal.action = "Initialiser";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = "";
-      document.getElementById("inputModal").focus();
     }
 
   }]);

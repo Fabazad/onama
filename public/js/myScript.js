@@ -32,7 +32,7 @@ $(document).ready(function(){
 $("#myfood").hover(function(){
   $('.tooltipped').tooltip({delay: 25, html: true});
   $('.modal').modal();
-
+  $('#inputModal').focus();
   $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         opacity: .5, // Opacity of modal background

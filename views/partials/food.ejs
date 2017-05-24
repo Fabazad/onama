@@ -1,28 +1,15 @@
 <div class="page " id="food" ng-controller="FoodCtrl as foodCtrl">
   <div class="container onBackground">
-    <div id="chargement" ng-show="foodCtrl.chargement">
-      <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-green-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="row">
       <h3>Aliments</h3>
-      
+
       <div class="row">
         <div class="col s12">
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">search</i>
-              <input type="text" id="autocomplete-input" class="autocomplete">
-              <label for="autocomplete-input">Chercher aliment</label>
+              <input type="text" id="autocompleteFood" class="autocomplete">
+              <label for="autocompleteFood">Chercher aliment</label>
             </div>
           </div>
         </div>
