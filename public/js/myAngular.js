@@ -40,13 +40,13 @@
     this.connection = {};
     this.inscription = {};
     this.editPassword = {};
+    this.user = {};
     this.food = {};
     var userCtrl = this;
 
-
     //recuperation des aliments de l'user
     this.getFood = function(id_user){
-      $http.get('/getMyFood',{params: {id_user: id_user}})
+      $http.get('/user/myfood',{params: {id_user: id_user}})
       .then(function(response){
         userCtrl.food = response.data;
         Materialize.toast("Connecté.", 3000);
@@ -87,7 +87,7 @@
 
     //Indique si un utilisateur est connecté
     this.connected = function(){
-      return("user" in this);
+      return('id_user' in this.user);
     }
 
     //deconnection de l'utilisateur
@@ -98,7 +98,6 @@
       $cookies.remove("cookiecode");
       Materialize.toast("Déconnecté.", 3000);
     }
-
 
     // Connection
     this.getConnection = function(){
@@ -151,6 +150,107 @@
       });
     };
 
+    //Obtenir la quantite d'un aliment
+    this.getQuantity = function(id_food){
+      var res = 0;
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          res = this.food[i].quantity_getfood;
+        }
+      }
+      return res;
+    }
+
+    //Obtenir la quantite en fonction de l'id
+    this.setQuantity = function(id_food, quantity){
+      for(var i =0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          this.food[i].quantity_getfood = quantity;
+        }
+      }
+    }
+
+    //Supprimer aliment
+    this.deleteFood = function(id_food){
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          this.food.splice(i, 1);
+        }
+      }
+    }
+
+    //Modifier quantite d'aliment
+    this.updateQuantityFood = function(id_food, action){
+      userCtrl.chargement = true;
+      var actualQuantity = this.getQuantity(id_food);
+      var modalValue = this.modal ? this.modal.inputValue : 0;
+      var id_user = userCtrl.user.id_user;
+
+      switch (action){
+        case "Ajouter":
+          var newValue = parseInt(actualQuantity) + parseInt(modalValue);
+          if(actualQuantity == 0){
+            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue}).then(function(response){
+              userCtrl.chargement = false;
+              userCtrl.setQuantity(response.data.id_food, response.data.quantity);
+            });
+          }
+          else{
+            var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
+            $http.put("user/setFood", {}, {params: data}).then(function(response){
+              userCtrl.chargement = false;
+              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
+            });
+          }
+          break;
+
+        case "Enlever":
+          var newValue = actualQuantity - modalValue;
+          if(newValue == 0){
+            $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}}).then(function(response){
+              userCtrl.chargement = false;
+              userCtrl.deleteFood(response.data.id_food);
+            });
+          }
+          else if(newValue > 0){
+            var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
+            $http.put("user/setFood", {}, {params: data}).then(function(response){
+              userCtrl.chargement = false;
+              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
+            });
+          }
+          else{
+            userCtrl.chargement = false;
+            Materialize.toast("Erreur : valeur finale négative.");
+          }
+          break;
+
+        case "Initialiser":
+          var newValue = modalValue;
+          if(actualQuantity == 0)
+          {
+            $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue}).then(function(response){
+              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
+              userCtrl.chargement = false;
+            });
+          }
+          else{
+            $http.put("user/setFood",{}, {params:{id_user: id_user, id_food: id_food, quantity_getfood: newValue}}).then(function(response){
+              userCtrl.setQuantity(response.data.id_food, response.data.quantity_getfood);
+              userCtrl.chargement = false;
+            });
+          }
+          break;
+
+        case "Delete":
+          var newValue = actualQuantity - modalValue;
+          $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}}).then(function(response){
+            userCtrl.deleteFood(response.data.id_food);
+            userCtrl.chargement = false;
+          });
+          break;
+      }
+    }
 
   }]);
 
@@ -167,7 +267,7 @@
     foodCtrl.chargement = true;
 
 
-    $http.get('/getFood')
+    $http.get('/food/all')
     .then(function(response){
       if("error" in response.data){
         alert(response.data.error);
@@ -250,17 +350,22 @@
       this.modal.id_food = id;
       this.modal.action = "Ajouter";
       this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = "";
+      document.getElementById("inputModal").focus();
     }
     this.setModalSub = function(id, q){
       this.modal.id_food = id;
       this.modal.action = "Enlever";
       this.modal.title_food = this.findTitle_food(id);
       this.modal.max = q;
+      document.getElementById("inputModal").focus();
     }
     this.setModalNew = function(id){
       this.modal.id_food = id;
       this.modal.action = "Initialiser";
       this.modal.title_food = this.findTitle_food(id);
+      this.modal.max = "";
+      document.getElementById("inputModal").focus();
     }
 
   }]);

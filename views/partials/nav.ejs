@@ -4,7 +4,7 @@
       <a href="#top" class="brand-logo center" uk-scroll><img style="height:60px;" id="LogoOnama" src="../img/TeteCerfBlc.png" alt="Logo Onama" /></a>
       <ul class="left hide-on-med-and-down">
         <li><a href="#top" uk-scroll>Accueil</a></li>
-        <li class="active"><a href="collapsible.html" uk-scroll>JavaScript</a></li>
+        <li ng-show="userCtrl.connected()"><a href="#myfood" uk-scroll>Mes aliments</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <li ng-hide="userCtrl.connected()"><a href="#connection" uk-scroll>Connexion</a></li>
@@ -23,5 +23,6 @@
   <li ng-hide="userCtrl.connected()"><a href="#connection" uk-scroll>Connexion</a></li>
   <li ng-hide="userCtrl.connected()"><a href="#inscription" uk-scroll>Inscription</a></li>
   <li ng-show="userCtrl.connected()"><a href="#myProfile" title="Mon compte" uk-scroll><i class="small material-icons">perm_identity</i>Mon compte</a></li>
+  <li ng-show="userCtrl.connected()"><a href="#myfood" uk-scroll>Mes aliments</a></li>
   <li ng-show="userCtrl.connected()" ng-click="userCtrl.deconnection()"><a href="#top" uk-scroll><i class="small material-icons">power_settings_new</i>Deconnexion</a></li>
 </ul>

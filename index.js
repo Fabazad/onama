@@ -45,19 +45,33 @@ app.get('/', function(request, response) {
 })
 
 .post("/editPassword", function (req, res, next){
-  console.log(req.body);
   user.verifPassword(req, res, next);
 }
+
 , function(req, res, next){
   user.editPassword(req, res);
 })
 
-.get("/getFood", function (req, res) {
+.get("/food/all", function (req, res) {
   food.getFood(req,res);
 })
 
-.get("/getMyFood", function(req, res){
+.get("/user/myfood", function(req, res){
   food.getMyFood(req, res);
+})
+
+.post("/user/addFood", function(req, res){
+  console.log("set" + req.body);
+  user.insertFood(req, res);
+})
+
+.put("/user/setFood", function(req, res){
+  console.log("set" + req.body);
+  user.updateFood(req, res);
+})
+
+.delete("/user/delFood", function(req, res){
+  user.deleteFood(req, res);
 });
 
 app.listen(app.get('port'), function() {
