@@ -147,7 +147,7 @@
     }
 
     //recupere tout les aliments
-  /*  $http.get('/food/all')
+   $http.get('/food/all')
     .then(function(response){
       if("error" in response.data){
         Materialize.toast(response.data.error, 2000);
@@ -188,7 +188,7 @@
           minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
         });
       }
-    });*/
+    });
   }]);
 
   app.controller("ConnectionCtrl",["$http", '$cookies', function($http, $cookies){
