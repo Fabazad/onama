@@ -38,7 +38,7 @@ app.get('/', function(request, response) {
 })
 
 .post('/inscription', function (req, res, next) {
-  conseole.log("/inscription");
+  console.log("/inscription");
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
@@ -46,7 +46,7 @@ app.get('/', function(request, response) {
   user.inscription(req,res);
 })
 
-.post("/editPassword", function (req, res, next){
+.put("/editPassword", function (req, res, next){
   console.log("/editPassword");
   user.verifPassword(req, res, next);
 }
@@ -117,6 +117,22 @@ app.get('/', function(request, response) {
 .get("/user/myRecipes", function(req, res){
   console.log("/user/myRecipes");
   user.getRecipes(req, res);
+})
+
+.post("/recipes/add", function(req, res, next){
+  console.log("/recipes/add");
+  recipes.verifAddRecipe(req, res, next);
+}
+,function(req, res ,next){
+  recipes.addRecipe(req, res, next);
+}
+,function(req, res, next){
+  recipes.addInstructions(req, next);
+
+}
+,function(req, res){
+  recipes.addFood(req);
+  res.send("ok");
 });
 
 

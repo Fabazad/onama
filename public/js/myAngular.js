@@ -268,7 +268,7 @@
       chargement = true;
       var params = this.editpassword;
       params.id_user = user.id_user;
-      $http.post('/editPassword', params).then(function(response){
+      $http.put('/editPassword', {}, {params: params}).then(function(response){
         chargement = false;
         myProfileCtrl.editpassword = {};
         if("error" in response.data){
@@ -459,6 +459,11 @@
     this.difficulties = {};
     this.origins = {};
     this.addRecipe = {submitvalue: "Créer la recette", submiticon: "library_add", food: {}};
+    this.food = [];
+    this.review = {};
+    this.instructions = [];
+    this.instruction = "";
+
     this.userRecipes = function(){
       return user.recipes;
     }
@@ -487,6 +492,83 @@
     this.existingFood = function(title_food){
       return existingFood(title_food);
     }
+
+    this.addFood = function(foodReview = this.review){
+      if(foodReview.title_food && existingFood(foodReview.title_food) && foodReview.quantity_containfood){
+        var food = foodReview;
+        food.id_food = existingFood(food.title_food);
+        this.food.push(food);
+        this.review = {};
+      }
+      else{
+        Materialize.toast("Champs incorrectes.",2000);
+      }
+    }
+
+    this.deleteFood = function (id_food){
+      for(var i = 0; i < this.food.length; i++){
+        if(this.food[i].id_food == id_food){
+          this.food.splice(i,1);
+        }
+      }
+    }
+
+    this.addInstruction = function(){
+      if(this.instruction && this.instruction.length <= 120){
+        var instruction = this.instruction;
+        this.instructions.push(instruction);
+        this.instruction = "";
+      }
+      else{
+        Materialize.toast("Champs incorrectes.",2000);
+      }
+    }
+
+    this.deleteInst = function(instruction){
+      for(var i = 0; i < this.instructions.length; i++){
+        if(this.instructions[i] == instruction){
+          this.instructions.splice(i,1);
+        }
+      }
+    }
+
+
+    this.createRecipe = function(){
+      chargement = true;
+      if(this.addRecipe.title_recipe
+      && this.addRecipe.id_type
+      && this.addRecipe.id_origin
+      && this.addRecipe.id_difficulty
+      && this.addRecipe.peopleamount
+      && this.addRecipe.description
+      && this.food.length > 0
+      && this.instructions.length > 0
+      && this.addRecipe.imgurl
+      && this.addRecipe.time_recipe > 0){
+        var recipe = this.addRecipe;
+        recipe.food = this.food;
+        recipe.instructions = this.instructions;
+        recipe.id_user = user.id_user;
+        $http.post("/recipes/add", recipe).then(function(response){
+          if("error" in response.data){
+            Materialize.toast(response.data.error, 2000);
+          }
+          else{
+            Materialize.toast("Crée.", 2000);
+            this.addRecipe = {};
+            this.showForm = false;
+            this.buttonType = 'add';
+          }
+          chargement = false;
+        });
+      }
+      else {
+        chargement = false;
+        Materialize.toast("Champs incorrectes.",2000);
+      }
+    }
+
+
 
   }]);
 

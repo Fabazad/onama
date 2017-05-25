@@ -27,9 +27,18 @@
       <p>{{user.birthdate | date}}</p>
     </div>
     <form ng-submit="EditPassword.$valid && myProfileCtrl.editpassword.newpassword == myProfileCtrl.editpassword.newpasswordbis && myProfileCtrl.editPassword()" name="EditPassword" novalidate>
-      <input type="password" placeholder="Mot de passe actuel" ng-model="myProfileCtrl.editpassword.actualpassword" required/>
-      <input type="password" placeholder="Nouveau mot de passe" ng-model="myProfileCtrl.editpassword.newpassword" required/>
-      <input type="password" placeholder="Nouveau mot de passe" ng-model="myProfileCtrl.editpassword.newpasswordbis" required/>
+      <div class="input-field">
+        <input id="actualpassword" type="password" ng-model="myProfileCtrl.editpassword.actualpassword" required/>
+        <label for="actualpassword">Mot de passe actuel</label>
+      </div>
+      <div class="input-field">
+        <input id="newpassword" type="password" ng-model="myProfileCtrl.editpassword.newpassword" required/>
+        <label for="newpassword">Nouveau mot de passe</label>
+      </div>
+      <div class="input-field">
+        <input id="newpasswordbis" type="password" ng-model="myProfileCtrl.editpassword.newpasswordbis" required/>
+        <label for="newpasswordbis">Nouveau mot de passe</label>
+      </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Modifier le mot de passe
         <i class="material-icons right">mode_edit</i>
       </button>
