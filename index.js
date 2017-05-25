@@ -131,8 +131,7 @@ app.get('/', function(request, response) {
 
 }
 ,function(req, res){
-  recipes.addFood(req);
-  res.send("ok");
+  recipes.addFood(req, res);
 });
 
 

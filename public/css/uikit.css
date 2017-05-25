@@ -7219,7 +7219,7 @@ td.uk-text-break {
  */
 @media (pointer: coarse) {
   .uk-background-fixed {
-    background-attachment: scroll;
+    background-attachment: fixed;
   }
 }
 /* Image

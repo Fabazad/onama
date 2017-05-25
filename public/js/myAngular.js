@@ -464,6 +464,8 @@
     this.instructions = [];
     this.instruction = "";
 
+    var myRecipesCtrl = this;
+
     this.userRecipes = function(){
       return user.recipes;
     }
@@ -555,9 +557,12 @@
           }
           else{
             Materialize.toast("Crée.", 2000);
-            this.addRecipe = {};
-            this.showForm = false;
-            this.buttonType = 'add';
+            myRecipesCtrl.addRecipe = {};
+            myRecipesCtrl.food = [];
+            myRecipesCtrl.review = {};
+            myRecipesCtrl.instructions = [];
+            myRecipesCtrl.showForm = false;
+            myRecipesCtrl.buttonType = 'add';
           }
           chargement = false;
         });
