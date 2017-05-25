@@ -34,108 +34,209 @@
     }];
   });
 
-/*Controllers*/
+  var chargement = false;
+  var user = {};
+  var food= {};
+  var recipes ={};
 
-  app.controller("UserCtrl", ["$http", "$cookies", function($http, $cookies){
-    this.connection = {};
-    this.inscription = {};
-    this.editPassword = {};
-    this.user = {};
-    this.food = {};
-    this.recipes = {};
-    var userCtrl = this;
 
-    //recuperation des aliments de l'user
-    this.getFood = function(id_user){
-      $http.get('/user/myfood',{params: {id_user: id_user}})
-      .then(function(response){
-        userCtrl.food = response.data;
-
-      });
-    }
-
-    //Recuperation des recettes de l'utilisateur
-    this.getRecipes = function(id_user){
-      $http.get('/user/myRecipes',{params: {id_user: id_user}})
-      .then(function(response){
-        userCtrl.recipes = response.data;
-      });
-    }
-
-    //Initialiser le cookie stayconnected
-    this.initStayConnected = function(data){
-      if(data.stayconnected){ //Cookie 7 jours
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 7);
-        $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+  //Verifie si l'aliment et renvoie l'id
+  var existingFood = function(title_food){
+    var existing = 0;
+    for(var i = 0; i < food.length; i++){
+      if(food[i].title_food == title_food){
+        existing = food[i].id_food;
       }
-      else { //Cookie 20min
-        var expireDate = new Date();
-        expireDate.setMinutes(expireDate.getMinutes() + 20);
-        $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+    }
+    return existing;
+  }
+
+
+
+  //Obtenir la quantite d'un aliment
+  var getQuantity = function(id_food){
+    var res = 0;
+    for(var i = 0; i < user.food.length; i++){
+      if(user.food[i].id_food == id_food){
+        res = user.food[i].quantity_getfood;
       }
+    }
+    return res;
+  }
+
+  //recuperation des aliments de l'user
+  var getFood = function(id_user, $http){
+    $http.get('/user/myfood',{params: {id_user: id_user}})
+    .then(function(response){
+      user.food = response.data;
+
+    });
+  }
+
+  //Recuperation des recettes de l'utilisateur
+  var getRecipes = function(id_user, $http){
+    $http.get('/user/myRecipes',{params: {id_user: id_user}})
+    .then(function(response){
+      user.recipes = response.data;
+    });
+  }
+
+  //Initialiser le cookie stayconnected
+  var initStayConnected = function(data, $cookies){
+    if(data.stayconnected){ //Cookie 7 jours
+      var expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() + 7);
+      $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+    }
+    else { //Cookie 20min
+      var expireDate = new Date();
+      expireDate.setMinutes(expireDate.getMinutes() + 20);
+      $cookies.put('cookiecode', data.cookiecode, {"expires" : expireDate} );
+    }
+  }
+
+  //trouver le nom d'un aliment
+  var findTitle_food = function(id_food){
+    for(var i = 0; i < food.length; i++){
+      if(food[i].id_food == id_food){
+        return food[i].title_food;
+      }
+    }
+    return "";
+  }
+
+  //Supprimer aliment de chez l'ulisateur
+  var deleteFood = function(id_food){
+    for(var i = 0; i < user.food.length; i++){
+      if(user.food[i].id_food == id_food){
+        user.food.splice(i, 1);
+      }
+    }
+  }
+
+
+  /*Controllers*/
+
+  app.controller("PageCtrl",["$http", '$cookies', function($http, $cookies){
+
+    this.chargement = function(){
+      return chargement;
+    }
+    this.connected = function(){
+      return('id_user' in user);
     }
 
     //Connection si cookie stayconnected
-    var cookie = {cookiecode : $cookies.get('cookiecode')};
-    if(cookie.cookiecode){
-      this.chargement = true;
-      $http.post('/connectionCookie', cookie)
+    this.cookie = {cookiecode : $cookies.get('cookiecode')};
+    if(this.cookie.cookiecode){
+      chargement = true;
+      $http.post('/connectionCookie', this.cookie)
       .then(function(response){
-        userCtrl.chargement = false;
+        chargement = false;
         Materialize.toast("Connecté.", 3000);
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
         }
         else {
-          userCtrl.user = response.data;
-          userCtrl.initStayConnected(response.data);
-          userCtrl.getFood(userCtrl.user.id_user);
-          userCtrl.getRecipes(userCtrl.user.id_user);
+          user = response.data;
+          initStayConnected(response.data, $cookies);
+          getFood(user.id_user, $http);
+          getRecipes(user.id_user, $http);
         }
       });
     }
 
-    //Indique si un utilisateur est connecté
-    this.connected = function(){
-      return('id_user' in this.user);
-    }
+    //recupere tout les aliments
+  /*  $http.get('/food/all')
+    .then(function(response){
+      if("error" in response.data){
+        Materialize.toast(response.data.error, 2000);
+      }
+      else {
+        food = response.data;
+        var data = {};
+        var setField = function(element){
+          data[element.title_food] = null;
+        }
+        response.data.forEach(setField);
+        $('.autocomplete2').autocomplete({
+          data: data,
+          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+            //
+          },
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+        });
+        $('#autocompleteFood').autocomplete({
+          data: data,
+          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+            var index = -1;
+            for(var i = 0; i < food.length; i++){
+              if(food[i].title_food.replace(/ /g, "").toLowerCase() == val.replace(/ /g, "").toLowerCase()){
+                index = i;
+              }
+            }
+            if(index == -1){
+              Materialize.toast("Erreur.", 3000);
+            }
+            else {
+              //foodCtrl.changePage(Math.trunc(index/50) + 1);
+              Materialize.toast("Page : " + (Math.trunc(index/50) + 1) + " aliment : " + (index%50 + 1), 3000);
+            }
+          },
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+        });
+      }
+    });*/
+  }]);
 
-    //deconnection de l'utilisateur
-    this.deconnection = function(){
-      this.connection = {};
-      this.inscription = {};
-      this.editPassword = {};
-      this.user = {};
-      this.food = {};
-      $cookies.remove("cookiecode");
-      Materialize.toast("Déconnecté.", 3000);
+  app.controller("ConnectionCtrl",["$http", '$cookies', function($http, $cookies){
+    this.connection = {};
+    var connectionCtrl = this;
+
+    this.newPassword = function(mailAdress){
+      $http.put("user/newPassword", {}, {params:{mailadress: mailAdress}})
+      .then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else{
+          Materialize.toast("Un mail a été envoyé à " + response.data.mailadress + ".", 2000);
+        }
+      });
     }
 
     // Connection
     this.getConnection = function(){
-      this.chargement = true;
+      chargement = true;
       $http.post('/connection', this.connection).then(function(response){
-        userCtrl.chargement = false;
-        userCtrl.connection = {};
+        chargement = false;
+        connectionCtrl.connection = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
         }
         else {
-          userCtrl.user = response.data;
-          userCtrl.initStayConnected(response.data);
-          userCtrl.getFood(userCtrl.user.id_user);
-          userCtrl.getRecipes(userCtrl.user.id_user);
+          user = response.data;
+          initStayConnected(response.data, $cookies);
+          getFood(user.id_user, $http);
+          getRecipes(user.id_user, $http);
+          Materialize.toast("Connecté.", 3000);
         }
       });
     };
 
+  }]);
+
+  app.controller("InscriptionCtrl",["$http", function($http){
+    this.inscription = {};
+    var inscriptionCtrl = this;
     //Inscription
-    this.getInscription = function(inscription){
-      this.chargement = true;
+    this.getInscription = function(){
+      chargement = true;
       $http.post('/inscription', this.inscription).then(function(response){
-        userCtrl.chargement = false;
-        userCtrl.inscription = {};
+        chargement = false;
+        inscriptionCtrl.inscription = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
         }
@@ -144,15 +245,32 @@
         }
       });
     };
+  }]);
+
+  app.controller("NavCtrl",["$cookies", function($cookies){
+
+    //deconnection de l'utilisateur
+    this.deconnection = function(){
+      user = {};
+      user.food = {};
+      user.recipes = {};
+      $cookies.remove("cookiecode");
+      Materialize.toast("Déconnecté.", 3000);
+    }
+  }]);
+
+  app.controller("MyProfileCtrl",["$http", function($http){
+    this.editPassword = {};
+    var myProfileCtrl = this;
 
     //Changer le mot de passe
     this.editPassword = function(){
-      this.chargement = true;
+      chargement = true;
       var params = this.editpassword;
-      params.id_user = this.user.id_user;
+      params.id_user = user.id_user;
       $http.post('/editPassword', params).then(function(response){
-        userCtrl.chargement = false;
-        userCtrl.editpassword = {};
+        chargement = false;
+        myProfileCtrl.editpassword = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
         }
@@ -161,51 +279,67 @@
         }
       });
     };
+  }]);
 
-    //Obtenir la quantite d'un aliment
-    this.getQuantity = function(id_food){
-      var res = 0;
-      for(var i = 0; i < this.food.length; i++){
-        if(this.food[i].id_food == id_food){
-          res = this.food[i].quantity_getfood;
-        }
-      }
-      return res;
+  app.controller("MyFoodCtrl",["$http", function($http){
+    this.food = {};
+    this.modal = {};
+    this.userfood = user.food;
+    var myFoodCtrl = this;
+
+
+    this.userFood = function(){
+      return user.food;
     }
 
-    //Obtenir la quantite en fonction de l'id
-    this.setQuantity = function(id_food, quantity, title_food){
+    //Changer la quantite d'un aliment de l'utilisateur
+    var setQuantity = function(id_food, quantity, title_food){
       var find = false;
-      for(var i =0; i < this.food.length; i++){
-        if(this.food[i].id_food == id_food){
-          this.food[i].quantity_getfood = quantity;
+      for(var i =0; i < user.food.length; i++){
+        if(user.food[i].id_food == id_food){
+          user.food[i].quantity_getfood = quantity;
           find = true;
         }
       }
       if(!find){
-        this.food.push({id_food: id_food, quantity_getfood: quantity, title_food: title_food});
+        user.food.push({id_food: id_food, quantity_getfood: quantity, title_food: title_food});
       }
     }
 
-    //Supprimer aliment
-    this.deleteFood = function(id_food){
-      for(var i = 0; i < this.food.length; i++){
-        if(this.food[i].id_food == id_food){
-          this.food.splice(i, 1);
-        }
-      }
+    //Initialiser la fenetre modal
+    this.existingFood = function(title_food = this.myFoodAutocomplete){
+      return existingFood(title_food);
     }
+
+    this.setModalAdd = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Ajouter";
+      this.modal.title_food = findTitle_food(id);
+      this.modal.max = "";
+    }
+    this.setModalSub = function(id, q){
+      this.modal.id_food = id;
+      this.modal.action = "Enlever";
+      this.modal.title_food = findTitle_food(id);
+      this.modal.max = q;
+    }
+    this.setModalNew = function(id){
+      this.modal.id_food = id;
+      this.modal.action = "Initialiser";
+      this.modal.title_food = findTitle_food(id);
+      this.modal.max = "";
+    }
+
+
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, modalValue, title_food){
-
-      var actualQuantity = this.getQuantity(id_food);
-      var id_user = userCtrl.user.id_user;
-
+      var actualQuantity = getQuantity(id_food);
+      var id_user = user.id_user;
       switch (action){
         case "Ajouter":
           var newValue = parseInt(actualQuantity) + parseInt(modalValue);
-          this.setQuantity(id_food, newValue, title_food);
+          setQuantity(id_food, newValue, title_food);
           if(actualQuantity == 0){
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
           }
@@ -219,11 +353,11 @@
         case "Enlever":
           var newValue = actualQuantity - modalValue;
           if(newValue == 0){
-            this.deleteFood(id_food);
+            deleteFood(id_food);
             $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           }
           else if(newValue > 0){
-            this.setQuantity(id_food, newValue);
+            setQuantity(id_food, newValue);
             var data = {id_user: id_user, id_food: id_food, quantity_getfood: newValue};
             $http.put("user/setFood", {}, {params: data});
           }
@@ -234,7 +368,7 @@
 
         case "Initialiser":
           var newValue = modalValue;
-          this.setQuantity(id_food, newValue, title_food);
+          setQuantity(id_food, newValue, title_food);
           if(actualQuantity == 0)
           {
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
@@ -246,111 +380,35 @@
 
         case "Delete":
           var newValue = actualQuantity - modalValue;
-          this.deleteFood(id_food);
+          deleteFood(id_food);
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           break;
       }
     }
 
-    this.newPassword = function(mailAdress){
-      Materialize.toast(mailAdress,3000);
-      $http.put("user/newPassword", {}, {params:{mailadress: mailAdress}})
-      .then(function(response){
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 2000);
-        }
-        else{
-          Materialize.toast("Un mail a été envoyé à " + response.data.mailadress + ".", 2000);
-        }
-      });
-    }
-
   }]);
-
-
-  app.controller("MyFoodCtrl",["$http", function($http){
-    this.food = {};
-    this.modal = {};
-    var myFoodCtrl = this;
-
-    $http.get('/food/all')
-    .then(function(response){
-      if("error" in response.data){
-        alert(response.data.error);
-      }
-      else {
-        myFoodCtrl.food = response.data;
-        var data = {};
-        var setField = function(element){
-          data[element.title_food] = null;
-        }
-        response.data.forEach(setField);
-        $('#autocompleteMyFood').autocomplete({
-          data: data,
-          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
-          onAutocomplete: function(val) {
-            //
-          },
-          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-        });
-      }
-    });
-
-    //Initialiser la fenetre modal
-    this.findTitle_food = function(id_food){
-      for(var i = 0; i < this.food.length; i++){
-        if(this.food[i].id_food == id_food){
-          return this.food[i].title_food;
-        }
-      }
-      return "";
-    }
-    this.setModalAdd = function(id){
-      this.modal.id_food = id;
-      this.modal.action = "Ajouter";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = "";
-    }
-    this.setModalSub = function(id, q){
-      this.modal.id_food = id;
-      this.modal.action = "Enlever";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = q;
-    }
-    this.setModalNew = function(id){
-      this.modal.id_food = id;
-      this.modal.action = "Initialiser";
-      this.modal.title_food = this.findTitle_food(id);
-      this.modal.max = "";
-    }
-
-    this.existingFood = function(){
-      var existing = 0;
-      for(var i = 0; i < this.food.length; i++){
-        if(this.food[i].title_food == this.myFoodAutocomplete){
-          existing = this.food[i].id_food;
-        }
-      }
-      return existing;
-    }
-
-  }]);
-
 
   app.controller("FoodCtrl",["$http", function($http){
-    this.food = {};
     this.foodrow1 = {};
     this.foodrow2 = {};
     this.page = 0;
     this.totalPage = [];
+    this.food = food;
 
     var foodCtrl = this;
 
+    this.changePage = function(numpage){
+      if(numpage > 0 && numpage <= this.totalPage.length){
+        this.page = numpage;
+        this.foodrow1 = food.slice((this.page-1)*50, (this.page-1)*50 + 25);
+        this.foodrow2 = food.slice((this.page-1)*50+25, (this.page-1)*50 + 50);
+      }
+    }
 
     $http.get('/food/all')
     .then(function(response){
       if("error" in response.data){
-        alert(response.data.error);
+        Materialize.toast(response.data.error, 2000);
       }
       else {
         foodCtrl.food = response.data;
@@ -358,43 +416,10 @@
           foodCtrl.totalPage.push(i + 1);
         }
         foodCtrl.changePage(1);
-        var data = {};
-
-        var setField = function(element){
-          data[element.title_food] = null;
-        }
-        response.data.forEach(setField);
-        $('#autocompleteFood').autocomplete({
-          data: data,
-          limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
-          onAutocomplete: function(val) {
-              var index = -1;
-              for(var i = 0; i < foodCtrl.food.length; i++){
-                if(foodCtrl.food[i].title_food.replace(/ /g, "").toLowerCase() == val.replace(/ /g, "").toLowerCase()){
-                  index = i;
-                }
-              }
-              if(index == -1){
-                Materialize.toast("Erreur.", 3000);
-              }
-              else {
-                //foodCtrl.changePage(Math.trunc(index/50) + 1);
-                Materialize.toast("Page : " + (Math.trunc(index/50) + 1) + " aliment : " + (index%50 + 1), 3000);
-              }
-          },
-          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-        });
       }
     });
 
 
-    this.changePage = function(numpage){
-      if(numpage > 0 && numpage <= this.totalPage.length){
-        this.page = numpage;
-        this.foodrow1 = this.food.slice((this.page-1)*50, (this.page-1)*50 + 25);
-        this.foodrow2 = this.food.slice((this.page-1)*50+25, (this.page-1)*50 + 50);
-      }
-    }
 
     this.activePage = function(i){
       return (i == this.page ? "active" : "");
@@ -409,14 +434,12 @@
 
     this.disableLeft = function(){
       return(this.page == 1 ? "disabled" :"");
-      alert("test");
     }
     this.disableRight = function(){
       return(this.page == this.totalPage.length ? "disabled" : "");
     }
 
   }]);
-
 
   app.controller("RecipesCtrl",["$http", function($http){
     this.recipes = {};
@@ -425,7 +448,8 @@
     $http.get("/recipes/getAll")
     .then(function(response){
       recipesCtrl.recipes = response.data;
-    })
+    });
+
   }]);
 
   app.controller("MyRecipesCtrl",["$http", function($http){
@@ -434,7 +458,10 @@
     this.types = {};
     this.difficulties = {};
     this.origins = {};
-
+    this.addRecipe = {submitvalue: "Créer la recette", submiticon: "library_add", food: {}};
+    this.userRecipes = function(){
+      return user.recipes;
+    }
     var myRecipesCtrl = this;
 
     this.setForm = function(){
@@ -457,9 +484,14 @@
       myRecipesCtrl.origins = response.data;
     });
 
-
+    this.existingFood = function(title_food){
+      return existingFood(title_food);
+    }
 
   }]);
 
+  app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+  }]);
 
 })();

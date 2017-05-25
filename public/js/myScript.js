@@ -47,11 +47,11 @@ $("#myfood").hover(function(){
   );
 });
 
+$("#addFormButton").click(function(){
+  $('select').material_select();
+  $('input#input_text, textarea#textarea1').characterCounter();
+});
 
 $(document).hover(function(){
   $('.collapsible').collapsible();
-  $(document).ready(function() {
-   $('select').material_select();
-  });
-
 });

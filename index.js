@@ -16,11 +16,13 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
+  console.log("/");
   response.render('pages/index');
 })
 
 //User Connection/Inscription
 .post('/connection', function (req, res, next) {
+  console.log("/connection");
   user.verifConnection(req, res, next);
 }
 ,function(req, res, next){
@@ -31,10 +33,12 @@ app.get('/', function(request, response) {
 })
 
 .post('/connectionCookie', function (req, res, next) {
+  console.log("/connectionCookie");
   user.connectionCookie(req, res, next);
 })
 
 .post('/inscription', function (req, res, next) {
+  conseole.log("/inscription");
   user.verifInscription(req,res,next);
 }
 ,function(req,res,next){
@@ -43,6 +47,7 @@ app.get('/', function(request, response) {
 })
 
 .post("/editPassword", function (req, res, next){
+  console.log("/editPassword");
   user.verifPassword(req, res, next);
 }
 ,function(req, res, next){
@@ -50,6 +55,7 @@ app.get('/', function(request, response) {
 })
 
 .put("/user/newPassword", function(req, res, next){
+  console.log("/user/newPassword");
   user.verifMail(req, res, next);
 }
 ,function(req, res){
@@ -58,28 +64,34 @@ app.get('/', function(request, response) {
 
 //Food
 .get("/food/all", function (req, res) {
+  console.log("/food/all");
   food.getFood(req,res);
 })
 
 .get("/user/myfood", function(req, res){
+  console.log("/user/myFood");
   food.getMyFood(req, res);
 })
 
 .post("/user/addFood", function(req, res){
+  console.log("/user/addFood");
   user.insertFood(req, res);
 })
 
 .put("/user/setFood", function(req, res){
+  console.log("/user/setFood");
   user.updateFood(req, res);
 })
 
 .delete("/user/delFood", function(req, res){
+  console.log("/user/delFood");
   user.deleteFood(req, res);
 })
 
 //Recettes
 
 .get("/recipes/:action", function(req, res){
+  console.log("/recipes/action");
   switch (req.params.action) {
     case 'getAll':
       recipes.getAll(req, res);
@@ -103,6 +115,7 @@ app.get('/', function(request, response) {
 })
 
 .get("/user/myRecipes", function(req, res){
+  console.log("/user/myRecipes");
   user.getRecipes(req, res);
 });
 

@@ -1,35 +1,35 @@
-<div class="page" id="myProfile" ng-show="userCtrl.connected()">
+<div class="page" id="myProfile" ng-show="pageCtrl.connected()" ng-controller="MyProfileCtrl as myProfileCtrl">
   <div class="container onBackground">
     <h3>Mon Compte</h3>
     <div class="divider"></div>
     <div class="section">
       <h5>Nom</h5>
-      <p>{{userCtrl.user.lastname}}</p>
+      <p>{{user.lastname}}</p>
     </div>
     <div class="divider"></div>
     <div class="section">
       <h5>Prénom</h5>
-      <p>{{userCtrl.user.firstname}}</p>
+      <p>{{user.firstname}}</p>
     </div>
     <div class="divider"></div>
     <div class="section">
       <h5>Sexe</h5>
-      <p>{{userCtrl.user.sexe}}</p>
+      <p>{{user.sexe}}</p>
     </div>
     <div class="divider"></div>
     <div class="section">
       <h5>Adresse mail</h5>
-      <p>{{userCtrl.user.mailadress}}</p>
+      <p>{{user.mailadress}}</p>
     </div>
     <div class="divider"></div>
     <div class="section">
       <h5>Date de naissance</h5>
-      <p>{{userCtrl.user.birthdate | date}}</p>
+      <p>{{user.birthdate | date}}</p>
     </div>
-    <form ng-submit="EditPassword.$valid && userCtrl.editpassword.newpassword == userCtrl.editpassword.newpasswordbis && userCtrl.editPassword()" name="EditPassword" novalidate>
-      <input type="password" placeholder="Mot de passe actuel" ng-model="userCtrl.editpassword.actualpassword" required/>
-      <input type="password" placeholder="Nouveau mot de passe" ng-model="userCtrl.editpassword.newpassword" required/>
-      <input type="password" placeholder="Nouveau mot de passe" ng-model="userCtrl.editpassword.newpasswordbis" required/>
+    <form ng-submit="EditPassword.$valid && myProfileCtrl.editpassword.newpassword == myProfileCtrl.editpassword.newpasswordbis && myProfileCtrl.editPassword()" name="EditPassword" novalidate>
+      <input type="password" placeholder="Mot de passe actuel" ng-model="myProfileCtrl.editpassword.actualpassword" required/>
+      <input type="password" placeholder="Nouveau mot de passe" ng-model="myProfileCtrl.editpassword.newpassword" required/>
+      <input type="password" placeholder="Nouveau mot de passe" ng-model="myProfileCtrl.editpassword.newpasswordbis" required/>
       <button class="btn waves-effect waves-light" type="submit" name="action">Modifier le mot de passe
         <i class="material-icons right">mode_edit</i>
       </button>

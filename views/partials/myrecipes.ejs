@@ -1,10 +1,10 @@
-<div class="page" id="myrecipes" ng-controller="MyRecipesCtrl as myRecipesCtrl" ng-show="userCtrl.connected()">
+<div class="page" id="myrecipes" ng-controller="MyRecipesCtrl as myRecipesCtrl" ng-show="pageCtrl.connected()">
   <div class="container onBackground">
     <h3>Mes recettes</h3>
     <div class="row">
 
       <ul class="collapsible popout" data-collapsible="accordion">
-       <li ng-repeat="recipe in userCtrl.recipes">
+       <li ng-repeat="recipe in myRecipesCtrl.userRecipes()">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" /><h4>{{recipe.title_recipe}}</h4></div>
          <div class="collapsible-body container">
            <div class="row"/>
@@ -26,25 +26,92 @@
        </li>
      </ul>
 
-      <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Créer Recette">
+      <a id='addFormButton' class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Créer Recette">
         <i ng-click="myRecipesCtrl.setForm()" class="material-icons">{{myRecipesCtrl.buttonType}}</i>
       </a>
-      <form ng-show="myRecipesCtrl.showForm" name="AddRecipe" ng-submit="AddRecipe.$valid" novalidate>
+      <form ng-show="myRecipesCtrl.showForm" name="AddRecipe" ng-submit="AddRecipe.$valid">
         <h3>Créer une recette</h3>
         <div class="row">
           <div class="input-field col s12">
-            <input id="title_recipe" type="text" ng-model='myRecipesCtrl.addRecipe.title_food' required>
+            <input id="title_recipe" type="text" ng-model='myRecipesCtrl.addRecipe.title_food'>
             <label class="active" for="title_recipe">Nom de la recette</label>
           </div>
           <div class="input-field col s12">
-            <select  ng-model='myRecipesCtrl.addRecipe.type' required>
-              <option value="" disabled ng-model='myRecipesCtrl.addRecipe.type' selected>Choose your option</option>
+            <select  ng-model='myRecipesCtrl.addRecipe.type'>
+              <option value="" disabled selected>Choisir</option>
               <option ng-repeat="type in myRecipesCtrl.types" ng-value='{{type.id_type}}'>{{type.title_type}}</option>
             </select>
             <label>Type de plat</label>
           </div>
-        </div>
+          <div class="input-field col s12">
+            <select  ng-model='myRecipesCtrl.addRecipe.origin'>
+              <option value="" disabled selected>Choisir</option>
+              <option ng-repeat="origin in myRecipesCtrl.origins" ng-value='{{origin.id_type}}'>{{origin.title_origin}}</option>
+            </select>
+            <label>Origine de la recette</label>
+          </div>
+          <div class="input-field col s12">
+            <select  ng-model='myRecipesCtrl.addRecipe.difficulty'>
+              <option value="" disabled selected>Choisir</option>
+              <option ng-repeat="difficulty in myRecipesCtrl.difficulties" ng-value='{{difficulty.id_difficulty}}'>{{difficulty.title_difficulty}}</option>
+            </select>
+            <label>Difficulté de la recette</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="number" id="timeAdd" ng-model="myRecipesCtrl.addRecipe.time" min=0 step=1 />
+            <label for="timeAdd">Temps de préparation (min)</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="number" id="peopleamountAdd" ng-model="myRecipesCtrl.addRecipe.peopleamount" min=0 step=1 />
+            <label for="peopleamountAdd">Nombre de personne</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="url" id="imageUrlAdd" ng-model="myRecipesCtrl.addRecipe.imgurl"/>
+            <label for="imageUrlAdd">Url de l'image</label>
+          </div>
+          <div class="input-field col s12">
+            <textarea id="descriptionAdd" class="materialize-textarea" ng-model="myRecipesCtrl.addRecipe.description" data-length="250" ng-maxlength="250"></textarea>
+            <label for="descriptionAdd">Courte description</label>
+          </div>
 
+          <h4>Aliments</h4>
+
+          <table>
+            <thead>
+              <tr>
+                  <th>Aliment</th>
+                  <th>Quantité</th>
+                  <th>Supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="food in myRecipesCtrl.addRecipe.food">
+                <td>{{food.title_food}}</td>
+                <td>{{food.quantity_containfood}}</td>
+                <td><a class="waves-effect waves-light btn red"><i class="material-icons left">delete</i></a></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="input-field col s12">
+            <input type="text" id="autocompleteMyRecipes" ng-model="myRecipesCtrl.review.title_food" class="autocomplete autocomplete2" required>
+            <label for="autocompleteMyRecipes">Aliment</label>
+          </div>
+          <div class="input-field col s6" ng-show="myRecipesCtrl.existingFood(myRecipesCtrl.review.title_food)">
+            <input type="number" id="quantityfoodAdd" ng-model="myRecipesCtrl.review.quantity" min=0 step=1 />
+            <label for="quantityfoodAdd">Quantité (g)</label>
+          </div>
+          <div class="input-field col s6" ng-show="myRecipesCtrl.existingFood(myRecipesCtrl.review.title_food)">
+            <button class="btn waves-effect waves-light" type="submit">Ajouter
+            </button>
+          </div>
+
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light" type="submit">{{myRecipesCtrl.addRecipe.submitvalue}}
+              <i class="material-icons right">{{myRecipesCtrl.addRecipe.submiticon}}</i>
+            </button>
+          </div>
+        </div>
       </form>
 
     </div>

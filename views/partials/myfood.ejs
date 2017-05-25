@@ -1,14 +1,14 @@
-<div class="page noBackground" id="myfood" ng-controller="MyFoodCtrl as myFoodCtrl" ng-show="userCtrl.connected()">
+<div class="page noBackground" id="myfood" ng-controller="MyFoodCtrl as myFoodCtrl" ng-show="pageCtrl.connected()">
   <div class="container">
 
     <div id="modal1" class="modal">
       <form name="Modal" ng-submit="Modal.$valid " novalidate>
         <div class="modal-content">
           <h4>{{myFoodCtrl.modal.title_food}}</h4>
-          <input id="inputModal" type="number" min=0 step=1 max={{myFoodCtrl.modal.max}} ng-model="userCtrl.modal.inputValue" required/><span>g</span>
+          <input id="inputModal" type="number" min=0 step=1 max={{myFoodCtrl.modal.max}} ng-model="myFoodCtrl.modal.inputValue" required/><span>g</span>
         </div>
         <div class="modal-footer">
-          <input type="submit" onclick="$('#inputModal').val('')" ng-click="userCtrl.updateQuantityFood(myFoodCtrl.modal.id_food, myFoodCtrl.modal.action, userCtrl.modal.inputValue)" class="modal-action modal-close waves-effect waves-green btn-flat" value="{{myFoodCtrl.modal.action}}"/>
+          <input type="submit" onclick="$('#inputModal').val('')" ng-click="myFoodCtrl.updateQuantityFood(myFoodCtrl.modal.id_food, myFoodCtrl.modal.action, myFoodCtrl.modal.inputValue)" class="modal-action modal-close waves-effect waves-green btn-flat" value="{{myFoodCtrl.modal.action}}"/>
           <a href="" onclick="$('#inputModal').val('')" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
         </div>
       </form>
@@ -19,28 +19,28 @@
     <form name="myFoodAction" novalidate>
       <div class="row">
         <div class="input-field col s12">
-          <input type="text" id="autocompleteMyFood" ng-model="myFoodCtrl.myFoodAutocomplete" class="autocomplete" required>
+          <input type="text" id="autocompleteMyFood" ng-model="myFoodCtrl.myFoodAutocomplete" class="autocomplete autocomplete2" required>
           <label for="autocompleteMyFood">Aliment</label>
         </div>
       </div>
-      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood()">
+      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood(myFoodCtrl.myFoodAutocomplete)">
         <div class="input-field col s6">
           <input type="number" min=0 step="1" ng-model="myFoodCtrl.quantity" required/>
           <label for="input_text">Quantité (g)</label>
         </div>
       </div>
-      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood()">
+      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood(myFoodCtrl.myFoodAutocomplete)">
         <div class="input-field col s3">
-          <a class="green btn tooltipped" ng-click="myFoodAction.$valid && userCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Ajouter',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a>
+          <a class="green btn tooltipped" ng-click="myFoodAction.$valid && myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Ajouter',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a>
         </div>
         <div class="input-field col s3">
-          <a class="orange btn tooltipped" ng-click="myFoodAction.$valid && userCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Enlever',myFoodCtrl.quantity)" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a>
+          <a class="orange btn tooltipped" ng-click="myFoodAction.$valid && myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Enlever',myFoodCtrl.quantity)" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a>
         </div>
         <div class="input-field col s3">
-          <a class="yellow btn tooltipped" ng-click="myFoodAction.$valid && userCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Initialiser',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a>
+          <a class="yellow btn tooltipped" ng-click="myFoodAction.$valid && myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Initialiser',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a>
         </div>
         <div class="input-field col s3">
-          <a class="red btn tooltipped" ng-click="userCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Enlever',0)" data-position="bottom" data-delay="50" data-tooltip="Supprimer"><i class="material-icons">delete</i></a>
+          <a class="red btn tooltipped" ng-click="myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Enlever',0)" data-position="bottom" data-delay="50" data-tooltip="Supprimer"><i class="material-icons">delete</i></a>
         </div>
       </div>
     </form>
@@ -57,7 +57,7 @@
           </thead>
 
           <tbody>
-            <tr ng-repeat="food in userCtrl.food" ng-show="food.quantity_getfood">
+            <tr ng-repeat="food in myFoodCtrl.userFood()" ng-show="food.quantity_getfood">
               <td>{{food.title_food}}</td>
               <td>{{food.quantity_getfood}} g</td>
               <td>
@@ -69,7 +69,7 @@
                     <li><a ng-click="myFoodCtrl.setModalAdd(food.id_food)" href="#modal1" class="btn-floating green btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a></li>
                     <li><a ng-click="myFoodCtrl.setModalSub(food.id_food)" href="#modal1" class="btn-floating orange btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a></li>
                     <li><a ng-click="myFoodCtrl.setModalNew(food.id_food)" href="#modal1" class="btn-floating yellow btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a></li>
-                    <li><a ng-click="userCtrl.updateQuantityFood(food.id_food,'Delete',0)" class="btn-floating red btn" ><i class="material-icons">delete</i></a></li>
+                    <li><a ng-click="myFoodCtrl.updateQuantityFood(food.id_food,'Delete',0)" class="btn-floating red btn" ><i class="material-icons">delete</i></a></li>
                   </ul>
                 </div>
               </td>
