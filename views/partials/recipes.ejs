@@ -1,5 +1,8 @@
 <div class="page noBackground" id="recipes" ng-controller="RecipesCtrl as recipesCtrl">
   <div class="container">
+
+    <a ng-click="recipesCtrl.findRecipes()" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Avec mes aliments</a>
+
     <h3>Recettes</h3>
     <div class="row">
 
@@ -7,7 +10,7 @@
        <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
-           <a uk-scroll href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <a ng-show="pageCtrl.connected()" uk-scroll href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>

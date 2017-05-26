@@ -113,6 +113,14 @@ app.get('/', function(request, response) {
       recipes.getOne(req, res);
       break;
 
+    case 'find':
+      console.log(Array.isArray(req.query.food));
+      if(!Array.isArray(req.query.food)){
+        req.query.food = [req.query.food];
+      }
+      recipes.findRecipes(req, res);
+      break;
+
     default:
       res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
   }

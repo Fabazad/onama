@@ -470,6 +470,17 @@
       });
     }
 
+    this.findRecipes = function(){
+      $http.get("/recipes/find",{params:{id_user: user.id_user, food: user.food}}).then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else{
+          recipes = response.data;
+        }
+      });
+    }
+
   }]);
 
   app.controller("MyRecipesCtrl",["$http", function($http){
