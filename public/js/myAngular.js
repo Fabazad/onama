@@ -37,7 +37,7 @@
   var chargement = false;
   var user = {};
   var food = {};
-  var recipes = {};
+  var recipes = [];
   var recipe = {};
 
   //Verifie si l'aliment et renvoie l'id
@@ -450,9 +450,13 @@
     this.recipes = {};
     var recipesCtrl = this;
 
+    this.getRecipes = function(){
+      return recipes;
+    }
+
     $http.get("/recipes/getAll")
     .then(function(response){
-      recipesCtrl.recipes = response.data;
+      recipes = response.data;
     });
 
     this.makeShowRecipe = function(id_recipe){
@@ -572,6 +576,7 @@
             Materialize.toast(response.data.error, 2000);
           }
           else{
+
             Materialize.toast("Crée.", 2000);
             myRecipesCtrl.addRecipe = {};
             myRecipesCtrl.food = [];
@@ -579,6 +584,8 @@
             myRecipesCtrl.instructions = [];
             myRecipesCtrl.showForm = false;
             myRecipesCtrl.buttonType = 'add';
+            user.recipes.push(response.data);
+            recipes.push(response.data);
           }
           chargement = false;
         });
@@ -603,12 +610,12 @@
     this.deleteRecipe = function(id_recipe){
       for(var i = 0; i < user.recipes.length; i++){
         if(user.recipes[i].id_recipe == id_recipe){
-          user.recipes.slice(i,1);
+          user.recipes.splice(i,1);
         }
       }
       for(var i = 0; i < recipes.length; i++){
         if(recipes[i].id_recipe == id_recipe){
-          recipes.slice(i,1);
+          recipes.splice(i,1);
         }
       }
       $http.delete("/recipes/delete/" + id_recipe).then(function(response){
