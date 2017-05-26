@@ -60,6 +60,49 @@
           </li>
         </ul>
       </div>
+      <br>
+
+      <h4>Poids, prix et valeur nutritives</h4>
+
+      <div class="row">
+        <div class="col s12">
+          <table class="bordered">
+              <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>valeur</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Poids total</td>
+                  <td>{{recipe.totalQuantity}} g</td>
+                </tr>
+                <tr>
+                  <td>Prix</td>
+                  <td>{{recipe.price}} €</td>
+                </tr>
+                <tr>
+                  <td>Calories</td>
+                  <td>{{recipe.calorie | number:2}} g/100g</td>
+                </tr>
+                <tr>
+                  <td>Protéines</td>
+                  <td>{{recipe.proteins | number:2}} g/100g</td>
+                </tr>
+                <tr>
+                  <td>Lipides</td>
+                  <td>{{recipe.lipids | number:2}} g/100g</td>
+                </tr>
+                <tr>
+                  <td>Glucides</td>
+                  <td>{{recipe.carbohydrates | number:2}} g/100g</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
     </div>
   </div>

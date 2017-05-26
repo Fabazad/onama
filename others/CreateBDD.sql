@@ -28,7 +28,7 @@ CREATE TABLE public.USER(
 ------------------------------------------------------------
 CREATE TABLE public.FOOD(
 	id_food       SERIAL NOT NULL ,
-	title_food    VARCHAR (150)  ,
+	title_food    VARCHAR (150) NOT NULL UNIQUE,
 	price         FLOAT8   ,
 	calorie       FLOAT8   ,
 	proteins      FLOAT8   ,
@@ -44,7 +44,7 @@ CREATE TABLE public.FOOD(
 ------------------------------------------------------------
 CREATE TABLE public.RECIPE(
 	id_recipe     SERIAL NOT NULL ,
-	title_recipe  VARCHAR (255)  ,
+	title_recipe  VARCHAR (255) NOT NULL UNIQUE,
 	description   VARCHAR (500)  ,
 	time_recipe   INT   ,
 	popularity    INT   ,
@@ -63,7 +63,7 @@ CREATE TABLE public.RECIPE(
 ------------------------------------------------------------
 CREATE TABLE public.DIFFICULTY(
 	id_difficulty    SERIAL NOT NULL ,
-	title_difficulty VARCHAR (255)  ,
+	title_difficulty VARCHAR (255) NOT NULL UNIQUE,
 	CONSTRAINT prk_constraint_DIFFICULTY PRIMARY KEY (id_difficulty)
 )WITHOUT OIDS;
 
@@ -73,7 +73,7 @@ CREATE TABLE public.DIFFICULTY(
 ------------------------------------------------------------
 CREATE TABLE public.ORIGIN(
 	id_origin    SERIAL NOT NULL ,
-	title_origin VARCHAR (255)  ,
+	title_origin VARCHAR (255) NOT NULL UNIQUE,
 	CONSTRAINT prk_constraint_ORIGIN PRIMARY KEY (id_origin)
 )WITHOUT OIDS;
 
@@ -94,7 +94,7 @@ CREATE TABLE public.INSTRUCTIONS(
 ------------------------------------------------------------
 CREATE TABLE public.EQUIPMENT(
 	id_equipment    SERIAL NOT NULL ,
-	title_equipment VARCHAR (255)  ,
+	title_equipment VARCHAR (255) NOT NULL UNIQUE,
 	single          BOOL   ,
 	CONSTRAINT prk_constraint_EQUIPMENT PRIMARY KEY (id_equipment)
 )WITHOUT OIDS;
@@ -105,7 +105,7 @@ CREATE TABLE public.EQUIPMENT(
 ------------------------------------------------------------
 CREATE TABLE public.TYPE(
 	id_type    SERIAL NOT NULL ,
-	title_type VARCHAR (255)  ,
+	title_type VARCHAR (255) NOT NULL UNIQUE,
 	CONSTRAINT prk_constraint_TYPE PRIMARY KEY (id_type)
 )WITHOUT OIDS;
 

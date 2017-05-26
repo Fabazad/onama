@@ -3,7 +3,7 @@
     <h1>Inscription</h1>
     <form name="Inscription" ng-submit="Inscription.$valid && inscriptionCtrl.inscription.password == inscriptionCtrl.inscription.passwordbis && inscriptionCtrl.getInscription()" novalidate>
       <label class="form_col" for="homme" style="float:left">Sexe :</label><br>
-			<p><input name="sexe" type="radio" value="homme" id="homme" ng-model="inscriptionCtrlinscriptionCtrl.inscription.sexe"/><label for="homme">Homme</label></p>
+			<p><input name="sexe" type="radio" value="homme" id="homme" ng-model="inscriptionCtrl.inscription.sexe"/><label for="homme">Homme</label></p>
 			<p><input name="sexe" type="radio" value="femme" id="femme" ng-model="inscriptionCtrl.inscription.sexe"/><label for="femme">Femme</label></p>
       <div class="input-field">
         <input id="lastname" name="lastname" type="text" ng-model="inscriptionCtrl.inscription.lastname" required/>
