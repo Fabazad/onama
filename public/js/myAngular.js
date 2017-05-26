@@ -279,6 +279,11 @@
         }
       });
     };
+
+    this.getUser = function(){
+      return [user];
+    }
+
   }]);
 
   app.controller("MyFoodCtrl",["$http", function($http){
