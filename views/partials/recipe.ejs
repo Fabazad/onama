@@ -1,0 +1,66 @@
+<div ng-controller="RecipeCtrl as recipeCtrl" class="page noBackground" id="recipe" ng-show="recipeCtrl.showRecipe()">
+  <div class="container" ng-repeat="recipe in recipeCtrl.getRecipe()">
+    <h3>Recette : {{recipe.title_recipe}}</h3>
+    <div class="row">
+      <div class="col s12">
+        <img class="recipeimg" ng-src="{{recipe.imgurl}}"/>
+      </div>
+    </div>
+    <div class='row'>
+      <div class="col s12">
+        <h5>{{recipe.description}}</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <ul>
+          <li><h5><h5>Type : {{recipe.title_type}}</h5></h5></li>
+          <li><h5>Difficulté : {{recipe.title_difficulty}}</h5></li>
+          <li><h5>Pour {{recipe.peopleamount}} personnes</h5></li>
+        </ul>
+      </div>
+      <div class="col s6">
+        <ul>
+          <li><h5>Temps : {{recipe.time_recipe}}</h5></li>
+          <li><h5>Origine : {{recipe.title_origin}}</h5></li>
+          <li><h5>popularité {{recipe.popularity}} vues</h5></li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>Ingrédients</h4>
+
+    <div class="row">
+      <div class="col s12">
+        <table class="bordered">
+            <thead>
+              <tr>
+                  <th>Nom</th>
+                  <th>Quantité (g)</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="food in recipe.food">
+                <td>{{food.title_food}}</td>
+                <td>{{food.quantity_containfood}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+
+      <h4>Instructions</h4>
+
+      <div class="instructions">
+        <ul>
+          <li ng-repeat="instruction in recipe.instructions">
+            <h5><i class="tiny material-icons">label</i>{{instruction}}</h5>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

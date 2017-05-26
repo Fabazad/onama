@@ -158,3 +158,30 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 .collapsible-body{
   padding: 0px;
 }
+.collapsible-header>a{
+  float: right;
+  margin-top: 10px;
+}
+.btn-floating.btn-large i {
+    width: inherit;
+  }
+.recipeimg {
+    box-shadow: 0px 0px 10px black;
+}
+.instructions{
+  text-align: left;
+}
+.instructions>ul>li>h5>i{
+  margin-right: 10px;
+}
+.collapsible.popout>li {
+  position: relative;
+}
+.deleteRecipeBtn{
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+.collapsible-header i {
+  width: inherit
+}

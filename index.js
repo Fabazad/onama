@@ -109,6 +109,10 @@ app.get('/', function(request, response) {
       recipes.getOrigins(req, res);
       break;
 
+    case 'getOne':
+      recipes.getOne(req, res);
+      break;
+
     default:
       res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
   }
@@ -132,6 +136,10 @@ app.get('/', function(request, response) {
 }
 ,function(req, res){
   recipes.addFood(req, res);
+})
+
+.delete("/recipes/delete/:id_recipe", function(req, res){
+  recipes.deleteRecipe(req, res);
 });
 
 

@@ -36,9 +36,9 @@
 
   var chargement = false;
   var user = {};
-  var food= {};
-  var recipes ={};
-
+  var food = {};
+  var recipes = {};
+  var recipe = {};
 
   //Verifie si l'aliment et renvoie l'id
   var existingFood = function(title_food){
@@ -450,6 +450,17 @@
       recipesCtrl.recipes = response.data;
     });
 
+    this.makeShowRecipe = function(id_recipe){
+      $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else{
+          recipe = response.data;
+        }
+      });
+    }
+
   }]);
 
   app.controller("MyRecipesCtrl",["$http", function($http){
@@ -573,10 +584,49 @@
       }
     }
 
+    this.makeShowRecipe = function(id_recipe){
+      $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+        else{
+          recipe = response.data;
+        }
+      });
+    }
 
+    this.deleteRecipe = function(id_recipe){
+      for(var i = 0; i < user.recipes.length; i++){
+        if(user.recipes[i].id_recipe == id_recipe){
+          user.recipes.slice(i,1);
+        }
+      }
+      for(var i = 0; i < recipes.length; i++){
+        if(recipes[i].id_recipe == id_recipe){
+          recipes.slice(i,1);
+        }
+      }
+      $http.delete("/recipes/delete/" + id_recipe).then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+      });
+    }
 
   }]);
 
+  app.controller("RecipeCtrl",["$http", function($http){
+
+
+    this.showRecipe = function(){
+      return ('id_recipe' in recipe);
+    }
+
+    this.getRecipe = function(){
+      Materialize.toast(recipe.length,1000);
+      return [recipe];
+    }
+  }]);
 
 
 })();

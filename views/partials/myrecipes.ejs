@@ -5,7 +5,11 @@
 
       <ul class="collapsible popout" data-collapsible="accordion">
        <li ng-repeat="recipe in myRecipesCtrl.userRecipes()">
-         <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" /><h4>{{recipe.title_recipe}}</h4></div>
+         <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
+           <h4>{{recipe.title_recipe}}</h4>
+           <a uk-scroll href="#recipe" ng-click="myRecipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <a ng-click="myRecipesCtrl.deleteRecipe(recipe.id_recipe)" class="btn-floating waves-light btn red deleteRecipeBtn"><i class="material-icons left">delete</i></a>
+         </div>
          <div class="collapsible-body container">
            <div class="row"/>
              <div class="col s12" style="margin-bottom:10px">
