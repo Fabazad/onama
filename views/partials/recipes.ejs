@@ -10,7 +10,7 @@
        <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
-           <a uk-scroll href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <a uk-scroll href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>

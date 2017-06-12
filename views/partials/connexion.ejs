@@ -4,7 +4,8 @@
     <div class="modal-content">
       <div class="row">
         <div class="input-field col s12">
-          <input type="email" placeholder="Votre adresse mail" id='mailLostPassword' ng-model="connectionCtrl.mailLostPassword" required/>
+          <input type="email" id='mailLostPassword' ng-model="connectionCtrl.mailLostPassword" required/>
+          <label for="firstmailLostPassword">Votre adresse mail</label>
         </div>
       </div>
     </div>
@@ -22,8 +23,14 @@
 
     <h3>Connexion</h3>
     <form ng-submit="Connection.$valid && connectionCtrl.getConnection()" name="Connection" novalidate>
-      <input type="email" placeholder="Adresse Mail" ng-model="connectionCtrl.connection.mailadress" required/>
-      <input type="password" placeholder=" Mot de Passe" ng-model="connectionCtrl.connection.password" required/>
+      <div class="input-field col s12">
+        <input type="email" id="mailadressconnection" ng-model="connectionCtrl.connection.mailadress" required/>
+        <label for="mailadressconnection">Adresse mail</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="password" id="passwordconnection" ng-model="connectionCtrl.connection.password" required/>
+        <label for="passwordconnection">Mot de passe</label>
+      </div>
       <input type="checkbox" id="stayconnected" ng-model="connectionCtrl.connection.stayconnected"/><label style="float:left" for="stayconnected">Rester connecté </label>
       <a style="float:right" href="#modalLostPassword" >Mot de pass oublié ?</a><br>
       <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
