@@ -290,6 +290,7 @@
     this.food = {};
     this.modal = {};
     this.userfood = user.food;
+    this.quantity = 0;
     var myFoodCtrl = this;
 
 
@@ -313,7 +314,12 @@
 
     //Initialiser la fenetre modal
     this.existingFood = function(title_food = this.myFoodAutocomplete){
-      return existingFood(title_food);
+      var idfood = existingFood(title_food);
+      if(idfood){
+        this.quantity = getQuantity(idfood);
+        $("#quantityMyFood").select();
+      }
+      return idfood;
     }
 
     this.setModalAdd = function(id){
@@ -389,6 +395,9 @@
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           break;
       }
+      this.quantity = 0;
+      this.myFoodAutocomplete = "";
+      $("#autocompleteMyFood").focus();
     }
 
   }]);

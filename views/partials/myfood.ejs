@@ -23,9 +23,9 @@
           <label for="autocompleteMyFood">Aliment</label>
         </div>
       </div>
-      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood(myFoodCtrl.myFoodAutocomplete)">
+      <div class="row scale-transition" ng-show="myFoodCtrl.existingFood()">
         <div class="input-field col s6">
-          <input type="number" min=0 step="1" ng-model="myFoodCtrl.quantity" required/>
+          <input id="quantityMyFood" type="number" min=0 step="1" ng-model="myFoodCtrl.quantity" required/>
           <label for="input_text">Quantité (g)</label>
         </div>
       </div>
@@ -40,7 +40,7 @@
           <a class="yellow btn tooltipped" ng-click="myFoodAction.$valid && myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Initialiser',myFoodCtrl.quantity, myFoodCtrl.myFoodAutocomplete)" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a>
         </div>
         <div class="input-field col s3">
-          <a class="red btn tooltipped" ng-click="myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Enlever',0)" data-position="bottom" data-delay="50" data-tooltip="Supprimer"><i class="material-icons">delete</i></a>
+          <a class="red btn tooltipped" ng-click="myFoodCtrl.updateQuantityFood(myFoodCtrl.existingFood(),'Delete',0)" data-position="bottom" data-delay="50" data-tooltip="Supprimer"><i class="material-icons">delete</i></a>
         </div>
       </div>
     </form>
