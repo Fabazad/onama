@@ -30,8 +30,10 @@ a{
   box-shadow: 0px 0px 4px;
   padding: 50px;
 }
-body{
+html{
   background-image: url("../img/Fondecran2.jpg");
+  background-attachment: fixed;
+  background-size: cover;
 }
 #home{
   padding-top: 1px;
