@@ -11,6 +11,9 @@ h3{
   color: #008F45;
   text-shadow: 1px 1px 3px;
 }
+h4 {
+  color: #806b49;
+}
 .imgHome{
   width: 65%;
   box-shadow: 0px 0px 7px black;
@@ -189,4 +192,12 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   position: absolute;
   right: 10px;
   top: 10px;
+}
+.titleLogo {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  max-width: 65px;
+}
+#recipe .container {
+  text-align: left;
 }
