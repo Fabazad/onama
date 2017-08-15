@@ -291,6 +291,7 @@
     this.modal = {};
     this.userfood = user.food;
     this.quantity = 0;
+    this.idFood = 0;
     var myFoodCtrl = this;
 
 
@@ -314,12 +315,11 @@
 
     //Initialiser la fenetre modal
     this.existingFood = function(title_food = this.myFoodAutocomplete){
-      var idfood = existingFood(title_food);
-      if(idfood){
-        this.quantity = getQuantity(idfood);
-        $("#quantityMyFood").select();
+      this.idFood = existingFood(title_food);
+      if(this.idFood){
+        this.quantity = getQuantity(this.idFood);
       }
-      return idfood;
+      return this.idFood;
     }
 
     this.setModalAdd = function(id){

@@ -135,9 +135,6 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   font-size: 4em;
   vertical-align: middle;
 }
-#modal1 {
-  width: 40%;
-}
 #modalLostPassword {
   width: 50%;
 }
