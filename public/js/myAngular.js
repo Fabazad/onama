@@ -554,6 +554,11 @@
           }
         }
       });
+      $http.post("recipes/addView",{id_recipe: id_recipe}).then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+      });
     }
 
     this.findRecipes = function(){

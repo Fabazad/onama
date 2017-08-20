@@ -146,6 +146,11 @@ app.get('/', function(request, response) {
   recipes.addFood(req, res);
 })
 
+.post("/recipes/addView", function(req, res){
+  console.log(req.body.id_recipe);
+  recipes.addView(req, res);
+})
+
 .delete("/recipes/delete/:id_recipe", function(req, res){
   recipes.deleteRecipe(req, res);
 });
