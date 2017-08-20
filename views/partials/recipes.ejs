@@ -3,7 +3,59 @@
 
 
     <h3>Recettes</h3>
-    <a ng-click="recipesCtrl.findRecipes()" ng-show="pageCtrl.connected()" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Avec mes aliments</a>
+    <a ng-submit="alert('test');" ng-click="recipesCtrl.switchShowSearch()" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Recherche filtrée</a>
+    <form ng-show="recipesCtrl.showSearch()" >
+      <div class="row">
+        <div class="input-field s12">
+          <input type="checkbox" id="myFoodCheckbox" ng-model="recipesCtrl.search.myFood"/><label for="myFoodCheckbox">Avec mes aliments</label>
+        </div>
+        <div class="input-field col s12">
+          <select multiple>
+            <option value="" disabled selected>Peu importe</option>
+            <option ng-repeat="type in recipesCtrl.types" ng-value='{{type.id_type}}'>{{type.title_type}}</option>
+          </select>
+          <label>Types</label>
+        </div>
+        <div class="input-field col s12">
+          <select multiple>
+            <option value="" disabled selected>Peu importe</option>
+            <option ng-repeat="difficulty in recipesCtrl.difficulties" ng-value='{{difficulty.id_difficulty}}'>{{difficulty.title_difficulty}}</option>
+          </select>
+          <label>Difficultées</label>
+        </div>
+        <div class="input-field col s12">
+          <select multiple>
+            <option value="" disabled selected>Peu importe</option>
+            <option ng-repeat="origin in recipesCtrl.origins" ng-value='{{origin.id_origin}}'>{{origin.title_origin}}</option>
+          </select>
+          <label>Origines</label>
+        </div>
+        <div class="input-field col s12">
+          <input type="number" id="timeAdd" min=0 step=1 max=9999/>
+          <label for="timeMax">Temps de préparation maximum (min)</label>
+        </div>
+        <div class="input-field col s12">
+          <input type="number" id="peopleamountAdd" min=0 step=1 max=99/>
+          <label for="peopleamountAdd">Nombre de personne minimum</label>
+        </div>
+        <div class="input-field col s6">
+          <select>
+            <option value="" selected>Pas besoin</option>
+            <option ng-repeat="nutrionalValue in recipesCtrl.nutrionalValues" value="{{nutrionalValue}}">{{nutrionalValue}}</option>
+          </select>
+          <label>Trier par</label>
+        </div>
+        <div class="input-field col s6">
+          <select>
+            <option value="0" selected>Croissant</option>
+            <option value="1">Décroissant</option>
+          </select>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Rechercher</button>
+        </div>
+      </div>
+    </form>
     <div class="row">
 
       <ul class="collapsible popout" data-collapsible="accordion">

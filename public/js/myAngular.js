@@ -39,6 +39,9 @@
   var food = {};
   var recipes = [];
   var recipe = {};
+  var types = {};
+  var difficulties = {};
+  var origins = {};
 
   //Verifie si l'aliment et renvoie l'id
   var existingFood = function(title_food){
@@ -189,6 +192,18 @@
         });
       }
     });
+
+    //Récupérer les caractéristiques de toute les recettes
+    $http.get("/recipes/types").then(function(response){
+      types = response.data;
+    });
+    $http.get("/recipes/difficulties").then(function(response){
+      difficulties = response.data;
+    });
+    $http.get("/recipes/origins").then(function(response){
+      origins = response.data;
+    });
+
   }]);
 
   app.controller("ConnectionCtrl",["$http", '$cookies', function($http, $cookies){
@@ -327,18 +342,21 @@
       this.modal.action = "Ajouter";
       this.modal.title_food = findTitle_food(id);
       this.modal.max = "";
+      $("#inputModal").select();
     }
     this.setModalSub = function(id, q){
       this.modal.id_food = id;
       this.modal.action = "Enlever";
       this.modal.title_food = findTitle_food(id);
       this.modal.max = q;
+      $("#inputModal").select();
     }
     this.setModalNew = function(id){
       this.modal.id_food = id;
       this.modal.action = "Initialiser";
       this.modal.title_food = findTitle_food(id);
       this.modal.max = "";
+      $("#inputModal").select();
     }
 
 
@@ -397,7 +415,7 @@
       }
       this.quantity = 0;
       this.myFoodAutocomplete = "";
-      $("#autocompleteMyFood").focus();
+      $("#autocompleteMyFood").select();
     }
 
   }]);
@@ -457,6 +475,12 @@
 
   app.controller("RecipesCtrl",["$http", function($http){
     this.recipes = {};
+    this.search = {
+      show : 0,
+      myFood : false
+    }
+    this.nutrionalValues = ["Prix","Calories","Protéines","Lipides","Glucides"];
+
     var recipesCtrl = this;
 
     this.getRecipes = function(){
@@ -474,13 +498,66 @@
           Materialize.toast(response.data.error, 2000);
         }
         else{
-          recipe = response.data;
+          var rows = response.data;
+          var instructions = [];
+          var food = [];
+          var title_food_Arr = [];
+          var quantity_containfood_Arr = [];
+          var row = {};
+          var price = 0;
+          var calorie = 0;
+          var proteins = 0;
+          var lipids = 0;
+          var carbohydrates = 0;
+          var quantityTotal = 0;
+
+          rows.forEach(function(row){
+            if(instructions.indexOf(row.title_instruction) == -1){
+              instructions.push(row.title_instruction);
+            }
+            if(title_food_Arr.indexOf(row.title_food) == -1){
+              title_food_Arr.push(row.title_food);
+              quantity_containfood_Arr.push(row.quantity_containfood);
+              price += row.price*row.quantity_containfood/1000;
+              calorie += row.calorie*row.quantity_containfood/100;
+              proteins += row.proteins*row.quantity_containfood/100;
+              lipids += row.lipids*row.quantity_containfood/100;
+              carbohydrates += row.carbohydrates*row.quantity_containfood/100;
+              quantityTotal += row.quantity_containfood;
+            }
+          });
+
+          for(var i = 0; i < title_food_Arr.length; i++){
+            food.push({title_food: title_food_Arr[i], quantity_containfood: quantity_containfood_Arr[i]});
+          }
+          var row1 = rows[0];
+          recipe = {
+            id_recipe: row1.id_recipe,
+            title_recipe: row1.title_recipe,
+            time_recipe : row1.time_recipe,
+            description: row1.description,
+            title_difficulty: row1.title_difficulty,
+            popularity: row1.popularity,
+            peopleamount: row1.peopleamount,
+            imgurl: row1.imgurl,
+            title_type: row1.title_type,
+            title_origin: row1.title_origin,
+            title_difficulty: row1.title_difficulty,
+            instructions: instructions,
+            food: food,
+            price: price,
+            calorie: calorie/(quantityTotal/100),
+            proteins: proteins/(quantityTotal/100),
+            lipids: lipids/(quantityTotal/100),
+            carbohydrates: carbohydrates/(quantityTotal/100),
+            totalQuantity: quantityTotal
+          }
         }
       });
     }
 
     this.findRecipes = function(){
-      $http.get("/recipes/find",{params:{id_user: user.id_user, food: user.food}}).then(function(response){
+      $http.get("/recipes/find",{params:{id_user: user.id_user}}).then(function(response){
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
         }
@@ -490,14 +567,25 @@
       });
     }
 
+    this.switchShowSearch = function(){
+      this.types = types;
+      this.difficulties = difficulties;
+      this.origins = origins
+      this.search.show = Math.abs(this.search.show - 1);
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+    }
+
+    this.showSearch = function(){
+      return this.search.show;
+    }
+
   }]);
 
   app.controller("MyRecipesCtrl",["$http", function($http){
     this.buttonType = 'add';
     this.showForm = false;
-    this.types = {};
-    this.difficulties = {};
-    this.origins = {};
     this.addRecipe = {submitvalue: "Créer la recette", submiticon: "library_add", food: {}};
     this.food = [];
     this.review = {};
@@ -518,18 +606,11 @@
       }else {
         this.showForm = true;
         this.buttonType = 'stop';
+        this.types = types;
+        this.difficulties = difficulties;
+        this.origins = origins
       }
     }
-
-    $http.get("/recipes/types").then(function(response){
-      myRecipesCtrl.types = response.data;
-    });
-    $http.get("/recipes/difficulties").then(function(response){
-      myRecipesCtrl.difficulties = response.data;
-    });
-    $http.get("/recipes/origins").then(function(response){
-      myRecipesCtrl.origins = response.data;
-    });
 
     this.existingFood = function(title_food){
       return existingFood(title_food);

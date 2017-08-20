@@ -91,7 +91,7 @@ app.get('/', function(request, response) {
 //Recettes
 
 .get("/recipes/:action", function(req, res){
-  console.log("/recipes/action");
+  console.log("/recipes/" + req.params.action);
   switch (req.params.action) {
     case 'getAll':
       recipes.getAll(req, res);
