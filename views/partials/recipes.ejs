@@ -6,7 +6,7 @@
     <a ng-submit="alert('test');" ng-click="recipesCtrl.switchShowSearch()" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Recherche filtrée</a>
     <form ng-show="recipesCtrl.showSearch()" >
       <div class="row">
-        <div class="input-field s12">
+        <div class="input-field s12" ng-show="pageCtrl.connected()">
           <input type="checkbox" id="myFoodCheckbox" ng-model="recipesCtrl.search.myFood"/><label for="myFoodCheckbox">Avec mes aliments</label>
         </div>
         <div class="input-field col s12">
@@ -83,7 +83,6 @@
          </div>
        </li>
      </ul>
-
     </div>
   </div>
 </div>

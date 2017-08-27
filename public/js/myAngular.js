@@ -248,17 +248,22 @@
     var inscriptionCtrl = this;
     //Inscription
     this.getInscription = function(){
-      chargement = true;
-      $http.post('/inscription', this.inscription).then(function(response){
-        chargement = false;
-        inscriptionCtrl.inscription = {};
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 3000);
-        }
-        else {
-          Materialize.toast("Inscrit.", 3000);
-        }
-      });
+      if(inscriptionCtrl.inscription.password != inscriptionCtrl.inscription.passwordbis){
+        Materialize.toast("Les deux mots de passes ne sont pas identiques.", 3000);
+      }
+      else{
+        chargement = true;
+        $http.post('/inscription', this.inscription).then(function(response){
+          chargement = false;
+          inscriptionCtrl.inscription = {};
+          if("error" in response.data){
+            Materialize.toast(response.data.error, 3000);
+          }
+          else {
+            Materialize.toast("Inscrit.", 3000);
+          }
+        });
+      }
     };
   }]);
 
@@ -479,7 +484,7 @@
       show : 0,
       myFood : false
     }
-    this.nutrionalValues = ["Prix","Calories","Protéines","Lipides","Glucides"];
+    this.nutrionalValues = ["Prix","Popularité","Calories","Protéines","Lipides","Glucides"];
 
     var recipesCtrl = this;
 
