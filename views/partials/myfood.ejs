@@ -64,9 +64,9 @@
                     <i class="large material-icons">mode_edit</i>
                   </a>
                   <ul>
-                    <li><a ng-click="myFoodCtrl.setModalAdd(food.id_food)" href="#modal1" class="btn-floating green btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a></li>
-                    <li><a ng-click="myFoodCtrl.setModalSub(food.id_food)" href="#modal1" class="btn-floating orange btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a></li>
-                    <li><a ng-click="myFoodCtrl.setModalNew(food.id_food)" href="#modal1" class="btn-floating yellow btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a></li>
+                    <li><a ng-click="myFoodCtrl.setModal('Ajouter',food.id_food)" href="#modal1" class="btn-floating green btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajouter"><i class="material-icons">add</i></a></li>
+                    <li><a ng-click="myFoodCtrl.setModal('Enlever',food.id_food)" href="#modal1" class="btn-floating orange btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enlever"><span class="minus">-</span></a></li>
+                    <li><a ng-click="myFoodCtrl.setModal('Initialiser',food.id_food)" href="#modal1" class="btn-floating yellow btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nouvelle valeur"><i class="material-icons">settings_backup_restore</i></a></li>
                     <li><a ng-click="myFoodCtrl.updateQuantityFood(food.id_food,'Delete',0)" class="btn-floating red btn" ><i class="material-icons">delete</i></a></li>
                   </ul>
                 </div>

@@ -320,7 +320,7 @@
     }
 
     //Changer la quantite d'un aliment de l'utilisateur
-    var setQuantity = function(id_food, quantity, title_food){
+    var setQuantity = function(id_food, quantity){
       var find = false;
       for(var i =0; i < user.food.length; i++){
         if(user.food[i].id_food == id_food){
@@ -329,7 +329,7 @@
         }
       }
       if(!find){
-        user.food.push({id_food: id_food, quantity_getfood: quantity, title_food: title_food});
+        user.food.push({id_food: id_food, quantity_getfood: quantity, title_food: findTitle_food(id_food)});
       }
     }
 
@@ -342,29 +342,15 @@
       return this.idFood;
     }
 
-    this.setModalAdd = function(id){
+    this.setModal = function(action,id){
       this.modal.id_food = id;
-      this.modal.action = "Ajouter";
+      this.modal.action = action;
       this.modal.title_food = findTitle_food(id);
-      this.modal.max = "";
+      if(action == "Enlever"){
+        this.modal.max = getQuantity(id);
+      }
       $("#inputModal").select();
     }
-    this.setModalSub = function(id, q){
-      this.modal.id_food = id;
-      this.modal.action = "Enlever";
-      this.modal.title_food = findTitle_food(id);
-      this.modal.max = q;
-      $("#inputModal").select();
-    }
-    this.setModalNew = function(id){
-      this.modal.id_food = id;
-      this.modal.action = "Initialiser";
-      this.modal.title_food = findTitle_food(id);
-      this.modal.max = "";
-      $("#inputModal").select();
-    }
-
-
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, modalValue, title_food){
@@ -402,7 +388,7 @@
 
         case "Initialiser":
           var newValue = modalValue;
-          setQuantity(id_food, newValue, title_food);
+          setQuantity(id_food, newValue);
           if(actualQuantity == 0)
           {
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
