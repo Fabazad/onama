@@ -38,7 +38,6 @@
           <input ng-model="recipesCtrl.search.people" type="number" id="peopleamountAdd" min=0 step=1 max=99/>
           <label for="peopleamountAdd">Nombre de personne minimum</label>
         </div>
-        <div>test : {{recipesCtrl.search.orderBy}}</div>
         <div class="input-field col s6">
           <select ng-model="recipesCtrl.search.orderBy" >
             <option ng-repeat="(eValue,fValue) in recipesCtrl.orderByPossibilities" value='{{eValue}}'>{{fValue}}</option>
