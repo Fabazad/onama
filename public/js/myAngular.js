@@ -64,6 +64,7 @@
         res = user.food[i].quantity_getfood;
       }
     }
+
     return res;
   }
 
@@ -72,7 +73,6 @@
     $http.get('/user/myfood',{params: {id_user: id_user}})
     .then(function(response){
       user.food = response.data;
-
     });
   }
 
@@ -353,12 +353,14 @@
     }
 
     //Modifier quantite d'aliment
-    this.updateQuantityFood = function(id_food, action, modalValue, title_food){
+    this.updateQuantityFood = function(id_food, action, quantity){
+      var title_food = findTitle_food(id_food);
       var actualQuantity = getQuantity(id_food);
       var id_user = user.id_user;
       switch (action){
         case "Ajouter":
-          var newValue = parseInt(actualQuantity) + parseInt(modalValue);
+          var newValue = parseInt(actualQuantity) + parseInt(quantity);
+
           setQuantity(id_food, newValue, title_food);
           if(actualQuantity == 0){
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
@@ -371,7 +373,7 @@
           break;
 
         case "Enlever":
-          var newValue = actualQuantity - modalValue;
+          var newValue = actualQuantity - quantity;
           if(newValue == 0){
             deleteFood(id_food);
             $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
@@ -387,7 +389,7 @@
           break;
 
         case "Initialiser":
-          var newValue = modalValue;
+          var newValue = quantity;
           setQuantity(id_food, newValue);
           if(actualQuantity == 0)
           {
@@ -470,7 +472,7 @@
       show : 0,
       myFood : false
     }
-    this.nutrionalValues = ["Prix","Popularité","Calories","Protéines","Lipides","Glucides"];
+
 
     var recipesCtrl = this;
 
@@ -553,7 +555,65 @@
     }
 
     this.findRecipes = function(){
-      $http.get("/recipes/find",{params:{id_user: user.id_user}}).then(function(response){
+
+      //Creation,de requete SQL
+      var reqSQL = "";
+      var reqSQL1 = "SELECT r.id_recipe, r.title_recipe, min(d.title_difficulty) as difficulty, min(t.title_type) as type, r.time_recipe as time, r.popularity as popularity, r.peopleamount as people, min(o.title_origin) as origin, r.description, r.imgurl";
+      var reqSQL3 = " FROM public.recipe r, public.difficulty d, public.origin o, public.type t, public.containfood c, public.food f WHERE r.id_difficulty = d.id_difficulty AND r.id_origin = o.id_origin AND r.id_type = t.id_type AND r.id_recipe = c.id_recipe AND c.id_food = f.id_food";
+      var search = this.search;
+
+      //Les selects multiples
+      var reqSQL4 = ""
+      var attributs = ["type", "difficulty", "origin"];
+      var numAttribut = 0;
+      var multipleSelects = [search.types,search.difficulties,search.origins];
+      multipleSelects.forEach(function(select){
+        if(select.length != 0){
+          reqSQL4 += " AND (1=0";
+          select.forEach(function(element){
+            reqSQL4 += " OR r.id_" + attributs[numAttribut] + " = " + element;
+          });
+          reqSQL4 += ")";
+        }
+        numAttribut ++;
+      });
+
+      //Les inputs simples
+      var reqSQL5 = "";
+      if(search.time){
+        reqSQL5 += " AND r.time_recipe <= " + search.time;
+      }
+      if(search.people){
+        reqSQL5 += " AND r.peopleAmount >= " + search.people;
+      }
+
+      //Les inputs compliqués (tris)
+      var reqSQL2 = "";
+      var reqSQL7 = "";
+      var reqSQL8 = "";
+      if(search.orderBy){
+        if(["price","calorie","proteins","lipids"].indexOf(search.orderBy) != -1){
+          reqSQL2 = ",sum(c.quantity_containfood*f." + search.orderBy + ")/sum(c.quantity_containfood) as " + search.orderBy;
+        }
+        reqSQL7 += " GROUP BY r.id_recipe ORDER BY " + search.orderBy;
+        if(search.orderByWay){
+          reqSQL8 += " DESC";
+        }
+      }
+      else{
+        reqSQL7 += " GROUP BY r.id_recipe";
+      }
+
+      //La checkbox
+      var reqSQL6 = "";
+      if(search.myFood){
+        reqSQL6 += " AND r.id_recipe NOT IN (SELECT c.id_recipe FROM public.containfood c, public.getfood g WHERE (c.id_food NOT IN (SELECT id_food FROM public.getfood WHERE id_user = " + user.id_user + ") OR id_user = " + user.id_user + " AND quantity_containfood > quantity_getfood AND c.id_food = g.id_food))";
+      }
+
+      //On met tout ensemble
+      reqSQL = reqSQL1 + reqSQL2 + reqSQL3 + reqSQL4 + reqSQL5 + reqSQL6 + reqSQL7 + reqSQL8;
+
+      $http.get("/recipes/find",{params:{reqSQL: reqSQL}}).then(function(response){
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
         }
@@ -566,7 +626,17 @@
     this.switchShowSearch = function(){
       this.types = types;
       this.difficulties = difficulties;
-      this.origins = origins
+      this.origins = origins;
+      this.orderByPossibilities = {
+        "": "Pas besoin",
+        "price": "Prix",
+        "popularity": "Popularité",
+        "time": "Temps",
+        "difficulty": "Difficultée",
+        "calorie": "Calories",
+        "proteins": "Protéines",
+        "lipids": "Lipides",
+        "carbohydrates": "Glucides"};
       this.search.show = Math.abs(this.search.show - 1);
       $(document).ready(function() {
         $('select').material_select();
@@ -732,7 +802,6 @@
     }
 
     this.getRecipe = function(){
-      Materialize.toast(recipe.length,1000);
       return [recipe];
     }
   }]);

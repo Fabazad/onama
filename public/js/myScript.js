@@ -1,7 +1,5 @@
 $(document).ready(function(){
   $('.parallax').parallax();
-
-
   $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         opacity: .5, // Opacity of modal background
@@ -51,6 +49,7 @@ $("#addFormButton").click(function(){
   $('select').material_select();
   $('input#input_text, textarea#textarea1').characterCounter();
 });
+
 
 $(document).hover(function(){
   $('.collapsible').collapsible();
