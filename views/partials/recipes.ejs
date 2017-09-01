@@ -42,7 +42,7 @@
           <select ng-model="recipesCtrl.search.orderBy" >
             <option ng-repeat="(eValue,fValue) in recipesCtrl.orderByPossibilities" value='{{eValue}}'>{{fValue}}</option>
           </select>
-          <label>Trier par</label>
+          <label>Trier par (prix et valeurs nutritives pour 100g)</label>
         </div>
         <div class="input-field col s6">
           <select ng-model="recipesCtrl.search.orderByWay">
@@ -61,7 +61,8 @@
        <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
-           <a uk-scroll href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:2}}</h6>
+           <a href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>
@@ -69,13 +70,13 @@
                <span>{{recipe.description}}</span>
              </div>
              <div class="col s6">
-               <p>Type : {{recipe.title_type}}</p>
-               <p>Difficulté : {{recipe.title_difficulty}}</p>
-               <p>Pour {{recipe.peopleamount}} personnes</p>
+               <p>Type : {{recipe.type}}</p>
+               <p>Difficulté : {{recipe.difficulty}}</p>
+               <p>Pour {{recipe.people}} personnes</p>
              </div>
              <div class="col s6">
-               <p>Temps : {{recipe.time_recipe}} min</p>
-               <p>Origine : {{recipe.title_origin}}</p>
+               <p>Temps : {{recipe.time}} min</p>
+               <p>Origine : {{recipe.origin}}</p>
                <p>Popularité : {{recipe.popularity}} vues</p>
              </div>
            </div>

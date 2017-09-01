@@ -472,6 +472,7 @@
       show : 0,
       myFood : false
     }
+    this.orderBy = "";
 
 
     var recipesCtrl = this;
@@ -591,16 +592,22 @@
       var reqSQL2 = "";
       var reqSQL7 = "";
       var reqSQL8 = "";
+      var orderByTrad = {"price":"Prix","calorie":"Calories","proteins":"Protéines","popularity":"Popularité","time":"Temps","difficulty":"Difficultée"};
       if(search.orderBy){
+        this.orderBy = orderByTrad[search.orderBy];
         if(["price","calorie","proteins","lipids"].indexOf(search.orderBy) != -1){
-          reqSQL2 = ",sum(c.quantity_containfood*f." + search.orderBy + ")/sum(c.quantity_containfood) as " + search.orderBy;
+          reqSQL2 = ",sum(c.quantity_containfood*f." + search.orderBy + ")/sum(c.quantity_containfood) as orderby";
+          reqSQL7 += " GROUP BY r.id_recipe ORDER BY orderby";
         }
-        reqSQL7 += " GROUP BY r.id_recipe ORDER BY " + search.orderBy;
+        else{
+          reqSQL7 += " GROUP BY r.id_recipe ORDER BY " + search.orderBy;
+        }
         if(search.orderByWay){
           reqSQL8 += " DESC";
         }
       }
       else{
+        this.orderBy = "";
         reqSQL7 += " GROUP BY r.id_recipe";
       }
 
@@ -619,6 +626,11 @@
         }
         else{
           recipes = response.data;
+          if(["popularity","time","difficulty"].indexOf(search.orderBy) != -1){
+            for(var i = 0; i< recipes.length; i++){
+              recipes[i].orderby = recipes[i][search.orderBy];
+            }
+          }
         }
       });
     }
@@ -645,6 +657,10 @@
 
     this.showSearch = function(){
       return this.search.show;
+    }
+
+    this.isOrdered = function(){
+      return this.orderBy != "";
     }
 
   }]);

@@ -200,3 +200,8 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 #recipe .container {
   text-align: left;
 }
+.orderByInfo {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
