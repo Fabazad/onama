@@ -627,9 +627,13 @@
         else{
           recipes = response.data;
           if(["popularity","time","difficulty"].indexOf(search.orderBy) != -1){
+            recipesCtrl.search.unity = {"popularity":"vues","time":"min","difficulty":""}[search.orderBy];
             for(var i = 0; i< recipes.length; i++){
               recipes[i].orderby = recipes[i][search.orderBy];
             }
+          }
+          else{
+            recipesCtrl.search.unity = "calorie" == search.orderBy ? "kCal/100g" : "g/100g";
           }
         }
       });

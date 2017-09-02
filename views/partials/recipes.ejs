@@ -61,7 +61,7 @@
        <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
-           <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:2}}</h6>
+           <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:0}} {{recipesCtrl.search.unity}}</h6>
            <a href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
          </div>
          <div class="collapsible-body container">
