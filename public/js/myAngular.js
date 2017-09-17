@@ -227,7 +227,7 @@
       chargement = true;
       $http.post('/connection', this.connection).then(function(response){
         chargement = false;
-        connectionCtrl.connection = {};
+        //connectionCtrl.connection = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
         }
@@ -354,6 +354,7 @@
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, quantity){
+      chargement = true;
       var title_food = findTitle_food(id_food);
       var actualQuantity = getQuantity(id_food);
       var id_user = user.id_user;
@@ -406,6 +407,7 @@
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           break;
       }
+      chargement = false;
       this.quantity = 0;
       this.myFoodAutocomplete = "";
       $("#autocompleteMyFood").select();
