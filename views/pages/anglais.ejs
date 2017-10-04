@@ -2,7 +2,7 @@
 <html ng-app="app">
   <head>
     <meta charset="UTF-8" />
-		<meta name="description" content="Onama corps"/>
+		<meta name="description" content="Onama anglais"/>
 		<meta name="Content-Language" content="fr">
 		<meta name="Author" content="Fabien TURGUT">
 		<title>Onama</title>
@@ -15,30 +15,38 @@
         <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0" />
   </head>
 
-	<body id='top' ng-controller="PageCtrl as pageCtrl" ng-click="pageCtrl.test()">
-    <div id="chargement" ng-show="pageCtrl.chargement()">
-      <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-green-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
+	<body id='top'>
+      <% include ../partials/nav.ejs %>
+      <div class="page parallax-container" id="anglais" ng-controller="EnglishCtrl as englishCtrl">
+        <div class="container onBackground">
+          <h3>Vocabulaire d'anglais</h3>
+          <form ng-submit="EnglishForm.$valid && englishCtrl.getAnswer()" name="EnglishForm" novalidate>
+            <div class="row" ng-show="englishCtrl.prevAnswer">
+              <div class="input-field col s4">
+                <h4>{{englishCtrl.prevWorldToTrans}}</h4>
+              </div>
+              <div class="input-field col s4">
+                <h4>{{englishCtrl.prevAnswer}}</h4>
+              </div>
+              <div class="input-field col s4">
+                <h4>{{englishCtrl.correction}}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <h4>{{englishCtrl.worldToTrans}}</h4>
+              </div>
+              <div class="input-field col s6">
+                <input type="text" id="answer" ng-model="englishCtrl.answer" required/>
+                <label for="mailadressconnection">Réponse</label>
+              </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">Suivant
+              <i class="material-icons right">send</i>
+            </button>
+          </form>
         </div>
       </div>
-    </div>
-      <% include ../partials/nav.ejs %>
-      <% include ../partials/accueil.ejs %>
-      <% include ../partials/myProfile.ejs %>
-      <% include ../partials/connexion.ejs %>
-      <% include ../partials/recipe.ejs %>
-      <% include ../partials/recipes.ejs %>
-      <% include ../partials/myrecipes.ejs %>
-      <% include ../partials/myfood.ejs %>
-      <% include ../partials/food.ejs %>
-      <% include ../partials/inscription.ejs %>
       <% include ../partials/footer.ejs %>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>

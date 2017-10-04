@@ -13,7 +13,7 @@
         <li ng-show="pageCtrl.connected()"><a href="#myfood" >Mes aliments</a></li>
         <li ><a href="#food" >Aliments</a></li>
         <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Mon compte" ng-show="pageCtrl.connected()"><a href="#myProfile" ><i class="large material-icons">perm_identity</i></a></li>
-        <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Deconnexion" ng-show="pageCtrl.connected()" ng-click="navCtrl.deconnection()"><a href="#top" ><i class="large material-icons">power_settings_new</i></a></li>
+        <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Deconnexion" ng-show="pageCtrl.connected()"><a href="#top" ng-click="navCtrl.deconnection()"><i class="large material-icons">power_settings_new</i></a></li>
       </ul>
 
       <a data-activates="nav-mobile" class="button-collapse" ><i class="material-icons">menu</i></a>
@@ -29,5 +29,5 @@
   <li ><a href="#recipes" >Recettes</a></li>
   <li ng-show="pageCtrl.connected()"><a href="#myfood" >Mes aliments</a></li>
   <li ><a href="#food" >Aliments</a></li>
-  <li ng-show="pageCtrl.connected()" ng-click="navCtrl.deconnection()"><a href="#top" ><i class="small material-icons">power_settings_new</i>Deconnexion</a></li>
+  <li ng-show="pageCtrl.connected()"><a href="#top" ng-click="navCtrl.deconnection()"><i class="small material-icons">power_settings_new</i>Deconnexion</a></li>
 </ul>

@@ -35,6 +35,24 @@ html{
   background-attachment: fixed;
   background-size: cover;
 }
+.foodrow{
+  position: relative;
+  font-weight: bold;
+}
+.btn-tiny{
+  width: 30px;
+  height: 30px;
+  right: 5px;
+  bottom: 5px;
+  background-color: rgba(144,119,78,1);
+}
+.btn-tiny:hover{
+  background-color: rgb(124,99,58);
+}
+.btn-tiny .material-icons{
+  font-size: 1.4rem;
+  line-height: 2.3rem;
+}
 #home{
   padding-top: 1px;
 }

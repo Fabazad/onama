@@ -15,9 +15,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(request, response) {
+app.get("/anglais", function(req,res){
+  res.render('pages/anglais.ejs');
+})
+
+.get('/', function(request, response) {
   console.log("/");
   response.render('pages/index');
+})
+
+.get("/anglais", function(req,res){
+  res.render('pages/anglais.ejs');
 })
 
 //User Connection/Inscription
@@ -153,6 +161,14 @@ app.get('/', function(request, response) {
 
 .delete("/recipes/delete/:id_recipe", function(req, res){
   recipes.deleteRecipe(req, res);
+});
+
+app.get("anglais/:action", function(req,res){
+  switch (req.params.action) {
+    case "all":
+      english.getWords(req,res);
+      break;
+  }
 });
 
 

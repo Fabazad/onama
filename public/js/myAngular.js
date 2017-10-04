@@ -34,7 +34,7 @@
     }];
   });
 
-  var chargement = false;
+  var chargement = 0;
   var user = {};
   var food = {};
   var recipes = [];
@@ -123,8 +123,9 @@
   app.controller("PageCtrl",["$http", '$cookies', function($http, $cookies){
 
     this.chargement = function(){
-      return chargement;
+      return (chargement);
     }
+
     this.connected = function(){
       return('id_user' in user);
     }
@@ -132,10 +133,10 @@
     //Connection si cookie stayconnected
     this.cookie = {cookiecode : $cookies.get('cookiecode')};
     if(this.cookie.cookiecode){
-      chargement = true;
+      chargement++;
       $http.post('/connectionCookie', this.cookie)
       .then(function(response){
-        chargement = false;
+        chargement--;
         Materialize.toast("Connecté.", 3000);
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
@@ -150,6 +151,7 @@
     }
 
     //recupere tout les aliments
+    chargement++;
    $http.get('/food/all')
     .then(function(response){
       if("error" in response.data){
@@ -191,17 +193,24 @@
           minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
         });
       }
+      chargement--;
     });
 
     //Récupérer les caractéristiques de toute les recettes
+    chargement++;
     $http.get("/recipes/types").then(function(response){
       types = response.data;
+      chargement--;
     });
+    chargement++;
     $http.get("/recipes/difficulties").then(function(response){
       difficulties = response.data;
+      chargement--;
     });
+    chargement++;
     $http.get("/recipes/origins").then(function(response){
       origins = response.data;
+      chargement--;
     });
 
   }]);
@@ -224,9 +233,9 @@
 
     // Connection
     this.getConnection = function(){
-      chargement = true;
+      chargement++;
       $http.post('/connection', this.connection).then(function(response){
-        chargement = false;
+        chargement--;
         //connectionCtrl.connection = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 3000);
@@ -252,9 +261,9 @@
         Materialize.toast("Les deux mots de passes ne sont pas identiques.", 3000);
       }
       else{
-        chargement = true;
+        chargement++;
         $http.post('/inscription', this.inscription).then(function(response){
-          chargement = false;
+          chargement--;
           inscriptionCtrl.inscription = {};
           if("error" in response.data){
             Materialize.toast(response.data.error, 3000);
@@ -285,11 +294,11 @@
 
     //Changer le mot de passe
     this.editPassword = function(){
-      chargement = true;
+      chargement++;
       var params = this.editpassword;
       params.id_user = user.id_user;
       $http.put('/editPassword', {}, {params: params}).then(function(response){
-        chargement = false;
+        chargement--;
         myProfileCtrl.editpassword = {};
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
@@ -354,7 +363,7 @@
 
     //Modifier quantite d'aliment
     this.updateQuantityFood = function(id_food, action, quantity){
-      chargement = true;
+      chargement++;
       var title_food = findTitle_food(id_food);
       var actualQuantity = getQuantity(id_food);
       var id_user = user.id_user;
@@ -407,7 +416,7 @@
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           break;
       }
-      chargement = false;
+      chargement--;
       this.quantity = 0;
       this.myFoodAutocomplete = "";
       $("#autocompleteMyFood").select();
@@ -558,6 +567,7 @@
     }
 
     this.findRecipes = function(){
+      chargement++;
 
       //Creation,de requete SQL
       var reqSQL = "";
@@ -594,10 +604,10 @@
       var reqSQL2 = "";
       var reqSQL7 = "";
       var reqSQL8 = "";
-      var orderByTrad = {"price":"Prix","calorie":"Calories","proteins":"Protéines","popularity":"Popularité","time":"Temps","difficulty":"Difficultée"};
+      var orderByTrad = {"price":"Prix","calorie":"Calories","proteins":"Protéines","lipids":"Lipides","carbohydrates":"Glucides","popularity":"Popularité","time":"Temps","difficulty":"Difficultée"};
       if(search.orderBy){
         this.orderBy = orderByTrad[search.orderBy];
-        if(["price","calorie","proteins","lipids"].indexOf(search.orderBy) != -1){
+        if(["price","calorie","proteins","lipids","carbohydrates"].indexOf(search.orderBy) != -1){
           reqSQL2 = ",sum(c.quantity_containfood*f." + search.orderBy + ")/sum(c.quantity_containfood) as orderby";
           reqSQL7 += " GROUP BY r.id_recipe ORDER BY orderby";
         }
@@ -638,6 +648,7 @@
             recipesCtrl.search.unity = "calorie" == search.orderBy ? "kCal/100g" : "g/100g";
           }
         }
+        chargement--;
       });
     }
 
@@ -745,7 +756,7 @@
 
 
     this.createRecipe = function(){
-      chargement = true;
+      chargement++;
       if(this.addRecipe.title_recipe
       && this.addRecipe.id_type
       && this.addRecipe.id_origin
@@ -776,13 +787,12 @@
             user.recipes.push(response.data);
             recipes.push(response.data);
           }
-          chargement = false;
         });
       }
       else {
-        chargement = false;
         Materialize.toast("Champs incorrectes.",2000);
       }
+      chargement--;
     }
 
     this.makeShowRecipe = function(id_recipe){
@@ -828,5 +838,37 @@
     }
   }]);
 
+  app.controller("EnglishCtrl",["$http", function($http){
+
+    this.prevWorldToTrans = "";
+    this.prevAnswer = "";
+    this.worldToTrans = "Test";
+    this.answer = "";
+    this.correction = "test2";
+    var englishCtrl = this;
+
+    $http.get("/english/all").then(function(response){
+      if("error" in response.data){
+        Materialize.toast(response.data.error, 2000);
+      }
+      englishCtrl.worlds = response.data;
+    });
+
+    this.getAnswer = function(){
+      this.prevWorldToTrans = this.worldToTrans;
+      this.prevAnswer = this.answer
+      this.worldToTrans = "";
+      this.answer = "";
+    }
+
+
+    this.showRecipe = function(){
+      return ('id_recipe' in recipe);
+    }
+
+    this.getRecipe = function(){
+      return [recipe];
+    }
+  }]);
 
 })();
