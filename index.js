@@ -25,7 +25,7 @@ app.get("/anglais", function(req,res){
 })
 
 .get('/montageH', function(req,res) {
-  res.redirect('https://media.giphy.com/media/3ov9jS8AeV6ypsOJbi/giphy.gif');
+  res.render('pages/montageH');
 })
   
 
