@@ -873,7 +873,7 @@
       this.show = true;
     }
     
-    this.show = function(){
+    this.canShow = function(){
       return this.show;
     }
     
