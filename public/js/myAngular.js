@@ -869,7 +869,6 @@
     this.show = false;
     
     this.getShow = function(){
-      alert(this.show);
       this.show = true;
     }
     
