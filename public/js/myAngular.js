@@ -868,9 +868,12 @@
   app.controller("LinkCtrl",["$http", function($http){
     this.show = false;
     
-    this.show = function(){
-      alert("test");
+    this.getShow = function(){
       this.show = true;
+    }
+    
+    this.show = function(){
+      return this.show;
     }
     
   }]);
