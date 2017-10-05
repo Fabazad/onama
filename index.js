@@ -25,7 +25,7 @@ app.get("/anglais", function(req,res){
 })
 
 .get('/montageH', function(req,res) {
-  res.render('pages/montageH');
+  res.render('pages/montage');
 })
   
 
