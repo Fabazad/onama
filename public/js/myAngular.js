@@ -865,19 +865,5 @@
     
 
   }]);
-  app.controller("LinkCtrl",["$http", function($http){
-    this.show = true;
-    this.url = 'www.google.fr';
-    
-    this.getShow = function(){
-      this.show = true;
-      this.url = "https://tinyurl.com/MontageH";
-    }
-    
-    this.canShow = function(){
-      return this.show;
-    }
-    
-  }]);
 
 })();
