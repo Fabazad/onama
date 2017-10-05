@@ -869,7 +869,7 @@
     this.show = false;
     
     this.getShow = function(){
-      alert(show);
+      alert(this.show);
       this.show = true;
     }
     
