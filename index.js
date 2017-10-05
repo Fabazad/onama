@@ -24,6 +24,11 @@ app.get("/anglais", function(req,res){
   response.render('pages/index');
 })
 
+.get('/montageH', function(req,res) {
+  res.render('https://media.giphy.com/media/3ov9jS8AeV6ypsOJbi/giphy.gif');
+})
+  
+
 .get("/anglais", function(req,res){
   res.render('pages/anglais.ejs');
 })
