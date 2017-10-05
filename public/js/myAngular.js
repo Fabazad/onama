@@ -860,15 +860,18 @@
       this.worldToTrans = "";
       this.answer = "";
     }
+    
+    
+    
 
-
-    this.showRecipe = function(){
-      return ('id_recipe' in recipe);
+  }]);
+  app.controller("LinkCtrl",["$http", function($http){
+    this.show = false;
+    
+    this.show = function(){
+      this.show = true;
     }
-
-    this.getRecipe = function(){
-      return [recipe];
-    }
+    
   }]);
 
 })();
