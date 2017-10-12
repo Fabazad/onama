@@ -7,7 +7,12 @@
     <form ng-submit="recipesCtrl.findRecipes()" ng-show="recipesCtrl.showSearch()" >
       <div class="row">
         <div class="input-field s12" ng-show="pageCtrl.connected()">
-          <input type="checkbox" id="myFoodCheckbox" ng-model="recipesCtrl.search.myFood"/><label for="myFoodCheckbox">Avec mes aliments</label>
+          <div class="input-field col s12">
+            <input type="checkbox" id="myFoodCheckbox" ng-model="recipesCtrl.search.myFood"/><label for="myFoodCheckbox">Avec mes aliments</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="checkbox" id="favoritesCheckbox" ng-model="recipesCtrl.search.favorites"/><label for="favoritesCheckbox">Mes recettes favorites</label>
+          </div>
         </div>
         <div class="input-field col s12">
           <select ng-model="recipesCtrl.search.types" multiple>
@@ -62,7 +67,8 @@
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
            <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:0}} {{recipesCtrl.search.unity}}</h6>
-           <a href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <a href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <i ng-click="recipesCtrl.changeFavorite(recipe.id_recipe)" class="material-icons waves-effect waves-light tooltipped favorite" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipesCtrl.isFavorite(recipe.id_recipe)}}</i>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>

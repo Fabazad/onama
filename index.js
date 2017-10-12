@@ -98,7 +98,7 @@ app.get("/anglais", function(req,res){
 
 //Recettes
 
-.get("/recipes/:action", function(req, res){
+.get("/recipes/:action", function(req, res, next){
   console.log("/recipes/" + req.params.action);
   switch (req.params.action) {
     case 'getAll':
@@ -129,9 +129,19 @@ app.get("/anglais", function(req,res){
       recipes.findRecipes(req, res);
       break;
 
+    case 'getFavorites':
+      recipes.getFavorites(req,res);
+      break;
+
     default:
       res.send(404, 'Page introuvable ! Sûrement une mauvaise Url ;)');
   }
+})
+
+.put("/recipes/changeFavorite",function(req,res,next){
+  recipes.isFavorite(req,res,next);
+},function(req,res){
+  recipes.changeFavorite(req,res);
 })
 
 .get("/user/myRecipes", function(req, res){
@@ -142,15 +152,11 @@ app.get("/anglais", function(req,res){
 .post("/recipes/add", function(req, res, next){
   console.log("/recipes/add");
   recipes.verifAddRecipe(req, res, next);
-}
-,function(req, res ,next){
+},function(req, res ,next){
   recipes.addRecipe(req, res, next);
-}
-,function(req, res, next){
+},function(req, res, next){
   recipes.addInstructions(req, next);
-
-}
-,function(req, res){
+},function(req, res){
   recipes.addFood(req, res);
 })
 

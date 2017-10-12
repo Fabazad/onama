@@ -43,6 +43,10 @@
   var difficulties = {};
   var origins = {};
 
+  var connected = function(){
+    return('id_user' in user);
+  }
+
   //Verifie si l'aliment et renvoie l'id
   var existingFood = function(title_food){
     var existing = 0;
@@ -117,6 +121,41 @@
     }
   }
 
+  //Obtenir les favoris
+  var getFavoritesRecipes = function($http){
+    while(!recipes){}
+    $http.get("/recipes/getFavorites",{params:{id_user: user.id_user}}).then(function(response){
+      if("error" in response.data){
+        Materialize.toast(response.data.error, 3000);
+      }
+      else {
+        user.favorites = response.data;
+      }
+    });
+  }
+
+
+  //Se connecter
+  var connection = function(response,$http,$cookies){
+    if("error" in response.data){
+      Materialize.toast(response.data.error, 3000);
+    }
+    else {
+      user = response.data;
+      initStayConnected(response.data, $cookies);
+      getFood(user.id_user, $http);
+      getRecipes(user.id_user, $http);
+      getFavoritesRecipes($http);
+      Materialize.toast("Connecté.", 3000);
+    }
+    chargement--;
+  }
+
+//Bloque les collapsible sur la fonction
+var blockCollapsible = function(){
+  $('.collapsible').collapsible('destroy');
+  setTimeout(function(){ $('.collapsible').collapsible(); }, 250);
+}
 
   /*Controllers*/
 
@@ -127,7 +166,7 @@
     }
 
     this.connected = function(){
-      return('id_user' in user);
+      return connected();
     }
 
     //Connection si cookie stayconnected
@@ -136,17 +175,7 @@
       chargement++;
       $http.post('/connectionCookie', this.cookie)
       .then(function(response){
-        chargement--;
-        Materialize.toast("Connecté.", 3000);
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 3000);
-        }
-        else {
-          user = response.data;
-          initStayConnected(response.data, $cookies);
-          getFood(user.id_user, $http);
-          getRecipes(user.id_user, $http);
-        }
+        connection(response,$http,$cookies);
       });
     }
 
@@ -235,18 +264,7 @@
     this.getConnection = function(){
       chargement++;
       $http.post('/connection', this.connection).then(function(response){
-        chargement--;
-        //connectionCtrl.connection = {};
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 3000);
-        }
-        else {
-          user = response.data;
-          initStayConnected(response.data, $cookies);
-          getFood(user.id_user, $http);
-          getRecipes(user.id_user, $http);
-          Materialize.toast("Connecté.", 3000);
-        }
+        connection(response,$http,$cookies);
       });
     };
 
@@ -498,6 +516,7 @@
     });
 
     this.makeShowRecipe = function(id_recipe){
+      blockCollapsible();
       $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
@@ -678,6 +697,32 @@
 
     this.isOrdered = function(){
       return this.orderBy != "";
+    }
+
+    this.isFavorite = function(id_recipe){
+      if(user.favorites && user.favorites.indexOf(id_recipe) >= 0){
+        return 'favorite';
+      }
+      else{
+        return 'favorite_border';
+      }
+    }
+
+    this.changeFavorite = function(id_recipe){
+      blockCollapsible();
+      if(connected()){
+        $http.put('/recipes/changeFavorite', {}, {params:{id_user: user.id_user, id_recipe: id_recipe}}).then(function(response){
+          if(response.data.isFavorite){
+            user.favorites.push(id_recipe);
+          }
+          else{
+            user.favorites.splice(user.favorites.indexOf(id_recipe),1);
+          }
+        });
+      }
+      else{
+        Materialize.toast("Veuillez vous connecter pour enregistrer des favoris.",3000);
+      }
     }
 
   }]);

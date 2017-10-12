@@ -210,6 +210,13 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   right: 10px;
   top: 10px;
 }
+.favorite{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #90774e;
+  font-size: 2rem;
+}
 .titleLogo {
   margin-right: 20px;
   margin-bottom: 20px;

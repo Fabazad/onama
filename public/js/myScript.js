@@ -52,6 +52,10 @@ $("#addFormButton").click(function(){
 
 
 $(document).hover(function(){
+  $('.tooltipped').tooltip({delay: 50});
+});
+
+$(".collapsible").hover(function(){
   $('.collapsible').collapsible();
 });
 
