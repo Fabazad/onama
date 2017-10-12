@@ -24,6 +24,11 @@ app.get("/anglais", function(req,res){
   response.render('pages/index');
 })
 
+.get('/montage', function(req,res) {
+  res.render('pages/montage');
+})
+  
+
 .get("/anglais", function(req,res){
   res.render('pages/anglais.ejs');
 })

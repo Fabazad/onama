@@ -905,15 +905,10 @@ var blockCollapsible = function(){
       this.worldToTrans = "";
       this.answer = "";
     }
+    
+    
+    
 
-
-    this.showRecipe = function(){
-      return ('id_recipe' in recipe);
-    }
-
-    this.getRecipe = function(){
-      return [recipe];
-    }
   }]);
 
 })();
