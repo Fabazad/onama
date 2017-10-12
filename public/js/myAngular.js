@@ -591,7 +591,7 @@ var blockCollapsible = function(){
       //Creation,de requete SQL
       var reqSQL = "";
       var reqSQL1 = "SELECT r.id_recipe, r.title_recipe, min(d.title_difficulty) as difficulty, min(t.title_type) as type, r.time_recipe as time, r.popularity as popularity, r.peopleamount as people, min(o.title_origin) as origin, r.description, r.imgurl";
-      var reqSQL3 = " FROM public.recipe r, public.difficulty d, public.origin o, public.type t, public.containfood c, public.food f WHERE r.id_difficulty = d.id_difficulty AND r.id_origin = o.id_origin AND r.id_type = t.id_type AND r.id_recipe = c.id_recipe AND c.id_food = f.id_food";
+      var reqSQL3 = " FROM public.recipe r, public.difficulty d, public.origin o, public.type t, public.containfood c, public.food f, public.favorite fa WHERE r.id_difficulty = d.id_difficulty AND r.id_origin = o.id_origin AND r.id_type = t.id_type AND r.id_recipe = c.id_recipe AND c.id_food = f.id_food";
       var search = this.search;
 
       //Les selects multiples
@@ -642,10 +642,18 @@ var blockCollapsible = function(){
         reqSQL7 += " GROUP BY r.id_recipe";
       }
 
-      //La checkbox
-      var reqSQL6 = "";
-      if(search.myFood){
-        reqSQL6 += " AND r.id_recipe NOT IN (SELECT c.id_recipe FROM public.containfood c, public.getfood g WHERE (c.id_food NOT IN (SELECT id_food FROM public.getfood WHERE id_user = " + user.id_user + ") OR id_user = " + user.id_user + " AND quantity_containfood > quantity_getfood AND c.id_food = g.id_food))";
+      //Les checkboxs
+      if(connected()){
+        var reqSQL6 = "";
+        if(search.myFood){
+          reqSQL6 += " AND r.id_recipe NOT IN (SELECT c.id_recipe FROM public.containfood c, public.getfood g WHERE (c.id_food NOT IN (SELECT id_food FROM public.getfood WHERE id_user = " + user.id_user + ") OR id_user = " + user.id_user + " AND quantity_containfood > quantity_getfood AND c.id_food = g.id_food))";
+        }
+        if(search.favorites){
+          reqSQL6 += " AND fa.id_user = " + user.id_user + " AND fa.id_recipe = r.id_recipe";
+        }
+      }
+      else{
+        Materialize.toast("Veuillez vous connectez pour ces options.",3000);
       }
 
       //On met tout ensemble
@@ -905,9 +913,9 @@ var blockCollapsible = function(){
       this.worldToTrans = "";
       this.answer = "";
     }
-    
-    
-    
+
+
+
 
   }]);
 
