@@ -214,7 +214,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   position: absolute;
   right: 10px;
   bottom: 10px;
-  color: #90774e;
+  color: #008f45;
   font-size: 2rem;
 }
 .titleLogo {
