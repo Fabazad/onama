@@ -185,6 +185,78 @@ var changeFavorite = function(id_recipe, $http){
   }
 }
 
+//Envoie une recette dans la page recette apres avoir cliquer sur details
+var makeShowRecipe = function(id_recipe,$http){
+  blockCollapsible();
+  $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
+    if("error" in response.data){
+      Materialize.toast(response.data.error, 2000);
+    }
+    else{
+      var rows = response.data;
+      var instructions = [];
+      var food = [];
+      var title_food_Arr = [];
+      var quantity_containfood_Arr = [];
+      var row = {};
+      var price = 0;
+      var calorie = 0;
+      var proteins = 0;
+      var lipids = 0;
+      var carbohydrates = 0;
+      var quantityTotal = 0;
+
+      rows.forEach(function(row){
+        if(instructions.indexOf(row.title_instruction) == -1){
+          instructions.push(row.title_instruction);
+        }
+        if(title_food_Arr.indexOf(row.title_food) == -1){
+          title_food_Arr.push(row.title_food);
+          quantity_containfood_Arr.push(row.quantity_containfood);
+          price += row.price*row.quantity_containfood/1000;
+          calorie += row.calorie*row.quantity_containfood/100;
+          proteins += row.proteins*row.quantity_containfood/100;
+          lipids += row.lipids*row.quantity_containfood/100;
+          carbohydrates += row.carbohydrates*row.quantity_containfood/100;
+          quantityTotal += row.quantity_containfood;
+        }
+      });
+
+      for(var i = 0; i < title_food_Arr.length; i++){
+        food.push({title_food: title_food_Arr[i], quantity_containfood: quantity_containfood_Arr[i]});
+      }
+      var row1 = rows[0];
+      recipe = {
+        id_recipe: row1.id_recipe,
+        title_recipe: row1.title_recipe,
+        time_recipe : row1.time_recipe,
+        description: row1.description,
+        title_difficulty: row1.title_difficulty,
+        popularity: row1.popularity,
+        peopleamount: row1.peopleamount,
+        imgurl: row1.imgurl,
+        title_type: row1.title_type,
+        title_origin: row1.title_origin,
+        title_difficulty: row1.title_difficulty,
+        instructions: instructions,
+        food: food,
+        price: price,
+        calorie: calorie/(quantityTotal/100),
+        proteins: proteins/(quantityTotal/100),
+        lipids: lipids/(quantityTotal/100),
+        carbohydrates: carbohydrates/(quantityTotal/100),
+        totalQuantity: quantityTotal
+      }
+    }
+  //window.scrollTo($('#recipe').offset(),0);
+    setTimeout(function(){
+      $('html, body').animate({
+        scrollTop:$('#recipe').offset().top
+      }, 'slow');
+    },50);
+  });
+}
+
   /*Controllers*/
 
   app.controller("PageCtrl",["$http", '$cookies', function($http, $cookies){
@@ -550,74 +622,7 @@ var changeFavorite = function(id_recipe, $http){
     });
 
     this.makeShowRecipe = function(id_recipe){
-      blockCollapsible();
-      $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 2000);
-        }
-        else{
-          var rows = response.data;
-          var instructions = [];
-          var food = [];
-          var title_food_Arr = [];
-          var quantity_containfood_Arr = [];
-          var row = {};
-          var price = 0;
-          var calorie = 0;
-          var proteins = 0;
-          var lipids = 0;
-          var carbohydrates = 0;
-          var quantityTotal = 0;
-
-          rows.forEach(function(row){
-            if(instructions.indexOf(row.title_instruction) == -1){
-              instructions.push(row.title_instruction);
-            }
-            if(title_food_Arr.indexOf(row.title_food) == -1){
-              title_food_Arr.push(row.title_food);
-              quantity_containfood_Arr.push(row.quantity_containfood);
-              price += row.price*row.quantity_containfood/1000;
-              calorie += row.calorie*row.quantity_containfood/100;
-              proteins += row.proteins*row.quantity_containfood/100;
-              lipids += row.lipids*row.quantity_containfood/100;
-              carbohydrates += row.carbohydrates*row.quantity_containfood/100;
-              quantityTotal += row.quantity_containfood;
-            }
-          });
-
-          for(var i = 0; i < title_food_Arr.length; i++){
-            food.push({title_food: title_food_Arr[i], quantity_containfood: quantity_containfood_Arr[i]});
-          }
-          var row1 = rows[0];
-          recipe = {
-            id_recipe: row1.id_recipe,
-            title_recipe: row1.title_recipe,
-            time_recipe : row1.time_recipe,
-            description: row1.description,
-            title_difficulty: row1.title_difficulty,
-            popularity: row1.popularity,
-            peopleamount: row1.peopleamount,
-            imgurl: row1.imgurl,
-            title_type: row1.title_type,
-            title_origin: row1.title_origin,
-            title_difficulty: row1.title_difficulty,
-            instructions: instructions,
-            food: food,
-            price: price,
-            calorie: calorie/(quantityTotal/100),
-            proteins: proteins/(quantityTotal/100),
-            lipids: lipids/(quantityTotal/100),
-            carbohydrates: carbohydrates/(quantityTotal/100),
-            totalQuantity: quantityTotal
-          }
-        }
-      //window.scrollTo($('#recipe').offset(),0);
-        setTimeout(function(){
-          $('html, body').animate({
-        		scrollTop:$('#recipe').offset().top
-        	}, 'slow');
-        },50);
-      });
+      makeShowRecipe(id_recipe,$http);
       $http.post("recipes/addView",{id_recipe: id_recipe}).then(function(response){
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
@@ -875,14 +880,7 @@ var changeFavorite = function(id_recipe, $http){
     }
 
     this.makeShowRecipe = function(id_recipe){
-      $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
-        if("error" in response.data){
-          Materialize.toast(response.data.error, 2000);
-        }
-        else{
-          recipe = response.data;
-        }
-      });
+      makeShowRecipe(id_recipe,$http);
     }
 
     this.deleteRecipe = function(id_recipe){
