@@ -288,7 +288,6 @@ var blockCollapsible = function(){
             Materialize.toast("Inscrit.", 3000);
             window.scrollTo($('#top').offset().top,0);
             chargement++;
-            alert(inscriptionCtrl.inscription.password);
             $http.get('/connection', {params: inscriptionCtrl.inscription}).then(function(response){
               connection(response,$http,$cookies);
             });
