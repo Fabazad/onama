@@ -11,19 +11,14 @@ $(document).ready(function(){
       }
     );
 
-
-  $('#nav-mobile').click(function(){
-    $('.button-collapse').sideNav('hide');
+  $(".button-collapse").sideNav({
+    menuWidth: 500,
+    closeOnClick: true
   });
-
-  $(".button-collapse").sideNav();
 
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 200 // Creates a dropdown of 15 years to control year
-  });
-  $('#nav-mobile').click(function(){
-    $('.button-collapse').sideNav('hide');
   });
 
 });
@@ -65,5 +60,4 @@ $('a[href^="#"]').click(function(){
 	$('html, body').animate({
 		scrollTop:$(the_id).offset().top
 	}, 'slow');
-	return false;
 });

@@ -210,12 +210,16 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   right: 10px;
   top: 10px;
 }
-.favorite{
+.favorite-list{
   position: absolute;
   right: 10px;
   bottom: 10px;
   color: #008f45;
   font-size: 2rem;
+}
+.favorite-recipe{
+  color: #008f45;
+  font-size: 3rem;
 }
 .titleLogo {
   margin-right: 20px;

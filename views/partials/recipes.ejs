@@ -67,8 +67,8 @@
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
            <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:0}} {{recipesCtrl.search.unity}}</h6>
-           <a href="#recipe" ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
-           <i ng-click="recipesCtrl.changeFavorite(recipe.id_recipe)" class="material-icons waves-effect waves-light tooltipped favorite" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipesCtrl.isFavorite(recipe.id_recipe)}}</i>
+           <a ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+           <i ng-click="recipesCtrl.changeFavorite(recipe.id_recipe)" class="material-icons waves-effect waves-light tooltipped favorite-list" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipesCtrl.isFavorite(recipe.id_recipe)}}</i>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>

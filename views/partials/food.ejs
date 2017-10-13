@@ -26,8 +26,9 @@
       <div class="col s6">
         <ul class="collapsible" data-collapsible="accordion">
           <li ng-repeat="foodrow in foodCtrl.foodrow1" class="foodrow">
-            <div class="collapsible-header">{{foodrow.title_food}}
+            <div class="collapsible-header">
               <a href="#recipe" ng-click="" class="btn-floating btn-tiny waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+              <span>{{foodrow.title_food}}</span>
             </div>
               <div class="collapsible-body"><span>
                 <table class="bordered">
@@ -68,8 +69,9 @@
       <div class="col s6">
         <ul class="collapsible" data-collapsible="accordion">
           <li ng-repeat="foodrow in foodCtrl.foodrow2" class="foodrow">
-            <div class="collapsible-header">{{foodrow.title_food}}
+            <div class="collapsible-header">
               <a href="#recipe" ng-click="foodCtrl.test()" class="btn-floating btn-tiny waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+              <span>{{foodrow.title_food}}</span>
             </div>
               <div class="collapsible-body"><span>
                 <table class="bordered">

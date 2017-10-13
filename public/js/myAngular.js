@@ -157,6 +157,34 @@ var blockCollapsible = function(){
   setTimeout(function(){ $('.collapsible').collapsible(); }, 250);
 }
 
+//Indique si une recette est favorite
+var isFavorite = function(id_recipe){
+  if(user.favorites && user.favorites.indexOf(id_recipe) >= 0){
+    return 'favorite';
+  }
+  else{
+    return 'favorite_border';
+  }
+}
+
+//change la valeur du favoris pour une recette
+var changeFavorite = function(id_recipe, $http){
+  blockCollapsible();
+  if(connected()){
+    $http.put('/recipes/changeFavorite', {}, {params:{id_user: user.id_user, id_recipe: id_recipe}}).then(function(response){
+      if(response.data.isFavorite){
+        user.favorites.push(id_recipe);
+      }
+      else{
+        user.favorites.splice(user.favorites.indexOf(id_recipe),1);
+      }
+    });
+  }
+  else{
+    Materialize.toast("Veuillez vous connecter pour enregistrer des favoris.",3000);
+  }
+}
+
   /*Controllers*/
 
   app.controller("PageCtrl",["$http", '$cookies', function($http, $cookies){
@@ -274,7 +302,10 @@ var blockCollapsible = function(){
     var inscriptionCtrl = this;
     //Inscription
     this.getInscription = function(){
-      if(inscriptionCtrl.inscription.password != inscriptionCtrl.inscription.passwordbis){
+      if(!Inscription.$valid){
+        Materialize.toast("Des champs sont vides ou incorrectes.", 3000);
+      }
+      else if(inscriptionCtrl.inscription.password != inscriptionCtrl.inscription.passwordbis){
         Materialize.toast("Les deux mots de passes ne sont pas identiques.", 3000);
       }
       else{
@@ -580,6 +611,12 @@ var blockCollapsible = function(){
             totalQuantity: quantityTotal
           }
         }
+      //window.scrollTo($('#recipe').offset(),0);
+        setTimeout(function(){
+          $('html, body').animate({
+        		scrollTop:$('#recipe').offset().top
+        	}, 'slow');
+        },50);
       });
       $http.post("recipes/addView",{id_recipe: id_recipe}).then(function(response){
         if("error" in response.data){
@@ -720,22 +757,8 @@ var blockCollapsible = function(){
     }
 
     this.changeFavorite = function(id_recipe){
-      blockCollapsible();
-      if(connected()){
-        $http.put('/recipes/changeFavorite', {}, {params:{id_user: user.id_user, id_recipe: id_recipe}}).then(function(response){
-          if(response.data.isFavorite){
-            user.favorites.push(id_recipe);
-          }
-          else{
-            user.favorites.splice(user.favorites.indexOf(id_recipe),1);
-          }
-        });
-      }
-      else{
-        Materialize.toast("Veuillez vous connecter pour enregistrer des favoris.",3000);
-      }
+      changeFavorite(id_recipe,$http);
     }
-
   }]);
 
   app.controller("MyRecipesCtrl",["$http", function($http){
@@ -884,7 +907,6 @@ var blockCollapsible = function(){
 
   app.controller("RecipeCtrl",["$http", function($http){
 
-
     this.showRecipe = function(){
       return ('id_recipe' in recipe);
     }
@@ -892,6 +914,15 @@ var blockCollapsible = function(){
     this.getRecipe = function(){
       return [recipe];
     }
+
+    this.isFavorite = function(){
+      return isFavorite(recipe.id_recipe);
+    }
+
+    this.changeFavorite = function(){
+      changeFavorite(recipe.id_recipe,$http);
+    }
+
   }]);
 
   app.controller("EnglishCtrl",["$http", function($http){

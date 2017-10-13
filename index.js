@@ -36,7 +36,6 @@ app.get("/anglais", function(req,res){
 //User Connection/Inscription
 .get('/connection', function (req, res, next) {
   console.log("/connection");
-  console.log(req);
   user.verifConnection(req, res, next);
 }
 ,function(req, res, next){
