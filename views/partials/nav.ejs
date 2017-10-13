@@ -5,13 +5,14 @@
       <ul class="left hide-on-med-and-down">
         <li><a href="#top" >Accueil</a></li>
         <li ><a href="#recipes" >Recettes</a></li>
+        <li ng-hide="pageCtrl.connected()"><a href="#food" >Aliments</a></li>
         <li ><a ng-show="pageCtrl.connected()" href="#myrecipes" >Mes Recettes</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <li ng-hide="pageCtrl.connected()"><a href="#connection" >Connexion</a></li>
-        <li ng-hide="pageCtrl.connected()"><a href="#inscription" >Inscription</a></li>
         <li ng-show="pageCtrl.connected()"><a href="#myfood" >Mes aliments</a></li>
-        <li ><a href="#food" >Aliments</a></li>
+        <li ng-show="pageCtrl.connected()"><a href="#food" >Aliments</a></li>
+        <li ng-hide="pageCtrl.connected()"><a href="#inscription" >Inscription</a></li>
         <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Mon compte" ng-show="pageCtrl.connected()"><a href="#myProfile" ><i class="large material-icons">perm_identity</i></a></li>
         <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Deconnexion" ng-show="pageCtrl.connected()"><a href="#top" ng-click="navCtrl.deconnection()"><i class="large material-icons">power_settings_new</i></a></li>
       </ul>

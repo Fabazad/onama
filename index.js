@@ -27,15 +27,16 @@ app.get("/anglais", function(req,res){
 .get('/montage', function(req,res) {
   res.render('pages/montage');
 })
-  
+
 
 .get("/anglais", function(req,res){
   res.render('pages/anglais.ejs');
 })
 
 //User Connection/Inscription
-.post('/connection', function (req, res, next) {
+.get('/connection', function (req, res, next) {
   console.log("/connection");
+  console.log(req);
   user.verifConnection(req, res, next);
 }
 ,function(req, res, next){

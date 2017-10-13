@@ -263,15 +263,14 @@ var blockCollapsible = function(){
     // Connection
     this.getConnection = function(){
       chargement++;
-      $http.post('/connection', this.connection).then(function(response){
+      $http.get('/connection', {params: this.connection}).then(function(response){
         connection(response,$http,$cookies);
       });
-    };
+    }
 
   }]);
 
-  app.controller("InscriptionCtrl",["$http", function($http){
-    this.inscription = {};
+  app.controller("InscriptionCtrl",["$http", '$cookies', function($http, $cookies){
     var inscriptionCtrl = this;
     //Inscription
     this.getInscription = function(){
@@ -282,12 +281,17 @@ var blockCollapsible = function(){
         chargement++;
         $http.post('/inscription', this.inscription).then(function(response){
           chargement--;
-          inscriptionCtrl.inscription = {};
           if("error" in response.data){
             Materialize.toast(response.data.error, 3000);
           }
-          else {
+          else{
             Materialize.toast("Inscrit.", 3000);
+            window.scrollTo($('#top').offset().top,0);
+            chargement++;
+            alert(inscriptionCtrl.inscription.password);
+            $http.get('/connection', {params: inscriptionCtrl.inscription}).then(function(response){
+              connection(response,$http,$cookies);
+            });
           }
         });
       }
