@@ -1,3 +1,19 @@
+<div id="deleteRecipeModal" class="modal" ng-controller="MyRecipesCtrl as myRecipesCtrl">
+  <div class="row">
+    <div class="col s12">
+      <span>Etes vous sûr de vouloir supprimer la recette ? + {{myRecipesCtrl.modalRecipe}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s6">
+      <a class=" modal-action modal-close waves-effect waves-light btn">Non</a>
+    </div>
+    <div class="col s6">
+      <a ng-click="myRecipesCtrl.deleteRecipe()" class="modal-action modal-close waves-effect waves-light btn">Oui</a>
+    </div>
+  </div>
+</div>
+
 <div class="page noBackground" id="myrecipes" ng-controller="MyRecipesCtrl as myRecipesCtrl" ng-show="pageCtrl.connected()">
   <div class="container">
     <h3>Mes recettes</h3>
@@ -8,7 +24,7 @@
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
            <h4>{{recipe.title_recipe}}</h4>
            <a uk-scroll href="#recipe" ng-click="myRecipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
-           <a ng-click="myRecipesCtrl.deleteRecipe(recipe.id_recipe)" class="btn-floating waves-light btn red deleteRecipeBtn"><i class="material-icons left">delete</i></a>
+           <a href="#deleteRecipeModal" ng-click="myRecipesCtrl.configModal(recipe.id_recipe)" class="btn-floating waves-light btn red deleteRecipeBtn"><i class="material-icons left">delete</i></a>
          </div>
          <div class="collapsible-body container">
            <div class="row"/>

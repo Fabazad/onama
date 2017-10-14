@@ -42,6 +42,7 @@
   var types = {};
   var difficulties = {};
   var origins = {};
+  var modalRecipe = null;
 
   var connected = function(){
     return('id_user' in user);
@@ -883,24 +884,28 @@ var makeShowRecipe = function(id_recipe,$http){
       makeShowRecipe(id_recipe,$http);
     }
 
-    this.deleteRecipe = function(id_recipe){
+    this.configModal = function(id_recipe){
+      modalRecipe = id_recipe;
+    }
+
+    this.deleteRecipe = function(){
+      alert(modalRecipe);
       for(var i = 0; i < user.recipes.length; i++){
-        if(user.recipes[i].id_recipe == id_recipe){
+        if(user.recipes[i].id_recipe == modalRecipe){
           user.recipes.splice(i,1);
         }
       }
       for(var i = 0; i < recipes.length; i++){
-        if(recipes[i].id_recipe == id_recipe){
+        if(recipes[i].id_recipe == modalRecipe){
           recipes.splice(i,1);
         }
       }
-      $http.delete("/recipes/delete/" + id_recipe).then(function(response){
+      $http.delete("/recipes/delete/" + modalRecipe).then(function(response){
         if("error" in response.data){
           Materialize.toast(response.data.error, 2000);
         }
       });
     }
-
   }]);
 
   app.controller("RecipeCtrl",["$http", function($http){
