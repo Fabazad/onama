@@ -1,49 +1,52 @@
 <div class="page noBackground" id="recipes" ng-controller="RecipesCtrl as recipesCtrl">
   <div class="container">
-
-
     <h3>Recettes</h3>
+    <div class="row">
+      <div class="divider"></div>
+    </div>
     <a ng-click="recipesCtrl.switchShowSearch()" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Recherche filtrée</a>
     <form ng-submit="recipesCtrl.findRecipes()" ng-show="recipesCtrl.showSearch()" >
       <div class="row">
-        <div class="input-field s12" ng-show="pageCtrl.connected()">
-          <div class="input-field col s12">
+        <div class="input-field s4" ng-show="pageCtrl.connected()">
+          <div class="input-field col s6">
             <input type="checkbox" id="myFoodCheckbox" ng-model="recipesCtrl.search.myFood"/><label for="myFoodCheckbox">Avec mes aliments</label>
           </div>
-          <div class="input-field col s12">
+          <div class="input-field col s6">
             <input type="checkbox" id="favoritesCheckbox" ng-model="recipesCtrl.search.favorites"/><label for="favoritesCheckbox">Mes recettes favorites</label>
           </div>
         </div>
-        <div class="input-field col s12">
+      </div>
+      <div class="row">
+        <div class="input-field col m4 s12">
           <select ng-model="recipesCtrl.search.types" multiple>
             <option value="" disabled selected>Peu importe</option>
             <option ng-repeat="type in recipesCtrl.types" ng-value='{{type.id_type}}'>{{type.title_type}}</option>
           </select>
           <label>Types</label>
         </div>
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <select ng-model="recipesCtrl.search.difficulties" multiple>
             <option value="" disabled selected>Peu importe</option>
             <option ng-repeat="difficulty in recipesCtrl.difficulties" ng-value='{{difficulty.id_difficulty}}'>{{difficulty.title_difficulty}}</option>
           </select>
           <label>Difficultés</label>
         </div>
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <select ng-model="recipesCtrl.search.origins" multiple>
             <option value="" disabled selected>Peu importe</option>
             <option ng-repeat="origin in recipesCtrl.origins" ng-value='{{origin.id_origin}}'>{{origin.title_origin}}</option>
           </select>
           <label>Origines</label>
         </div>
-        <div class="input-field col s12">
+        <div class="input-field col m6 s12">
           <input ng-model="recipesCtrl.search.time" type="number" id="timeAdd" min=0 step=1 max=9999/>
           <label for="timeMax">Temps de préparation maximum (min)</label>
         </div>
-        <div class="input-field col s12">
+        <div class="input-field col m6 s12">
           <input ng-model="recipesCtrl.search.people" type="number" id="peopleamountAdd" min=0 step=1 max=99/>
           <label for="peopleamountAdd">Nombre de personne minimum</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col m6 s12">
           <select ng-model="recipesCtrl.search.orderBy" >
             <option ng-repeat="(eValue,fValue) in recipesCtrl.orderByPossibilities" value='{{eValue}}'>{{fValue}}</option>
           </select>
@@ -62,6 +65,7 @@
     </form>
     <div class="row">
       <h3>Résultats</h3>
+      <div class="divider"></div>
       <ul class="collapsible popout" data-collapsible="accordion">
        <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />

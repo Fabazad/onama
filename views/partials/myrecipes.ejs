@@ -17,34 +17,34 @@
 <div class="page noBackground" id="myrecipes" ng-controller="MyRecipesCtrl as myRecipesCtrl" ng-show="pageCtrl.connected()">
   <div class="container">
     <h3>Mes recettes</h3>
+    <div class="divider"></div>
     <div class="row">
-
       <ul class="collapsible popout" data-collapsible="accordion">
-       <li ng-repeat="recipe in myRecipesCtrl.userRecipes()">
-         <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
-           <h4>{{recipe.title_recipe}}</h4>
-           <a uk-scroll href="#recipe" ng-click="myRecipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
-           <a href="#deleteRecipeModal" ng-click="myRecipesCtrl.configModal(recipe.id_recipe)" class="btn-floating waves-light btn red deleteRecipeBtn"><i class="material-icons left">delete</i></a>
-         </div>
-         <div class="collapsible-body container">
-           <div class="row"/>
-             <div class="col s12" style="margin-bottom:10px">
-               <span>{{recipe.description}}</span>
-             </div>
-             <div class="col s6">
-               <p>Type : {{recipe.title_type}}</p>
-               <p>Difficulté : {{recipe.title_difficulty}}</p>
-               <p>Pour {{recipe.peopleamount}} personnes</p>
-             </div>
-             <div class="col s6">
-               <p>Temps : {{recipe.time_recipe}} min</p>
-               <p>Origine : {{recipe.title_origin}}</p>
-               <p>Popularité : {{recipe.popularity}} vues</p>
-             </div>
-           </div>
-         </div>
-       </li>
-     </ul>
+        <li ng-repeat="recipe in myRecipesCtrl.userRecipes()">
+          <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
+            <h4>{{recipe.title_recipe}}</h4>
+            <a uk-scroll href="#recipe" ng-click="myRecipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+            <a href="#deleteRecipeModal" ng-click="myRecipesCtrl.configModal(recipe.id_recipe)" class="btn-floating waves-light btn red deleteRecipeBtn"><i class="material-icons left">delete</i></a>
+          </div>
+          <div class="collapsible-body container">
+            <div class="row"/>
+              <div class="col s12" style="margin-bottom:10px">
+                <span>{{recipe.description}}</span>
+              </div>
+              <div class="col s6">
+                <p>Type : {{recipe.title_type}}</p>
+                <p>Difficulté : {{recipe.title_difficulty}}</p>
+                <p>Pour {{recipe.peopleamount}} personnes</p>
+              </div>
+              <div class="col s6">
+                <p>Temps : {{recipe.time_recipe}} min</p>
+                <p>Origine : {{recipe.title_origin}}</p>
+                <p>Popularité : {{recipe.popularity}} vues</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
 
       <a id='addFormButton' class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Créer Recette">
         <i ng-click="myRecipesCtrl.setForm()" class="material-icons">{{myRecipesCtrl.buttonType}}</i>
@@ -96,9 +96,9 @@
           <table class="bordered">
             <thead>
               <tr>
-                  <th>Aliment</th>
-                  <th>Quantité (g)</th>
-                  <th>Supprimer</th>
+                <th>Aliment</th>
+                <th>Quantité (g)</th>
+                <th>Supprimer</th>
               </tr>
             </thead>
             <tbody>
@@ -134,8 +134,8 @@
           <table class="bordered">
             <thead>
               <tr>
-                  <th>Instruction</th>
-                  <th>Supprimer</th>
+                <th>Instruction</th>
+                <th>Supprimer</th>
               </tr>
             </thead>
             <tbody>
@@ -166,7 +166,6 @@
           </div>
         </div>
       </form>
-
     </div>
   </div>
 </div>
