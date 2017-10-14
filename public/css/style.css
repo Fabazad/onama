@@ -222,9 +222,8 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   font-size: 3rem;
 }
 .titleLogo {
-  margin-right: 20px;
-  margin-bottom: 20px;
-  max-width: 65px;
+  margin-right: 5px;
+  max-width: 30px;
 }
 #recipe .container {
   text-align: left;
@@ -233,4 +232,23 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   position: absolute;
   bottom: 5%;
   right: 5%;
+}
+.checkFood{
+  color: #008f45;
+}
+.recipeNav{
+  background-color: #806b49;
+}
+.recipeNav ul li.active{
+    background-color: #008f45;
+  }
+
+.recipeNav ul li {
+  width:25%;
+}
+.recipeNav ul {
+  width: 100%;
+}
+td, th{
+  color: black;
 }
