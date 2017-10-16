@@ -155,7 +155,7 @@
 //Bloque les collapsible sur la fonction
 var blockCollapsible = function(){
   $('.collapsible').collapsible('destroy');
-  setTimeout(function(){ $('.collapsible').collapsible(); }, 250);
+  setTimeout(function(){ $('.collapsible').collapsible(); }, 50);
 }
 
 //Indique si une recette est favorite
@@ -189,6 +189,12 @@ var changeFavorite = function(id_recipe, $http){
 //Envoie une recette dans la page recette apres avoir cliquer sur details
 var makeShowRecipe = function(id_recipe,$http){
   blockCollapsible();
+  setTimeout(function(){
+    $('html, body').animate({
+      scrollTop:$('#recipe').offset().top
+    }, 'slow');
+  },50);
+  recipe.id_recipe = 1;
   $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
     if("error" in response.data){
       Materialize.toast(response.data.error, 2000);
@@ -197,6 +203,7 @@ var makeShowRecipe = function(id_recipe,$http){
       var rows = response.data;
       var instructions = [];
       var food = [];
+      var id_food_Arr = [];
       var title_food_Arr = [];
       var quantity_containfood_Arr = [];
       var row = {};
@@ -212,6 +219,7 @@ var makeShowRecipe = function(id_recipe,$http){
           instructions.push(row.title_instruction);
         }
         if(title_food_Arr.indexOf(row.title_food) == -1){
+          id_food_Arr.push(row.id_food);
           title_food_Arr.push(row.title_food);
           quantity_containfood_Arr.push(row.quantity_containfood);
           price += row.price*row.quantity_containfood/1000;
@@ -224,7 +232,7 @@ var makeShowRecipe = function(id_recipe,$http){
       });
 
       for(var i = 0; i < title_food_Arr.length; i++){
-        food.push({title_food: title_food_Arr[i], quantity_containfood: quantity_containfood_Arr[i]});
+        food.push({id_food: id_food_Arr[i], title_food: title_food_Arr[i], quantity_containfood: quantity_containfood_Arr[i]});
       }
       var row1 = rows[0];
       recipe = {
@@ -249,12 +257,6 @@ var makeShowRecipe = function(id_recipe,$http){
         totalQuantity: quantityTotal
       }
     }
-  //window.scrollTo($('#recipe').offset(),0);
-    setTimeout(function(){
-      $('html, body').animate({
-        scrollTop:$('#recipe').offset().top
-      }, 'slow');
-    },50);
   });
 }
 
@@ -910,6 +912,8 @@ var makeShowRecipe = function(id_recipe,$http){
 
   app.controller("RecipeCtrl",["$http", function($http){
 
+    this.page = 1;
+
     this.showRecipe = function(){
       return ('id_recipe' in recipe);
     }
@@ -924,6 +928,21 @@ var makeShowRecipe = function(id_recipe,$http){
 
     this.changeFavorite = function(){
       changeFavorite(recipe.id_recipe,$http);
+    }
+
+    this.pageIsActive = function(numPage){
+      if(numPage == this.page){
+        return "active";
+      }
+    }
+    this.hasFood = function(id_food,quantity){
+      if(connected() && user.food){
+        for(var i = 0; i < user.food.length; i++){
+          if(user.food[i].id_food == id_food && user.food[i].quantity_getfood >= quantity){
+            return "active";
+          }
+        }
+      }
     }
 
   }]);

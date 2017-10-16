@@ -18,8 +18,10 @@
         <h5>{{recipe.description}}</h5>
         <div class="divider"></div>
       </div>
+    </div>
+    <div class="row">
       <div class="col s12">
-        <i class="medium material-icons checkFood">check_circle</i>
+        <i class="small material-icons checkFood">check_circle</i>
         <span>Vous avez les ingrédients pour effectuer cette recette.</span>
       </div>
       <div class="col s12">
@@ -29,15 +31,15 @@
     <nav>
     <div class="nav-wrapper recipeNav">
       <ul class="left hide-on-med-and-down">
-        <li class="active"><a href=""><img class="titleLogo" src="img/infos.png"/>Caractéristiques</a></li>
-        <li><a href=""><img class="titleLogo" src="img/ingredients.png"/>Ingrédients</a></li>
-        <li><a href=""><img class="titleLogo" src="img/instructions.png"/>Instructions</a></li>
-        <li><a href=""><img class="titleLogo" src="img/chart.png"/>Valeurs</li>
+        <li ng-class="recipeCtrl.pageIsActive(1)"><a ng-click="recipeCtrl.page = 1"><img class="titleLogo" src="img/infos.png"/>Caractéristiques</a></li>
+        <li ng-class="recipeCtrl.pageIsActive(2)"><a ng-click="recipeCtrl.page = 2"><img class="titleLogo" src="img/ingredients.png"/>Ingrédients</a></li>
+        <li ng-class="recipeCtrl.pageIsActive(3)"><a ng-click="recipeCtrl.page = 3"><img class="titleLogo" src="img/instructions.png"/>Instructions</a></li>
+        <li ng-class="recipeCtrl.pageIsActive(4)"><a ng-click="recipeCtrl.page = 4"><img class="titleLogo" src="img/chart.png"/>Valeurs</a></li>
       </ul>
     </div>
   </nav>
-    <div class="row">
-      <h4><img class="titleLogo" src="img/infos.png"/>Caractéristiques</h4>
+
+    <div class="row" ng-show="recipeCtrl.page == 1">
       <div class="col s6">
         <ul>
           <li><h5><h5>Type : {{recipe.title_type}}</h5></h5></li>
@@ -53,79 +55,37 @@
         </ul>
       </div>
     </div>
-    <div class="row">
-      <h4><img class="titleLogo" src="img/ingredients.png"/>Ingrédients</h4>
-      <div class="col s12">
-        <table class="bordered">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Quantité (g)</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            <tr ng-repeat="food in recipe.food">
-              <td>{{food.title_food}}</td>
-              <td>{{food.quantity_containfood}}</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="row" ng-show="recipeCtrl.page == 2">
+      <div class="col s12">
+        <div class="collection">
+          <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item">{{food.title_food}}<span class="secondary-content">{{food.quantity_containfood}}g</span></a>
+        </div>
       </div>
     </div>
-    <br>
 
 
-    <div class="instructions">
-      <h4><img class="titleLogo" src="img/instructions.png"/>Instructions</h4>
+    <div class="row" ng-show="recipeCtrl.page == 3">
       <ul>
         <li ng-repeat="instruction in recipe.instructions">
           <h5><i class="tiny material-icons">label</i>{{instruction}}</h5>
         </li>
       </ul>
     </div>
-    <br>
 
-
-    <div class="row">
-      <h4><img class="titleLogo" src="img/chart.png"/>Poids, prix et valeur nutritives</h4>
+    <div class="row" ng-show="recipeCtrl.page == 4">
       <div class="col s12">
-        <table class="bordered">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>valeur</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>Poids total</td>
-              <td>{{recipe.totalQuantity}} g</td>
-            </tr>
-            <tr>
-              <td>Prix</td>
-              <td>{{recipe.price}} €</td>
-            </tr>
-            <tr>
-              <td>Calories</td>
-              <td>{{recipe.calorie | number:2}} kcal/100g</td>
-            </tr>
-            <tr>
-              <td>Protéines</td>
-              <td>{{recipe.proteins | number:2}} g/100g</td>
-            </tr>
-            <tr>
-              <td>Lipides</td>
-              <td>{{recipe.lipids | number:2}} g/100g</td>
-            </tr>
-            <tr>
-              <td>Glucides</td>
-              <td>{{recipe.carbohydrates | number:2}} g/100g</td>
-            </tr>
-          </tbody>
-        </table>
+        <ul class="collection with-header">
+          <li class="collection-header"><h5>Poids, prix et valeurs nutritives /100g</h5></li>
+          <li class="collection-item">Poids total<span class="secondary-content">{{recipe.totalQuantity}}g</span></li>
+          <li class="collection-item">Prix<span class="secondary-content">{{recipe.price}}€</span></li>
+          <li class="collection-item">Calories<span class="secondary-content">{{recipe.calorie | number:2}}kcal</span></li>
+          <li class="collection-item">Protéines<span class="secondary-content">{{recipe.proteins | number:2}}g</span></li>
+          <li class="collection-item">Lipides<span class="secondary-content">{{recipe.lipids | number:2}}g</span></li>
+          <li class="collection-item">Glucides<span class="secondary-content">{{recipe.carbohydrates | number:2}}g</span></li>
+        </ul>
       </div>
     </div>
+
   </div>
 </div>

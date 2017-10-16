@@ -252,3 +252,20 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 td, th{
   color: black;
 }
+nav ul a {
+  text-align:center;
+}
+.collection {
+  text-align: left;
+  width: 65%;
+    margin: auto;
+}
+.collection a.collection-item {
+    color: #008f45;
+}
+.collection .collection-item.active {
+    background-color: #008f45;
+  }
+.secondary-content{
+  color: #008f45;
+}
