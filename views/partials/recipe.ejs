@@ -30,24 +30,25 @@
     </div>
     <nav>
     <div class="nav-wrapper recipeNav">
-      <ul class="left hide-on-med-and-down">
-        <li ng-class="recipeCtrl.pageIsActive(1)"><a ng-click="recipeCtrl.page = 1"><img class="titleLogo" src="img/infos.png"/>Caractéristiques</a></li>
-        <li ng-class="recipeCtrl.pageIsActive(2)"><a ng-click="recipeCtrl.page = 2"><img class="titleLogo" src="img/ingredients.png"/>Ingrédients</a></li>
-        <li ng-class="recipeCtrl.pageIsActive(3)"><a ng-click="recipeCtrl.page = 3"><img class="titleLogo" src="img/instructions.png"/>Instructions</a></li>
-        <li ng-class="recipeCtrl.pageIsActive(4)"><a ng-click="recipeCtrl.page = 4"><img class="titleLogo" src="img/chart.png"/>Valeurs</a></li>
+      <ul class="left">
+        <li ng-class="recipeCtrl.pageIsActive(1)"><a ng-click="recipeCtrl.page = 1"><img class="titleLogo" src="img/infos.png"/><span class="hide-on-med-and-down">Caractéristiques</<span></a></li>
+        <li ng-class="recipeCtrl.pageIsActive(2)"><a ng-click="recipeCtrl.page = 2"><img class="titleLogo" src="img/ingredients.png"/><span class="hide-on-med-and-down">Ingrédients</<span></a></li>
+        <li ng-class="recipeCtrl.pageIsActive(3)"><a ng-click="recipeCtrl.page = 3"><img class="titleLogo" src="img/instructions.png"/><span class="hide-on-med-and-down">Instructions</<span></a></li>
+        <li ng-class="recipeCtrl.pageIsActive(4)"><a ng-click="recipeCtrl.page = 4"><img class="titleLogo" src="img/chart.png"/><span class="hide-on-med-and-down">Valeurs</<span></a></li>
       </ul>
     </div>
   </nav>
 
     <div class="row" ng-show="recipeCtrl.page == 1">
-      <div class="col s6">
+      <h4 class="hide-on-large-only">Caractéristiques</h4>
+      <div class="col s12 m6">
         <ul>
           <li><h5><h5>Type : {{recipe.title_type}}</h5></h5></li>
           <li><h5>Difficulté : {{recipe.title_difficulty}}</h5></li>
           <li><h5>Pour {{recipe.peopleamount}} personnes</h5></li>
         </ul>
       </div>
-      <div class="col s6">
+      <div class="col s12 m6">
         <ul>
           <li><h5>Temps : {{recipe.time_recipe}} min</h5></li>
           <li><h5>Origine : {{recipe.title_origin}}</h5></li>
@@ -57,29 +58,30 @@
     </div>
 
     <div class="row" ng-show="recipeCtrl.page == 2">
+      <h4 class="hide-on-large-only">Ingrédients</h4>
       <div class="col s12">
         <div class="collection">
-          <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item">{{food.title_food}}<span class="secondary-content">{{food.quantity_containfood}}g</span></a>
+          <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item"><span class="first-content">{{food.title_food}}</span><span class="secondary-content">{{food.quantity_containfood}}g</span></a>
         </div>
       </div>
     </div>
 
 
     <div class="row" ng-show="recipeCtrl.page == 3">
-      <ul>
-        <li ng-repeat="instruction in recipe.instructions">
-          <h5><i class="tiny material-icons">label</i>{{instruction}}</h5>
-        </li>
-      </ul>
+      <h4 class="hide-on-large-only">Instructions</h4>
+      <div class="collection">
+        <a ng-repeat="instruction in recipe.instructions" ng-click="recipeCtrl.selectInst($index)" ng-class="recipeCtrl.IsactiveInst($index)" class="collection-item">{{$index + 1}}. {{instruction}}</a>
+      </div>
     </div>
 
     <div class="row" ng-show="recipeCtrl.page == 4">
+      <h4 class="hide-on-large-only">Poids, prix et valeurs nutritives /100g</h4>
       <div class="col s12">
         <ul class="collection with-header">
-          <li class="collection-header"><h5>Poids, prix et valeurs nutritives /100g</h5></li>
+          <li class="collection-header hide-on-med-and-down"><h5>Poids, prix et valeurs nutritives /100g</h5></li>
           <li class="collection-item">Poids total<span class="secondary-content">{{recipe.totalQuantity}}g</span></li>
           <li class="collection-item">Prix<span class="secondary-content">{{recipe.price}}€</span></li>
-          <li class="collection-item">Calories<span class="secondary-content">{{recipe.calorie | number:2}}kcal</span></li>
+          <li class="collection-item">Calories<span class="secondary-content">{{recipe.calorie | number:0}}kcal</span></li>
           <li class="collection-item">Protéines<span class="secondary-content">{{recipe.proteins | number:2}}g</span></li>
           <li class="collection-item">Lipides<span class="secondary-content">{{recipe.lipids | number:2}}g</span></li>
           <li class="collection-item">Glucides<span class="secondary-content">{{recipe.carbohydrates | number:2}}g</span></li>

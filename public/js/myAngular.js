@@ -944,6 +944,31 @@ var makeShowRecipe = function(id_recipe,$http){
         }
       }
     }
+    this.selectInst = function(index){
+      if(recipe.activatedInst){
+        if(recipe.activatedInst.indexOf(index) >= 0){
+          recipe.activatedInst.splice(recipe.activatedInst.indexOf(index),1)
+        }
+        else{
+          for(var i = 0; i<= index;i++){
+            if(recipe.activatedInst.indexOf(i) < 0){
+              recipe.activatedInst.push(i);
+            }
+          }
+        }
+      }
+      else{
+        recipe.activatedInst = [];
+        for(var i = 0; i<= index;i++){
+            recipe.activatedInst.push(i);
+        }
+      }
+    }
+    this.IsactiveInst = function(index){
+      if(recipe.activatedInst && recipe.activatedInst.indexOf(index) >= 0){
+        return 'active';
+      }
+    }
 
   }]);
 
