@@ -52,7 +52,7 @@
         <ul>
           <li><h5>Temps : {{recipe.time_recipe}} min</h5></li>
           <li><h5>Origine : {{recipe.title_origin}}</h5></li>
-          <li><h5>popularité {{recipe.popularity}} vues</h5></li>
+          <li><h5>Popularité {{recipe.popularity}} vues</h5></li>
         </ul>
       </div>
     </div>
@@ -64,6 +64,7 @@
           <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item"><span class="first-content">{{food.title_food}}</span><span class="secondary-content">{{food.quantity_containfood}}g</span></a>
         </div>
       </div>
+      <i>Si la case est entièrement verte alors vous possèdez l'ingrédient en quantité suffisante.</i>
     </div>
 
 
@@ -72,6 +73,7 @@
       <div class="collection">
         <a ng-repeat="instruction in recipe.instructions" ng-click="recipeCtrl.selectInst($index)" ng-class="recipeCtrl.IsactiveInst($index)" class="collection-item">{{$index + 1}}. {{instruction}}</a>
       </div>
+      <i>Cliquer sur une case permet de retenir où vous en êtes dans votre réalisation.</i>
     </div>
 
     <div class="row" ng-show="recipeCtrl.page == 4">

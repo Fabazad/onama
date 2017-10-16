@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <input type="submit" ng-click="connectionCtrl.newPassword(connectionCtrl.mailLostPassword)" class="modal-action modal-close waves-effect waves-green btn-flat" value="Recevoir un nouveau mot de passe" required/>
+      <input type="submit" ng-click="connectionCtrl.newPassword(connectionCtrl.mailLostPassword)" class="modal-action modal-close waves-effect waves-green btn-flat" value="Envoyer" required/>
       <a onclick="$('#mailLostPassword').val('')" class="modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
     </div>
   </form>
@@ -37,7 +37,7 @@
           <input type="checkbox" id="stayconnected" ng-model="connectionCtrl.connection.stayconnected"/><label for="stayconnected">Rester connecté </label>
         </div>
         <div class="col s12 m6">
-          <a href="#modalLostPassword" >Mot de pass oublié ?</a><br>
+          <a data-target="modalLostPassword" >Mot de pass oublié ?</a><br>
         </div>
       </div>
       <div class="row">
