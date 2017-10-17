@@ -2,7 +2,7 @@
   <div class="container">
     <h3>Inscription</h3>
     <div class="divider"></div>
-    <form name="Inscription" ng-submit="inscriptionCtrl.getInscription()" novalidate>
+    <form name="Inscription" ng-submit="inscriptionCtrl.getInscription(Inscription.$valid)" novalidate>
       <label class="form_col" for="homme" style="float:left">Sexe :</label><br>
 			<p><input name="sexe" type="radio" value="homme" id="homme" ng-model="inscriptionCtrl.inscription.sexe"/><label for="homme">Homme</label></p>
 			<p><input name="sexe" type="radio" value="femme" id="femme" ng-model="inscriptionCtrl.inscription.sexe"/><label for="femme">Femme</label></p>

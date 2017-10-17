@@ -376,8 +376,8 @@ var makeShowRecipe = function(id_recipe,$http){
   app.controller("InscriptionCtrl",["$http", '$cookies', function($http, $cookies){
     var inscriptionCtrl = this;
     //Inscription
-    this.getInscription = function(){
-      if(!Inscription.$valid){
+    this.getInscription = function(valid){
+      if(!valid){
         Materialize.toast("Des champs sont vides ou incorrectes.", 3000);
       }
       else if(inscriptionCtrl.inscription.password != inscriptionCtrl.inscription.passwordbis){
