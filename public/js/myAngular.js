@@ -691,17 +691,14 @@ var makeShowRecipe = function(id_recipe,$http){
       }
 
       //Les checkboxs
+      var reqSQL6 = "";
       if(connected()){
-        var reqSQL6 = "";
         if(search.myFood){
           reqSQL6 += " AND r.id_recipe NOT IN (SELECT c.id_recipe FROM public.containfood c, public.getfood g WHERE (c.id_food NOT IN (SELECT id_food FROM public.getfood WHERE id_user = " + user.id_user + ") OR id_user = " + user.id_user + " AND quantity_containfood > quantity_getfood AND c.id_food = g.id_food))";
         }
         if(search.favorites){
           reqSQL6 += " AND fa.id_user = " + user.id_user + " AND fa.id_recipe = r.id_recipe";
         }
-      }
-      else{
-        Materialize.toast("Veuillez vous connectez pour ces options.",3000);
       }
 
       //On met tout ensemble
