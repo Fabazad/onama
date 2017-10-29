@@ -61,7 +61,7 @@
 
 
 
-  //Obtenir la quantite d'un aliment
+  //Obtenir la quantite d'un aliment de l'utilisateur
   var getQuantity = function(id_food){
     var res = 0;
     for(var i = 0; i < user.food.length; i++){
@@ -194,7 +194,7 @@ var makeShowRecipe = function(id_recipe,$http){
       scrollTop:$('#recipe').offset().top
     }, 'slow');
   },50);
-  recipe.id_recipe = 1;
+  recipe.id_recipe = id_recipe;
   $http.get("/recipes/getOne",{params: {id_recipe: id_recipe}}).then(function(response){
     if("error" in response.data){
       Materialize.toast(response.data.error, 2000);
@@ -254,7 +254,8 @@ var makeShowRecipe = function(id_recipe,$http){
         proteins: proteins/(quantityTotal/100),
         lipids: lipids/(quantityTotal/100),
         carbohydrates: carbohydrates/(quantityTotal/100),
-        totalQuantity: quantityTotal
+        totalQuantity: quantityTotal,
+        totalPeople: row1.peopleamount
       }
     }
   });
@@ -710,8 +711,8 @@ var makeShowRecipe = function(id_recipe,$http){
         }
         else{
           recipes = response.data;
+          recipesCtrl.search.unity = {"popularity":"vues","time":"min","difficulty":""}[search.orderBy];
           if(["popularity","time","difficulty"].indexOf(search.orderBy) != -1){
-            recipesCtrl.search.unity = {"popularity":"vues","time":"min","difficulty":""}[search.orderBy];
             for(var i = 0; i< recipes.length; i++){
               recipes[i].orderby = recipes[i][search.orderBy];
             }
@@ -933,7 +934,8 @@ var makeShowRecipe = function(id_recipe,$http){
         return "active";
       }
     }
-    this.hasFood = function(id_food,quantity){
+    this.hasFood = function(id_food,quantity_containfood){
+      var quantity = quantity_containfood*(recipe.totalPeople/recipe.peopleamount);
       if(connected() && user.food){
         for(var i = 0; i < user.food.length; i++){
           if(user.food[i].id_food == id_food && user.food[i].quantity_getfood >= quantity){
@@ -977,8 +979,33 @@ var makeShowRecipe = function(id_recipe,$http){
       }
     }
 
-    this.changeTotalPeople = function(){
-      recipe.totalPeople = this.totalPeople;
+    this.rmPeople = function(){
+      if(recipe.totalPeople > recipe.peopleamount){
+        recipe.totalPeople -= recipe.peopleamount;
+      }
+    }
+
+    this.addPeople = function(){
+      recipe.totalPeople += recipe.peopleamount;
+    }
+
+    this.enougthFood = function(){
+      if(recipe.food){
+
+        if(connected()){
+          for(var i = 0; i < recipe.food.length; i++){
+            var quantityUser = getQuantity(recipe.food[i].id_food);
+            var quantityRecipe = recipe.food[i].quantity_containfood*(recipe.totalPeople/recipe.peopleamount);
+            if(quantityUser < quantityRecipe){
+              return false
+            }
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
     }
 
   }]);

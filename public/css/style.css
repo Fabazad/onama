@@ -231,6 +231,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 }
 .checkFood{
   color: #008f45;
+  vertical-align: middle;
 }
 .recipeNav{
   background-color: #806b49;
@@ -274,4 +275,12 @@ nav ul a {
 }
 #inputModal{
   width: 70%;
+}
+.caracBtn{
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
