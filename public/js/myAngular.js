@@ -912,6 +912,7 @@ var makeShowRecipe = function(id_recipe,$http){
     this.page = 1;
 
     this.showRecipe = function(){
+
       return ('id_recipe' in recipe);
     }
 
@@ -965,6 +966,19 @@ var makeShowRecipe = function(id_recipe,$http){
       if(recipe.activatedInst && recipe.activatedInst.indexOf(index) >= 0){
         return 'active';
       }
+    }
+
+    this.getQtyRecipe = function(){
+      if(recipe.totalPeople){
+        return recipe.totalPeople/recipe.peopleamount;
+      }
+      else{
+        return 1;
+      }
+    }
+
+    this.changeTotalPeople = function(){
+      recipe.totalPeople = this.totalPeople;
     }
 
   }]);

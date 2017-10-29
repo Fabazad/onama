@@ -33,10 +33,10 @@
     <div class="row">
       <div class="col s12">
         <i class="small material-icons checkFood">check_circle</i>
-        <span>Vous avez les ingrédients pour effectuer cette recette.</span>
+        <span>Vous avez les ingrédients pour effectuer {{recipeCtrl.getQtyRecipe()}} fois cette recette.</span>
       </div>
       <div class="col s12">
-        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cliquez ici si vous venez d'effectuer la recette et pour pouvoir enlever de vos aliments les aliments utilisés.">Recette effectuée, enlever les ingrédients</a>
+        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cliquez ici si vous venez d'effectuer la recette et pour pouvoir enlever de vos aliments les aliments utilisés.">Recette effectuée pour {{recipe.totalPeople}} personnes</a>
       </div>
     </div>
     <nav>
@@ -56,7 +56,7 @@
         <ul>
           <li><h5><h5>Type : {{recipe.title_type}}</h5></h5></li>
           <li><h5>Difficulté : {{recipe.title_difficulty}}</h5></li>
-          <li><h5>Pour {{recipe.peopleamount}} personnes</h5></li>
+          <li><h5>Pour <input ng-change="recipeCtrl.changeTotalPeople()" style='width:15%' type="number" ng-value="recipe.peopleamount" min="{{recipe.peopleamount}}" step="{{recipe.peopleamount}}" ng-model="recipeCtrl.totalPeople"> personnes</h5></li>
         </ul>
       </div>
       <div class="col s12 m6">
@@ -72,7 +72,7 @@
       <h4 class="hide-on-large-only">Ingrédients</h4>
       <div class="col s12">
         <div class="collection">
-          <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item"><span class="first-content">{{food.title_food}}</span><span class="secondary-content">{{food.quantity_containfood}}g</span></a>
+          <a ng-repeat="food in recipe.food" ng-class="recipeCtrl.hasFood(food.id_food,food.quantity_containfood)" class="collection-item"><span class="first-content">{{food.title_food}}</span><span class="secondary-content">{{food.quantity_containfood*recipeCtrl.getQtyRecipe()}}g</span></a>
         </div>
       </div>
       <i>Si la case est entièrement verte alors vous possèdez l'ingrédient en quantité suffisante.</i>
