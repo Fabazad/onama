@@ -19,11 +19,11 @@
     <form name="myFoodAction" novalidate>
       <div class="row">
         <div class="input-field col s12">
-          <input ng-change="myFoodCtrl.existingFood()" type="text" id="autocompleteMyFood" ng-model="myFoodCtrl.myFoodAutocomplete" class="autocomplete autocomplete2" required>
+          <input type="text" id="autocompleteMyFood" ng-model="myFoodCtrl.myFoodAutocomplete" class="autocomplete autocomplete2" required>
           <label for="autocompleteMyFood">Aliment</label>
         </div>
       </div>
-      <div class="row" ng-show="myFoodCtrl.idFood">
+      <div class="row" ng-show="myFoodCtrl.existingFood()">
           <div class="input-field col s6">
             <input id="quantityMyFood" type="number" min=0 step="1" ng-model="myFoodCtrl.quantity" required/>
             <label for="input_text">Quantité (g)</label>

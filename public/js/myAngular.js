@@ -470,6 +470,8 @@ var makeShowRecipe = function(id_recipe,$http){
     }
 
     //Initialiser la fenetre modal
+
+    //Indique si un aliment existe et renvoie son id
     this.existingFood = function(title_food = this.myFoodAutocomplete){
       this.idFood = existingFood(title_food);
       if(this.idFood){
@@ -485,7 +487,7 @@ var makeShowRecipe = function(id_recipe,$http){
       if(action == "Enlever"){
         this.modal.max = getQuantity(id);
       }
-      $("#inputModal").select();
+      setTimeout(function(){$("#inputModal").select();},50);
     }
 
     //Modifier quantite d'aliment
