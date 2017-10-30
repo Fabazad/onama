@@ -90,6 +90,10 @@ app.get("/anglais", function(req,res){
   console.log("/user/addFood");
   user.insertFood(req, res);
 })
+.post("/user/deleteFood", function(req, res){
+  console.log(req.body.reqSql);
+  user.deleteFood(req,res);
+})
 
 .put("/user/setFood", function(req, res){
   console.log("/user/setFood");

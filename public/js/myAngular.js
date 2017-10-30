@@ -69,8 +69,21 @@
         res = user.food[i].quantity_getfood;
       }
     }
-
     return res;
+  }
+
+  //Modifie la quantité de l'aliment de l'user
+  var setQuantity = function(id_food, quantity){
+    var find = false;
+    for(var i =0; i < user.food.length; i++){
+      if(user.food[i].id_food == id_food){
+        user.food[i].quantity_getfood = quantity;
+        find = true;
+      }
+    }
+    if(!find){
+      user.food.push({id_food: id_food, quantity_getfood: quantity, title_food: findTitle_food(id_food)});
+    }
   }
 
   //recuperation des aliments de l'user
@@ -456,20 +469,6 @@ var makeShowRecipe = function(id_recipe,$http){
       return user.food;
     }
 
-    //Changer la quantite d'un aliment de l'utilisateur
-    var setQuantity = function(id_food, quantity){
-      var find = false;
-      for(var i =0; i < user.food.length; i++){
-        if(user.food[i].id_food == id_food){
-          user.food[i].quantity_getfood = quantity;
-          find = true;
-        }
-      }
-      if(!find){
-        user.food.push({id_food: id_food, quantity_getfood: quantity, title_food: findTitle_food(id_food)});
-      }
-    }
-
     //Initialiser la fenetre modal
     this.existingFood = function(title_food = this.myFoodAutocomplete){
       this.idFood = existingFood(title_food);
@@ -499,7 +498,7 @@ var makeShowRecipe = function(id_recipe,$http){
         case "Ajouter":
           var newValue = parseInt(actualQuantity) + parseInt(quantity);
 
-          setQuantity(id_food, newValue, title_food);
+          setQuantity(id_food, newValue);
           if(actualQuantity == 0){
             $http.post("user/addFood", {id_user: id_user, id_food: id_food, quantity_getfood: newValue});
           }
@@ -990,6 +989,7 @@ var makeShowRecipe = function(id_recipe,$http){
     }
 
     this.enougthFood = function(){
+      var res = true;
       if(recipe.food){
 
         if(connected()){
@@ -997,15 +997,47 @@ var makeShowRecipe = function(id_recipe,$http){
             var quantityUser = getQuantity(recipe.food[i].id_food);
             var quantityRecipe = recipe.food[i].quantity_containfood*(recipe.totalPeople/recipe.peopleamount);
             if(quantityUser < quantityRecipe){
-              return false
+              res = false
             }
           }
-          return true;
         }
         else{
-          return false;
+          res = false;
         }
       }
+      if(res){
+        this.textEnougthFood = "Vous avez les ingrédients nécessaires pour effectuer " + this.getQtyRecipe() + " fois cette recette.";
+        this.iconEnougthFood = "check_circle";
+      }
+      else{
+        this.textEnougthFood = "Vous n'avez pas les ingrédients nécessaires pour effectuer " + this.getQtyRecipe() + " fois cette recette.";
+        this.iconEnougthFood = "cancel";
+      }
+      return res;
+    }
+
+    this.recipeDone = function(){
+      var foodToDelete = [];
+      var foodToDeleteSql = "";
+      var newQty = 0;
+      for(var i = 0; i < recipe.food.length; i++){
+        foodToDelete.push(recipe.food[i]);
+        foodToDelete[foodToDelete.length-1].quantity_containfood *= this.getQtyRecipe();
+        newQty = getQuantity(recipe.food[i].id_food) - foodToDelete[foodToDelete.length-1].quantity_containfood;
+        setQuantity(recipe.food[i].id_food, newQty);
+        if(newQty > 0){
+          foodToDeleteSql += "UPDATE public.getfood SET quantity_getfood = " + newQty + " WHERE id_food = " + recipe.food[i].id_food + " AND id_user = " + user.id_user + ";";
+        }
+        else{
+          foodToDeleteSql += "DELETE FROM public.getfood WHERE id_food = " + newQty + " AND id_user = " + user.id_user + ";";
+        }
+      }
+      $http.post("/user/deleteFood",{reqSql: foodToDeleteSql})
+      .then(function(response){
+        if("error" in response.data){
+          Materialize.toast(response.data.error, 2000);
+        }
+      });
     }
 
   }]);

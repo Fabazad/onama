@@ -1,4 +1,21 @@
 <div ng-controller="RecipeCtrl as recipeCtrl" class="page noBackground" id="recipe" ng-show="recipeCtrl.showRecipe()">
+  <div id="recipeDoneModal" class="modal">
+    <div class="row">
+      <div class="col s12">
+        <span>Etes vous sûr d'avoir effctuée {{recipeCtrl.getQtyRecipe()}} fois cette recette?<br>
+        Les éléments nécessaires à la préparation seront enlevés de voytre compte.</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <a class=" modal-action modal-close waves-effect waves-light btn">Non</a>
+      </div>
+      <div class="col s6">
+        <a ng-click="recipeCtrl.recipeDone()" class="modal-action modal-close waves-effect waves-light btn">Oui</a>
+      </div>
+    </div>
+  </div>
+
   <div class="container" ng-repeat="recipe in recipeCtrl.getRecipe()">
     <h3>Recette : {{recipe.title_recipe}}</h3>
     <div class="divider"></div>
@@ -20,7 +37,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <i ng-click="recipeCtrl.changeFavorite()" class="material-icons waves-effect waves-light tooltipped favorite-recipe" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipeCtrl.isFavorite()}}</i>
+        <i class="material-icons waves-effect waves-light tooltipped favorite-recipe" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipeCtrl.isFavorite()}}</i>
       </div>
     </div>
     <div class='row'>
@@ -30,13 +47,13 @@
         <div class="divider"></div>
       </div>
     </div>
-    <div ng-show="recipeCtrl.enougthFood()" class="row">
+    <div class="row">
       <div class="col s12">
-        <i class="small material-icons checkFood">check_circle</i>
-        <span>Vous avez les ingrédients pour effectuer {{recipeCtrl.getQtyRecipe()}} fois cette recette.</span>
+        <i ng-class="recipeCtrl.iconEnougthFood" class="small material-icons">{{recipeCtrl.iconEnougthFood}}</i>
+        <span>{{recipeCtrl.textEnougthFood}}</span>
       </div>
-      <div class="col s12">
-        <a ng-click="recipeCtrl.recipeDone()" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cliquez ici si vous venez d'effectuer la recette et pour pouvoir enlever de vos aliments les aliments utilisés.">Recette effectuée pour {{recipe.totalPeople}} personnes</a>
+      <div ng-show="recipeCtrl.enougthFood()" class="col s12">
+        <a href="#recipeDoneModal" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cliquez ici si vous venez d'effectuer la recette et pour pouvoir enlever de vos aliments les aliments utilisés.">Recette effectuée pour {{recipe.totalPeople}} personnes</a>
       </div>
     </div>
     <nav>

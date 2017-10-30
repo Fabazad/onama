@@ -229,8 +229,12 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
   bottom: 5%;
   right: 5%;
 }
-.checkFood{
+.check_circle{
   color: #008f45;
+  vertical-align: middle;
+}
+.cancel{
+  color: #806b49;
   vertical-align: middle;
 }
 .recipeNav{
