@@ -274,6 +274,9 @@ var makeShowRecipe = function(id_recipe,$http){
   });
 }
 
+//setTimeout(function($location){alert($location.url());},1000);
+
+
   /*Controllers*/
 
   app.controller("PageCtrl",["$http", '$cookies', function($http, $cookies){
@@ -462,6 +465,7 @@ var makeShowRecipe = function(id_recipe,$http){
     this.userfood = user.food;
     this.quantity = 0;
     this.idFood = 0;
+    this.existingFood = false;
     var myFoodCtrl = this;
 
 
@@ -472,12 +476,16 @@ var makeShowRecipe = function(id_recipe,$http){
     //Initialiser la fenetre modal
 
     //Indique si un aliment existe et renvoie son id
-    this.existingFood = function(title_food = this.myFoodAutocomplete){
+    this.testFood = function(){
+      title_food = this.myFoodAutocomplete
       this.idFood = existingFood(title_food);
       if(this.idFood){
         this.quantity = getQuantity(this.idFood);
+        this.existingFood = true;
       }
-      return this.idFood;
+      else{
+        this.existingFood = false;
+      }
     }
 
     this.setModal = function(action,id){
@@ -509,6 +517,7 @@ var makeShowRecipe = function(id_recipe,$http){
             $http.put("user/setFood", {}, {params: data}).then(function(response){
             });
           }
+          Materialize.toast("Ajouté",1000);
           break;
 
         case "Enlever":
@@ -525,6 +534,7 @@ var makeShowRecipe = function(id_recipe,$http){
           else{
             Materialize.toast("Erreur : valeur finale négative.");
           }
+          Materialize.toast("Enlevé",1000);
           break;
 
         case "Initialiser":
@@ -537,12 +547,14 @@ var makeShowRecipe = function(id_recipe,$http){
           else{
             $http.put("user/setFood",{}, {params:{id_user: id_user, id_food: id_food, quantity_getfood: newValue}});
           }
+          Materialize.toast("Initilisé",1000);
           break;
 
         case "Delete":
           var newValue = actualQuantity - modalValue;
           deleteFood(id_food);
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
+          Materialize.toast("Supprimé",1000);
           break;
       }
       chargement--;
