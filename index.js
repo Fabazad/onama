@@ -92,7 +92,7 @@ app.get("/anglais", function(req,res){
 })
 .post("/user/deleteFood", function(req, res){
   console.log(req.body.reqSql);
-  user.deleteFood(req,res);
+  user.deleteFoodSQL(req,res);
 })
 
 .put("/user/setFood", function(req, res){
