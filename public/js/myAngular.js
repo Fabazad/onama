@@ -551,7 +551,6 @@ var makeShowRecipe = function(id_recipe,$http){
           break;
 
         case "Delete":
-          var newValue = actualQuantity - modalValue;
           deleteFood(id_food);
           $http.delete("user/delFood", {params: {id_user: id_user, id_food: id_food}});
           Materialize.toast("Supprimé",1000);
