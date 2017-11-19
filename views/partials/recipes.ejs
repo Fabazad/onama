@@ -63,36 +63,45 @@
         </div>
       </div>
     </form>
+
+
+
     <div class="row">
       <h3>Résultats</h3>
-      <div class="divider"></div>
-      <ul class="collapsible popout" data-collapsible="accordion">
-       <li ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
-         <div class="collapsible-header"><img class="responsive-img" ng-src="{{recipe.imgurl}}" />
-           <h4>{{recipe.title_recipe}}</h4>
-           <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:0}} {{recipesCtrl.search.unity}}</h6>
-           <a ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="btn btn-floating btn-large waves-effect waves-light tooltipped details" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
-           <i ng-click="recipesCtrl.changeFavorite(recipe.id_recipe)" class="material-icons waves-effect waves-light tooltipped favorite-list" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipesCtrl.isFavorite(recipe.id_recipe)}}</i>
-         </div>
-         <div class="collapsible-body container">
-           <div class="row"/>
-             <div class="col s12" style="margin-bottom:10px">
-               <span>{{recipe.description}}</span>
-             </div>
-             <div class="col s6">
-               <p>Type : {{recipe.type}}</p>
-               <p>Difficulté : {{recipe.difficulty}}</p>
-               <p>Pour {{recipe.people}} personnes</p>
-             </div>
-             <div class="col s6">
-               <p>Temps : {{recipe.time}} min</p>
-               <p>Origine : {{recipe.origin}}</p>
-               <p>Popularité : {{recipe.popularity}} vues</p>
-             </div>
-           </div>
-         </div>
-       </li>
-     </ul>
+
+      <div class="divider col s12"></div>
+
+      <div class="col s12 m4"  ng-repeat="recipe in recipesCtrl.getRecipes() | limitTo:20">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" ng-src="{{recipe.imgurl}}">
+            <a ng-click="recipesCtrl.makeShowRecipe(recipe.id_recipe)" class="halfway-fab btn btn-floating  waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Détails"><i class="material-icons">visibility</i></a>
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{recipe.title_recipe}}<i class="material-icons right">more_vert</i></span>
+            <h6 ng-show="recipesCtrl.isOrdered()" class="orderByInfo">{{recipesCtrl.orderBy}} : {{recipe.orderby | number:0}} {{recipesCtrl.search.unity}}</h6>
+            <i ng-click="recipesCtrl.changeFavorite(recipe.id_recipe)" class="material-icons waves-effect waves-light tooltipped favorite-list" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipesCtrl.isFavorite(recipe.id_recipe)}}</i>
+
+            <p>{{recipe.description}}</p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+            <div class="row">
+              <div class="col s6">
+                <p>{{recipe.type}}</p>
+                <p>{{recipe.difficulty}}</p>
+                <p>{{recipe.people}} personnes</p>
+              </div>
+              <div class="col s6">
+                <p>{{recipe.time}} min</p>
+                <p>{{recipe.origin}}</p>
+                <p>{{recipe.popularity}} vues</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

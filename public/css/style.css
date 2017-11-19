@@ -201,11 +201,6 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 .collapsible-header i {
   width: inherit
 }
-.details.btn-floating{
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
 .favorite-list{
   position: absolute;
   right: 10px;
@@ -227,7 +222,6 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 .orderByInfo {
   position: absolute;
   bottom: 5%;
-  right: 5%;
 }
 .check_circle{
   color: #008f45;
@@ -287,4 +281,10 @@ nav ul a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.waves-effect{
+  overflow: initial;
+}
+.card{
+  height:400px;
 }
