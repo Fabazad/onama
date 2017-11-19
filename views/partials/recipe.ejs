@@ -37,7 +37,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <i class="material-icons waves-effect waves-light tooltipped favorite-recipe" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipeCtrl.isFavorite()}}</i>
+        <i ng-click="recipeCtrl.changeFavorite()" class="material-icons waves-effect waves-light tooltipped favorite-recipe" data-position="bottom" data-delay="50" data-tooltip="Favoris">{{recipeCtrl.isFavorite()}}</i>
       </div>
     </div>
     <div class='row'>
@@ -111,15 +111,47 @@
     <div class="row" ng-show="recipeCtrl.page == 4">
       <h4 class="hide-on-large-only">Poids, prix et valeurs nutritives /100g</h4>
       <div class="col s12">
-        <ul class="collection with-header">
-          <li class="collection-header hide-on-med-and-down"><h5>Poids, prix et valeurs nutritives /100g</h5></li>
-          <li class="collection-item">Poids total<span class="secondary-content">{{recipe.totalQuantity}}g</span></li>
-          <li class="collection-item">Prix<span class="secondary-content">{{recipe.price}}€</span></li>
-          <li class="collection-item">Calories<span class="secondary-content">{{recipe.calorie | number:0}}kcal</span></li>
-          <li class="collection-item">Protéines<span class="secondary-content">{{recipe.proteins | number:2}}g</span></li>
-          <li class="collection-item">Lipides<span class="secondary-content">{{recipe.lipids | number:2}}g</span></li>
-          <li class="collection-item">Glucides<span class="secondary-content">{{recipe.carbohydrates | number:2}}g</span></li>
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Valeurs nutritives</th>
+              <th>Pour 100g</th>
+              <th>Par personne</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Poids total</td>
+              <td>{{recipe.totalQuantity}}g</td>
+              <td>{{recipe.propPerPers | number:0}}g</td>
+            </tr>
+            <tr>
+              <td>Prix</td>
+              <td>{{recipe.price | number:2}}€/kg</td>
+              <td>{{recipe.price*recipe.propPerPers/1000 | number:2}}€
+            </tr>
+            <tr>
+              <td>Calories</td>
+              <td>{{recipe.calorie | number:0}}kcal</td>
+              <td>{{recipe.calorie*recipe.propPerPers/100 | number:0}}kcal</td>
+            </tr>
+            <tr>
+              <td>Protéines</td>
+              <td>{{recipe.proteins | number:1}}g</td>
+              <td>{{recipe.proteins*recipe.propPerPers/100 | number:1}}g</td>
+            </tr>
+            <tr>
+              <td>Lipides</td>
+              <td>{{recipe.lipids | number:1}}g</td>
+              <td>{{recipe.lipids*recipe.propPerPers/100 | number:1}}g</td>
+            </tr>
+            <tr>
+              <td>Glucides</td>
+              <td>{{recipe.carbohydrates | number:1}}g</td>
+              <td>{{recipe.carbohydrates*recipe.propPerPers/100 | number:1}}g</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 

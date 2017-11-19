@@ -268,7 +268,8 @@ var makeShowRecipe = function(id_recipe,$http){
         lipids: lipids/(quantityTotal/100),
         carbohydrates: carbohydrates/(quantityTotal/100),
         totalQuantity: quantityTotal,
-        totalPeople: row1.peopleamount
+        totalPeople: row1.peopleamount,
+        propPerPers: quantityTotal/row1.peopleamount
       }
     }
   });
