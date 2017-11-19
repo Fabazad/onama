@@ -286,5 +286,9 @@ nav ul a {
   overflow: initial;
 }
 .card{
-  height:400px;
+  height:410px;
+}
+.card-reveal p .material-icons{
+  color: #008f45;
+  vertical-align: middle;
 }
