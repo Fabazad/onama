@@ -292,3 +292,6 @@ nav ul a {
   color: #008f45;
   vertical-align: middle;
 }
+.card .card-image img {
+  height: 200px;
+}
