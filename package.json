@@ -1,13 +1,13 @@
 {
   "name": "onamajs",
   "version": "0.2.6",
-  "description": "A sample Node.js app using Express 4",
+  "description": "Nutrional app management.",
   "engines": {
     "node": "6.10.2"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "npm start"
   },
   "dependencies": {
     "angucomplete-alt": "^3.0.0",
